@@ -44,19 +44,41 @@ include classes/bors/objects/loaders/yaml.php
 include classes/bors/data/yaml.php
 include classes/bors/data/meta.php
 include classes/bors/page/fs/htsu.php
+include classes/bors/page/fs/markdown.php
+include classes/bors/page/fs/bbh.php
+include classes/bors/page/fs/html.php
 include classes/bors/page.php
 include classes/bors/base/page.php
+include classes/bors/base/page.html
 include engines/lcml
 include classes/bors/storage/htsu.php
 include classes/bors/storage.php
 include classes/url/calling2.php
 include classes/url/base.php
 include classes/access/base.php
-include data/fs/doc
-
-
-
-
-
-
+include data/fs/_bors
+include classes/bors/bodies/page.php
+include classes/bors/templates/smarty.php
+include classes/bors/templates/smarty2.php
+include classes/bors/templates/abstract.php
+include classes/bors/templates.php
+include engines/smarty/bors_smarty_common.php
+include classes/bors/templates/smarty-register.php
+include engines/smarty/smarty-resource-file.php
+include engines/smarty/smarty-resource-bors.php
+include templates/default/index.html
+include engines/smarty/plugins
+include classes/module/nav/top.php
+include classes/module/nav/top.tpl.php
+include classes/body/php.php
+include inc/bors/lists.php
+include inc/bors/modules.php
+include shared/css/bors
+include classes/bors/lcml
+include classes/bors/storage/fs/bbh.php
+include classes/bors/storage/fs/markdown.php
+include classes/bors/storage/fs/html.php
+include classes/bors/renderers/page.php
+include classes/lcml
+include classes/bors/template.php
 

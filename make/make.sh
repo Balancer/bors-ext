@@ -43,10 +43,10 @@ cd ..
 
 cp $EXT/make/setup.php.demo bors-demo/ext/cli/setup.php
 
-#rm bors-demo-ext -rf
-#rm bors-demo-3rdp -rf
+rm bors-demo-ext -rf
+rm bors-demo-3rdp -rf
 
-echo -e "<?php\nrequire_once 'config-3rd.php';" >> bors-demo/cli/config.php
+# echo -e "<?php\nrequire_once 'config-3rd.php';" >> bors-demo/ext/cli/config.php
 
 cd bors-demo/ext/webserver
 clear
