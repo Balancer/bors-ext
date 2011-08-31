@@ -1,7 +1,7 @@
 <?php
 
-if(file_exists('setup_php'))
-	include_once('setup.php');
+if(file_exists($f = dirname(__FILE__).'/setup.php'))
+	include_once($f);
 
 if(!defined('BORS_CORE'))
 {
