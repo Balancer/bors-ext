@@ -51,7 +51,7 @@ class dumb_httpd extends \Nanoserv\HTTP\Server
 
 // Replace [::] below with 0.0.0.0 for IPv4-only operation
 //$l = Nanoserv::New_Listener("tcp://[::]:8800", "dumb_httpd");
-$l = Nanoserv::New_Listener("tcp://127.0.0.1:8800", "dumb_httpd");
+$l = Nanoserv::New_Listener("tcp://0.0.0.0:8800", "dumb_httpd");
 
 $l->Set_Forking();
 $l->Activate();
