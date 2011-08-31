@@ -1,0 +1,4 @@
+<?php
+
+define('BORS_HOST', dirname(dirname(__FILE__)));
+define('BORS_CORE', dirname(BORS_HOST).'/bors-demo');
