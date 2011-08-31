@@ -43,6 +43,20 @@ include url_map.php
 include classes/bors/objects/loaders/yaml.php
 include classes/bors/data/yaml.php
 include classes/bors/data/meta.php
+include classes/bors/page/fs/htsu.php
+include classes/bors/page.php
+include classes/bors/base/page.php
+include engines/lcml
+include classes/bors/storage/htsu.php
+include classes/bors/storage.php
+include classes/url/calling2.php
+include classes/url/base.php
+include classes/access/base.php
+include data/fs/doc
+
+
+
+
 
 
 
