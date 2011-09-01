@@ -1,7 +1,7 @@
 <?php
 
-define('BORS_SITE', dirname(__FILE__));
-define('BORS_LOCAL', dirname(BORS_SITE));
+define('BORS_LOCAL', dirname(__FILE__));
+define('BORS_SITE', dirname(BORS_LOCAL));
 require_once '../cli/init.php';
 
 bors_lib_php::add_include_path(BORS_3RD_PARTY.'/'.config('nanoserv_path'));
@@ -9,6 +9,7 @@ require_once 'nanoserv/handlers/HTTP/Server.php';
 
 config_set('nanoserv_root', dirname(__FILE__).'/htdocs');
 config_set('webserver_class', 'bors_lib_servers_nanoserv');
+config_set('classes_auto_base', '');
 
 use \Nanoserv\Core as Nanoserv;
 class dumb_httpd extends \Nanoserv\HTTP\Server

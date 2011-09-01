@@ -50,4 +50,5 @@ rm bors-demo-3rdp -rf
 
 cd bors-demo/ext/webserver
 clear
+(sleep 1; brun http://localhost:8800/)&
 php run.php
