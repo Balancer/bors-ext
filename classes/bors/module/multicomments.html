@@ -1,0 +1,50 @@
+<h2>Комментарии</h2>
+
+<div class="yellow_box wtabs">Вы можете оставлять комментарии в любой из перечисленных ниже систем,
+как Вам будет удобнее</div>
+
+<div class="tabs">
+
+	<ul>
+	{if $vk_api_id}<li><a href="#tab-vk">ВКонтакте</a></li>{/if}
+	{if $disqus}<li><a href="#tab-disqus">Disqus</a></li>{/if}
+	{if $fb_app_id}<li><a href="#tab-fb">Facebook</a></li>{/if}
+	</ul>
+
+{if $vk_api_id}{literal}
+<div id="tab-vk">
+<script type="text/javascript">
+  VK.init({apiId: {/literal}{$vk_api_id}{literal}, onlyWidgets: true});
+</script>
+<div id="vk_comments"></div>
+<script type="text/javascript">
+VK.Widgets.Comments("vk_comments", {limit: 10, width: "600", attach: "*"});
+</script>
+</div>
+{/literal}{/if}
+
+{if $disqus}{literal}
+<div id="tab-disqus">
+<div id="disqus_thread"></div>
+<script type="text/javascript">
+    var disqus_shortname = '{/literal}{$disqus}{literal}';
+
+    /* * * DON'T EDIT BELOW THIS LINE * * */
+    (function() {
+        var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+        dsq.src = 'http://' + disqus_shortname + '.disqus.com/embed.js';
+        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+<a href="http://disqus.com" class="dsq-brlink">blog comments powered by <span class="logo-disqus">Disqus</span></a>
+</div>
+{/literal}{/if}
+
+{if $fb_app_id}
+<div id="tab-fb">
+<div id="fb-root"></div><script src="http://connect.facebook.net/en_US/all.js#xfbml=1"></script><fb:comments href="http://bors.balancer.ru/" num_posts="10" width="600"></fb:comments>
+</div>
+{/if}
+
+</div>
