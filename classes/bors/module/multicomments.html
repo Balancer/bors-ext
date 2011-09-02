@@ -1,5 +1,4 @@
 <h2>Комментарии</h2>
-
 <div class="yellow_box wtabs">Вы можете оставлять комментарии в любой из перечисленных ниже систем,
 как Вам будет удобнее</div>
 
@@ -18,7 +17,7 @@
 </script>
 <div id="vk_comments"></div>
 <script type="text/javascript">
-VK.Widgets.Comments("vk_comments", {limit: 10, width: "600", attach: "*"});
+VK.Widgets.Comments("vk_comments", {limit: 10, width: "600", attach: "*", page_id: "{/literal}{$pid}{literal}"});
 </script>
 </div>
 {/literal}{/if}
