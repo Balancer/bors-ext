@@ -8,7 +8,15 @@ class dumb_httpd extends \Nanoserv\HTTP\Server
 {
 	public function on_Request($url)
 	{
-//		echo "Request $url\n"; var_dump($this->request_headers); echo "\n\n";
+		if($this->request_content)
+		{
+//			echo "Request $url\n"; var_dump($this->request_headers); echo "\n\n";
+//			var_dump($this->request_content);
+			$post = bors_lib_http::parse_raw_http_request($this->request_content, $this->request_headers['CONTENT-TYPE']);
+//			var_dump($post);
+			$_POST = $post;
+		}
+
 		if(!file_exists($f = config('nanoserv_root').$url))
 			$f = NULL;
 
