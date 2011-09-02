@@ -1,9 +1,6 @@
 include classes
-rename classes ext/classes
 include cli
-rename cli ext/cli
 include webserver
-rename webserver ext/webserver
 
 include config-3rd.php
 rename config-3rd.php ext/config-3rd.php

@@ -7,48 +7,41 @@ CORE=$BASE/bors-core
 cd $BASE
 
 rm bors-demo -rf
-rm bors-demo-ext -rf
-rm bors-demo-3rdp -rf
-
 mkdir bors-demo
 hg init bors-demo
 
-mkdir bors-demo-ext
-hg init bors-demo-ext
-
-mkdir bors-demo-3rdp
-hg init bors-demo-3rdp
-
-hg convert bors-ext bors-demo-ext --filemap $EXT/make/bors-demo.ext.map
 hg convert bors-core bors-demo --filemap $EXT/make/bors-demo.core.map
-hg convert bors-third-party bors-demo-3rdp --filemap $EXT/make/bors-demo.3rdp.map
 
-cd bors-demo
+pushd bors-demo
 hg up
-echo Pull bors-demo-ext
-echo ------------------
-hg pull -f -u ../bors-demo-ext
-echo ... merge
-hg merge
-echo ... commit
-hg ci -m Merge
-echo Pull bors-demo-3rdp
-echo -------------------
-hg pull -f -u ../bors-demo-3rdp
-echo ... merge
-hg merge
-echo ... commit
-hg ci -m Merge
-cd ..
 
-cp $EXT/make/setup.php.demo bors-demo/ext/cli/setup.php
+for i in ext third-party tutorial; do
+	rm ../bors-demo-$i -rf
 
-rm bors-demo-ext -rf
-rm bors-demo-3rdp -rf
+	mkdir ../bors-demo-$i
+	hg init ../bors-demo-$i
+
+	hg convert ../bors-$i ../bors-demo-$i --filemap $EXT/make/bors-demo.$i.map
+
+	echo === Pull bors-demo-$i
+	hg pull -f -u ../bors-demo-$i
+	echo ... merge
+	hg merge
+	echo ... commit
+	hg ci -m Merge
+#	rm ../bors-demo-$i -rf
+done
+
+popd
+
+cp $EXT/make/setup.php.demo bors-demo/cli/setup.php
+cp -r $EXT/make/jquery-local bors-demo/webserver/htdocs
 
 # echo -e "<?php\nrequire_once 'config-3rd.php';" >> bors-demo/ext/cli/config.php
 
-cd bors-demo/ext/webserver
+cat ext.config.inc.demo >> bors-demo/ext/config.php
+
+cd bors-demo/webserver
 clear
 (sleep 1; brun http://localhost:8800/)&
 php run.php
