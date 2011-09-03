@@ -1,22 +1,22 @@
 <?php
 
-define('BORS_LOCAL', dirname(__FILE__));
-define('BORS_SITE', dirname(BORS_LOCAL));
-require_once '../cli/init.php';
-
 bors_lib_php::add_include_path(BORS_3RD_PARTY.'/'.config('nanoserv_path'));
 require_once 'nanoserv/handlers/HTTP/Server.php';
-
-config_set('nanoserv_root', dirname(__FILE__).'/htdocs');
-config_set('webserver_class', 'bors_lib_servers_nanoserv');
-config_set('classes_auto_base', '');
 
 use \Nanoserv\Core as Nanoserv;
 class dumb_httpd extends \Nanoserv\HTTP\Server
 {
 	public function on_Request($url)
 	{
-//		echo "Request $url\n"; var_dump($this->request_headers); echo "\n\n";
+		if($this->request_content)
+		{
+//			echo "Request $url\n"; var_dump($this->request_headers); echo "\n\n";
+//			var_dump($this->request_content);
+			$post = bors_lib_http::parse_raw_http_request($this->request_content, $this->request_headers['CONTENT-TYPE']);
+//			var_dump($post);
+			$_POST = $post;
+		}
+
 		if(!file_exists($f = config('nanoserv_root').$url))
 			$f = NULL;
 
