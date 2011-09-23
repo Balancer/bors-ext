@@ -25,6 +25,7 @@ class modules_unittest extends PHPUnit_Framework_TestCase
 
 		$x = bors_load_ex('modules_unittest_helper', NULL, array(
 		));
+
 		$this->assertNotNull($x);
 		$this->assertEquals('bar', $x->html_code());
 
