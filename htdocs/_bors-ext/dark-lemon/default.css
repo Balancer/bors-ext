@@ -1,0 +1,175 @@
+/*
+
+  @ default.css for free template "dark_lemon"
+  @ free to use for business and personal websites as long as you keep the links in the template
+  @ visit me -> http://www.ego-surf.net
+
+*/
+
+body {
+  font-family: 'Trebuchet MS', Verdana, Arial, sans-serif;
+  font-size: 14px;
+  color: #CCCCCC;
+  line-height: 150%;
+  background: #000;
+  margin: 0;
+}
+
+a {color: #A0C62E; text-decoration: none;}
+a:hover {color: #A0C62E; text-decoration: underline;}
+
+
+h1 {
+  color: #A0C62E;
+  font-size: 25px;
+  margin: 15px 0px 15px 0px;
+  font-weight: normal;
+}
+
+h2 {
+  color: #CCC;
+  font-size: 22px;
+  font-weight: normal;
+}
+
+.greentxt {
+  color: #A0C62E;
+}
+
+.bold {
+  font-weight: bold;
+}
+
+.bigger {font-size: 13px;}
+
+
+img.greenborder {
+  border: 2px solid #A0C62E;
+}
+
+
+#site_wrapper {
+  width: 950px;
+  position: absolute;
+  margin-left: 50%;
+  left: -475px;
+}
+
+#header {
+  height: 105px;
+}
+
+#logo {
+  position: absolute;
+  top: 25px;
+}
+
+#name {
+  position: absolute;
+  top: 33px;
+  left: 0px;
+}
+
+#social {
+  position: absolute;
+  right: 10px;
+  top: 30px;
+}
+
+#social a {display: block; float: left; height: 25px; width: 25px;}
+#social .rss {background: url(gfx/social_icons.png) no-repeat 0px -25px;}
+#social .rss:hover {background: url(gfx/social_icons.png) no-repeat 0px 0px;}
+#social .twitter {background: url(gfx/social_icons.png) no-repeat -26px -25px;}
+#social .twitter:hover {background: url(gfx/social_icons.png) no-repeat -26px 0px;}
+#social .facebook {background: url(gfx/social_icons.png) no-repeat -52px -25px;}
+#social .facebook:hover {background: url(gfx/social_icons.png) no-repeat -52px 0px;}
+#social .linkedin {background: url(gfx/social_icons.png) no-repeat -78px -25px;}
+#social .linkedin:hover {background: url(gfx/social_icons.png) no-repeat -78px 0px;}
+#social .digg {background: url(gfx/social_icons.png) no-repeat -104px -25px;}
+#social .digg:hover {background: url(gfx/social_icons.png) no-repeat -104px 0px;}
+
+#navigation {
+  position: absolute;
+  left: 0px;
+  right: 0px;
+  z-index: 30;
+  top: 109px;
+  height: 63px;
+  overflow: hidden;
+  background: url(gfx/bg_navtop.jpg) repeat-x;
+  font-size: 18px;
+  color: #333;
+}
+
+#navigation ul {
+  width: 950px;
+  position: absolute;
+  margin-left: 50%;
+  left: -475px;
+  padding: 0px;
+  margin-top: 10px;
+}
+#navigation li {list-style-type:none; float: left; position:relative; padding: 7px 10px 7px 10px; z-index: 30;}
+#navigation li a {color: #333; text-decoration: none; opacity: 1;}
+#navigation li.backLava {
+    background-color:#FFF;
+    border: 1px solid #333;
+    -webkit-border-radius: 5px;
+    -moz-border-radius: 5px;
+    border-radius: 5px;
+    z-index: 10;
+    opacity: .6;
+}
+
+#sidebar {
+  float: left;
+  width: 250px;
+}
+
+#content, #sidebar {
+  margin-top: 100px;
+}
+
+ul#sidenav {margin: 0px; padding: 0px;}
+ul#sidenav li {
+    margin-left: 0px;
+    margin-bottom: 5px;
+    background: #5C5C5C;
+    color: #FFF;
+    list-style-type: none;
+    padding: 7px 10px 7px 10px;
+    -webkit-border-radius: 5px;
+    -moz-border-radius: 5px;
+    border-radius: 5px;
+    }
+
+ul#sidenav a {position: relative; z-index: 30; color: #F4F4F4; text-decoration: none;}
+
+
+ul#sidenav li.backLava {
+    border: 1px solid #FFF;
+    -webkit-border-radius: 5px;
+    -moz-border-radius: 5px;
+    border-radius: 5px;
+}
+
+#content {
+  float: left;
+  width: 600px;
+  margin-left: 30px;
+}
+
+
+.belowc {
+  margin: 40px 0 10px 0;
+  text-align: center;
+  color: #999;
+  border-top: 1px solid #ccc;
+  font-size: 11px;
+}
+
+.belowc a {color: #999; text-decoration: none;}
+
+
+.clear {clear: both;}
+
