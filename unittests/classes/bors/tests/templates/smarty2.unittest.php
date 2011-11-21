@@ -7,6 +7,8 @@ class bors_tests_templates_smarty2_unittest extends PHPUnit_Framework_TestCase
 		$page = bors_load('bors_tests_templates_smarty2', NULL);
         $this->assertNotNull($page);
 
+//		var_dump($page->body_template());
+
 		$body = explode("\n", $page->body());
 //		var_dump($body);
 		$this->assertEquals(ec('Переменная 1 = значение переменной 1'), $body[0]);
