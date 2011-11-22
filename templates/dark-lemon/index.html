@@ -27,19 +27,22 @@
 	});
 	{/literal}</script>
 
+{find_var var="top_menu" find='page_site_sections'}
+{if $top_menu}
 	<div id="navigation">
 		<ul>
-			<li><a href="#">Home</a></li>
-			<li><a href="#">Products</a></li>
-			<li><a href="#">Services</a></li>
-			<li><a href="#">Customer Support</a></li>
+			{foreach from=$top_menu key="url" item="title"}
+			<li><a href="{$url}">{$title}</a></li>
+			{/foreach}
 		</ul>
 	</div>
+{/if}
 
 <div id="site_wrapper">
 	<div id="header">
 		<div id="logo"><!-- place logo image here if you like --></div>
-		<div id="name"><h2>{$project_title}</h2></div>
+		<div id="name"><h2>{find_var find='project_title'}</h2></div>
+{*
 		<div id="social">
 		<a href="#rss" class="rss"></a>
 		<a href="#twitter" class="twitter"></a>
@@ -47,15 +50,19 @@
 		<a href="#linkedin" class="linkedin"></a>
 		<a href="#digg" class="digg"></a>
 		</div>
+*}
 	</div>
 
+{find_var var="side_menu" find='page_menu'}
+{if $side_menu}
 	<div id="sidebar">
 	<ul id="sidenav">
-	<li><a href="#">About us</a></li>
-	<li><a href="#">Products</a></li>
-	<li><a href="#">News</a></li>
+	{foreach from=$side_menu key="url" item="title"}
+	<li><a href="{$url}">{$title}</a></li>
+	{/foreach}
 	</ul>
 	</div>
+{/if}
 
 	<div id="content">
 		<div class="bigbox">
@@ -70,8 +77,7 @@
 	</div><!-- END content -->
 	<div class="clear"></div>
 	<div class="belowc">
-		<span class="bigger bold">&copy; 2011 dark lemon trading inc. &middot; 1234 SomeStreet &middot; Brooklyn, NY 11201<br />
-		Phone: 1(234) 567 8910 &middot; Fax: 1(234) 567 8910 &middot; E-mail:mail@company.com</span>
+		<span class="bigger bold">Powered by <a href="http://bors.balancer.ru/">BORS© PHP Framework</a></span>
 		<!-- DO NOT REMOVE THIS PART, RESPECT MY WORK AND DO NOT VIOLATE THE COPYRIGHT -->
 		<br />tmpl made by <a href="http://www.schuh-wetsch.de/shop/cat/damenschuhe/stiefel.html" target="_blank">Stiefel</a> <a href="http://www.schuhe-billig.com/" target="_blank">guenstige Schuhe</a>
 		<!-- REMOVING LINK(S) IS EVIL, AND YOU WILL END UP HERE: http://www.ego-surf.net/hallofshame/ -->

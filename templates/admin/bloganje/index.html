@@ -23,18 +23,17 @@
         	<h2>{$this->page_title()}</h2>
 			<div class="nav_top">{module class="nav_top" id=$this}</div>
 
+	{find_var var="top_menu" find='page_site_sections'}
+	{if $top_menu}
     <div id="topmenu">
             	<ul>
-                	<li class="current"><a href="index.html">Dashboard</a></li>
-                    <li><a href="#">Orders</a></li>
-                	<li><a href="users.html">Users</a></li>
-                    <li><a href="#">Manage</a></li>
-                    <li><a href="#">CMS</a></li>
-                    <li><a href="#">Statistics</a></li>
-                    <li><a href="#">Settings</a></li>
+					{foreach from=$top_menu key="u" item="title"}
+					<li{if_main_url url=$u} class="current"{/if_main_url}><a href="{$u}">{$title}</a></li>
+					{/foreach}
               </ul>
           </div>
       </div>
+	{/if}
         <div id="top-panel">
             <div id="panel">
                 <ul>
