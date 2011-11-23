@@ -1,0 +1,74 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<title>{$this->browser_title()}</title>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<link rel="stylesheet" type="text/css" href="/_bors-ext/bluenew3column/style.css" media="screen" />
+</head>
+<body>
+<div id="wrap">
+
+<div id="header">
+<h1><a href="/">{$this->get_find('project_title')}</a></h1>
+<h2>{$this->get_find('project_slogan')}</h2>
+</div>
+
+<div id="menu">
+{find_var var="top_menu" find='page_site_sections'}
+{if $top_menu}
+<ul>
+	{foreach from=$top_menu key="url" item="title"}
+	<li><a href="{$url}">{$title}</a></li>
+	{/foreach}
+</ul>
+{/if}
+</div>
+
+<div id="content">
+
+<div id="left">
+	{find_var var="side_menu" find='page_menu'}
+	{if $side_menu}
+	<h2>Меню:</h2>
+	<div class="box">
+	<ul>
+	{foreach from=$side_menu key="url" item="title"}
+		<li><a href="{$url}">{$title}</a></li>
+	{/foreach}
+	</ul>
+	</div>
+	{/if}
+</div>
+
+<div id="right">
+
+{* top content *}
+
+<div class="contentleft">
+<h2>{$this->page_title()}</h2>
+<div class="contentleftbox">
+{$this->body()}
+</div>
+</div>
+
+{*
+<div class="contentright">
+<h2>Sponsors</h2>
+<div class="contentrightbox">
+<img src="images/googleads1.gif" alt="Ads Spot" />
+</div>
+</div>
+*}
+
+</div>
+<div style="clear: both;"> </div>
+</div>
+
+<div id="footer">
+&copy; {$this->get_find('project_copiright', 'Balancer')} | Powered by <a href="http://bors.balancer.ru">BORS©</a> | Design by <a href="http://www.minimalistic-design.com">Minimalistic Design</a>
+</div>
+
+</div>
+</body>
+</html>
