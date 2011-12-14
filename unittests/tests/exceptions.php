@@ -2,10 +2,14 @@
 
 class exceptions_unittest_helper extends bors_object
 {
-	function show()
-	{
+    /**
+     * @expectedException        Exception
+     * @expectedExceptionMessage Test exception
+     */
+    public function show()
+    {
 		bors_throw('Test exception');
-	}
+    }
 }
 
 class exceptions_unittest extends PHPUnit_Framework_TestCase
