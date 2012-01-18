@@ -218,7 +218,7 @@ class bors_lib_servers_web
 		}
 		catch(Exception $e)
 		{
-			$trace = debug_trace(0, false, -1, $e->getTrace());
+			$trace = bors_debug::trace(0, false, -1, $e->getTrace());
 			$message = $e->getMessage();
 			bors_debug::syslog('exception', "$message\n\n$trace", true, array('dont_show_user' => true));
 			try
