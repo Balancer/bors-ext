@@ -1,8 +1,0 @@
-include classes
-include cli
-include webserver
-
-include config-3rd.php
-rename config-3rd.php ext/config-3rd.php
-include config.php
-rename config.php ext/config.php

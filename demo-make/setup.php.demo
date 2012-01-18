@@ -1,6 +1,0 @@
-<?php
-
-define('BORS_CORE', dirname(dirname(__FILE__)));
-define('BORS_HOST', BORS_CORE.'/ext');
-define('BORS_3RD_PARTY', BORS_CORE.'/third-party');
-define('BORS_EXT', BORS_CORE.'/ext');
