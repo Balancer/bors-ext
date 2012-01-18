@@ -26,9 +26,9 @@ class dumb_httpd extends \Nanoserv\HTTP\Server
 		if($f && is_file($f))
 		{
 			if(preg_match('/\.css$/', $f))
-				$this->Add_Header('Content-Type: text/css');
+				$this->Set_Content_Type('text/css');
 			else
-				$this->Add_Header('Content-Type: '.mime_content_type($f));
+				$this->Set_Content_Type(mime_content_type($f));
 			return file_get_contents($f);
 		}
 
