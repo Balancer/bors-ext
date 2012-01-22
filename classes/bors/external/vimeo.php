@@ -8,7 +8,6 @@ class bors_external_vimeo
 	}
 
 	var $video_id;
-//	var $info;
 
 	function __construct($video_id)
 	{
@@ -53,7 +52,7 @@ class bors_external_vimeo
 	static function parse_links($text)
 	{
 		// http://vimeo.com/34949864
-		$text = preg_replace('!^\s*https?://[^/]*vimeo\.com/(\d+)\s*$!mi', '[vimeo]$2[/vimeo]', $text);
+		$text = preg_replace('!^\s*https?://[^/]*vimeo\.com/(\d+)\s*$!mi', '[vimeo]$1[/vimeo]', $text);
 		return $text;
 	}
 }
