@@ -2,8 +2,9 @@
 
 class bors_lcml_tag_pair_flickr extends bors_lcml_tag_pair
 {
-	function html($id)
+	function html($id, &$params = array())
 	{
-		return bors_external_flickr_photo::factory($id)->html();
+		$params['skip_around_cr'] = true;
+		return save_format(bors_external_flickr_photo::factory($id)->html());
 	}
 }

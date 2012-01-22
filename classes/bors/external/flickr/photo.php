@@ -35,7 +35,7 @@ class bors_external_flickr_photo
 		if(!$this->info)
 			return ec("<div class=\"red_box\">Данное фото на Flickr фото не найдено или доступ к нему запрещён</div>");
 
-		return "<div class=\"round_box\">
+		return "<div class=\"round_box\" style=\"width: 640px !important;\">
  <a href=\"{$this->flickr_url()}\"><img src=\"{$this->medium_url()}\" /></a><br/>
  <small><a href=\"{$this->flickr_url()}\">{$this->flickr_title()}</a></small>
 </div>";
