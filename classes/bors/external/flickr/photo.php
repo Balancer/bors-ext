@@ -38,7 +38,7 @@ class bors_external_flickr_photo
 
 		$sz = $this->medium_size();
 
-		return "<div class=\"round_box\" style=\"width: {$sz['width']}px; height: {$sz['height']};\">
+		return "<div class=\"round_box shadow8\" style=\"margin: 8px 0 8px 0; width: {$sz['width']}px; height: {$sz['height']};\">
  <a href=\"{$this->flickr_url()}\"><img src=\"{$this->medium_url()}\" /></a><br/>
  <small><a href=\"{$this->flickr_url()}\">{$this->flickr_title()}</a> @ <a href=\"{$this->owner_url()}\">{$this->owner_title()}</a></small>
 </div>";

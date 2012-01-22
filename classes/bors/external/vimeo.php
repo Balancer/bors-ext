@@ -22,10 +22,10 @@ class bors_external_vimeo
 		$height = defval_ne($params, 'height', 450);
 
 		$this->register($params);
-		return "<div class=\"round_box\" style=\"width: $width; height: $height;\">"
+		return "<div class=\"round_box shadow8\" style=\"margin: 8px 0 8px 0; width: {$width}px; height: auto;\">"
 			."<iframe src=\"http://player.vimeo.com/video/{$this->video_id}\" width=\"{$width}\" height=\"{$height}\" frameborder=\"0\"></iframe><br/>"
 			."<small><a href=\"{$this->info['url']}\">{$this->info['title']}</a> @ <a href=\"{$this->info['user_url']}\">{$this->info['user_name']}</a></small>"
-			."</div>";
+			."<div class=\"clear\">&nbsp;</div></div>";
 	}
 
 	function register($params)
