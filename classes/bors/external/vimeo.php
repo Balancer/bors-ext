@@ -13,7 +13,8 @@ class bors_external_vimeo
 	{
 		$this->video_id = $video_id;
 		$info_url = 'http://vimeo.com/api/v2/video/'.$video_id.'.php';
-		$this->info = array_pop(bors_lib_http::get_cached($info_url, 86400, true));
+		$data = bors_lib_http::get_cached($info_url, 86400, true);
+		$this->info = is_array($data) ? array_pop($data) : NULL;
 	}
 
 	function html(&$params = array())
