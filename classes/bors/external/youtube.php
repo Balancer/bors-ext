@@ -2,6 +2,20 @@
 
 class bors_external_youtube extends bors_object
 {
+	var $video_id;
+
+	function id() { return $this->video_id; }
+
+	static function factory($video_id)
+	{
+		return new bors_external_youtube($video_id);
+	}
+
+	function __construct($video_id)
+	{
+		$this->video_id = $video_id;
+	}
+
 	static function id_prepare($id)
 	{
 		if(preg_match('/youtube/', $id))
@@ -45,5 +59,52 @@ class bors_external_youtube extends bors_object
 		bors_function_include('url/parse');
 		$video_id = bors_url_parse($url, 'query', 'v');
 		return "[youtube]{$video_id}[/youtube]";
+	}
+
+	function title()
+	{
+		if($this->__havefc())
+			return $this->__lastc();
+
+		$gdata_url = "http://gdata.youtube.com/feeds/api/videos/".$this->id();
+		$html = bors_lib_http::get_cached($gdata_url, 86400*7);
+		$doc = new DOMDocument;
+		$doc->loadHTML($html);
+		return $this->__setc($doc->getElementsByTagName("title")->item(0)->nodeValue);
+	}
+
+	function html(&$params=array())
+	{
+		$width  = @$params['width']  ? $params['width']  : '640';
+		$height = @$params['height'] ? $params['height'] : '390';
+
+		$this->register($params);
+
+		return "<div class=\"rs_box\" style=\"width: {$width}px;\"><iframe width=\"{$width}\" height=\"{$height}\" src=\"http://www.youtube.com/embed/{$id}\" frameborder=\"0\" allowfullscreen></iframe><br/><small class=\"inbox\"><a href=\"http://www.youtube.com/watch/?v={$id}\">http://www.youtube.com/watch/?v={$id}</a></small></div>";
+	}
+
+	function register($params)
+	{
+		if(!($self = defval($params, 'self')))
+			return;
+
+		if($self->class_name() != 'balancer_board_post' && $self->class_name() != 'forum_post')
+			return;
+
+		if(bors_find_first('balancer_board_posts_object', array(
+			'post_id' => $self->id(),
+			'target_class_name' => 'bors_external_youtube',
+			'target_object_id' => $this->id(),
+		)))
+			return;
+
+		bors_new('balancer_board_posts_object', array(
+			'post_id' => $self->id(),
+			'target_class_id' => class_name_to_id('bors_external_youtube'),
+			'target_class_name' => 'bors_external_youtube',
+			'target_object_id' => $this->id(),
+			'target_create_time' => $self->create_time(),
+			'target_score' => $self->score(),
+		));
 	}
 }
