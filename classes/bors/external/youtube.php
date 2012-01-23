@@ -13,6 +13,7 @@ class bors_external_youtube extends bors_object
 
 	function __construct($video_id)
 	{
+		$video_id = self::id_prepare($video_id);
 		$this->video_id = $video_id;
 	}
 
@@ -29,8 +30,8 @@ class bors_external_youtube extends bors_object
 
 	static function url2html($url)
 	{
-		$id = self::id_prepare($url);
-		return bors_lcml_tag_pair_youtube::html($id);
+		$youtube = self::factory($url);
+		return $youtube->html();
 	}
 
 	static function parse_links($text)
@@ -69,7 +70,8 @@ class bors_external_youtube extends bors_object
 		$gdata_url = "http://gdata.youtube.com/feeds/api/videos/".$this->id();
 		$html = bors_lib_http::get_cached($gdata_url, 86400*7);
 		$doc = new DOMDocument;
-		$doc->loadHTML($html);
+//		echo "\n=================\n$html\n=================\n";
+		@$doc->loadHTML($html);
 		return $this->__setc($doc->getElementsByTagName("title")->item(0)->nodeValue);
 	}
 
@@ -80,7 +82,16 @@ class bors_external_youtube extends bors_object
 
 		$this->register($params);
 
-		return "<div class=\"rs_box\" style=\"width: {$width}px;\"><iframe width=\"{$width}\" height=\"{$height}\" src=\"http://www.youtube.com/embed/{$id}\" frameborder=\"0\" allowfullscreen></iframe><br/><small class=\"inbox\"><a href=\"http://www.youtube.com/watch/?v={$id}\">http://www.youtube.com/watch/?v={$id}</a></small></div>";
+		return "<div class=\"rs_box\" style=\"width: {$width}px;\">"
+			."<iframe width=\"{$width}\" height=\"{$height}\" src=\"http://www.youtube.com/embed/{$this->id()}\""
+			." frameborder=\"0\" allowfullscreen></iframe><br/>"
+			."<small class=\"inbox\"><a href=\"http://www.youtube.com/watch/?v={$this->id()}\">{$this->title()}</a></small></div>";
+	}
+
+	function text(&$params=array())
+	{
+		$this->register($params);
+		return $this->title()."\nhttp://www.youtube.com/watch?v=".$this->id()."\n";
 	}
 
 	function register($params)
