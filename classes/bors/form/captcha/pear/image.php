@@ -4,11 +4,16 @@ class bors_form_captcha_pear_image extends bors_forms_element
 {
 	static function html($params, &$form = NULL)
 	{
+		@unlink(config('webroot_cache_dir').'/'.md5(session_id()) . '.nocache.png');
+
+		if(!$form)
+			$form = bors_form::$_current_form;
+
 		require_once 'Text/CAPTCHA.php';
 
-		$width	= defval($params['width'], 200);
-		$height	= defval($params['height'], 80);
-		$font_size	= defval($params['font_size'], 24);
+		$width	= defval_ne($params, 'width', 200);
+		$height	= defval_ne($params, 'height', 80);
+		$font_size	= defval_ne($params, 'font_size', 24);
 
 		// Set CAPTCHA options (font must exist!)
 		$imageOptions = array(
@@ -36,41 +41,37 @@ class bors_form_captcha_pear_image extends bors_forms_element
 			bors_throw(printf('Error initializing CAPTCHA: %s!', $retval->getMessage()));
 
 		// Get CAPTCHA secret passphrase
-		$_SESSION['phrase'] = $c->getPhrase();
+		//TODO: доавить соль проекта
+		$html = "<input type=\"hidden\" name=\"captcha_hash\" value=\"".md5($c->getPhrase())."\" />\n";
 
 		// Get CAPTCHA image (as PNG)
 		$png = $c->getCAPTCHAAsPNG();
 		if(PEAR::isError($png))
 			bors_throw(printf('Error generating CAPTCHA: %s!', $png->getMessage()));
 
-		$file = md5(session_id()) . '.png';
-		file_put_contents(config('webroot_cache_dir')."/$file", $png);
-		$url = config('webroot_cache_url')."/$file";
+		$file = md5(session_id()) . '.nocache.png';
+		file_put_contents(config('cache.webroot_dir')."/$file", $png);
+		$url = config('cache.webroot_url')."/$file";
 
 		$form->append_attr('saver_prepare_classes', __CLASS__);
 
-		return "<img width=\"{$width}\" height=\"{$height}\" src=\"$url\" /><br/>\n"
+		return $html . "<img width=\"{$width}\" height=\"{$height}\" src=\"$url?\" /><br/>\n"
 			.ec("<p>Введите, пожалуйста, буквы, написанные на картинке выше</p>\n")
-			.ec("<input type=\"text\" name=\"captcha_phrase\" style=\"width: {$width}px\" /><br/>\n";
+			."<input type=\"text\" name=\"captcha_phrase\" style=\"width: {$width}px\" /><br/>\n";
 	}
 
 	static function saver_prepare(&$data)
 	{
-		unlink(config('webroot_cache_dir').'/'.md5(session_id()) . '.png');
-		session_start();
+		unlink(config('webroot_cache_dir').'/'.md5(session_id()) . '.nocache.png');
 		if($_SERVER['REQUEST_METHOD'] == 'POST')
 		{
-			if(isset($_POST['phrase']) && is_string($_POST['phrase'])
-				&& isset($_SESSION['phrase']) && strlen($_POST['phrase']) > 0
-				&& strlen($_SESSION['phrase']) > 0
-				&& $_POST['phrase'] == $_SESSION['phrase'])
+			if(!empty($data['captcha_phrase']) && md5($data['captcha_phrase']) == @$data['captcha_hash'])
 			{
 				// false — признак того, что мы ничего не обработали и нужно отрабатывать дальше.
 				// то есть проверка пройдена
 				return false;
 			}
 
-			unset($_SESSION['phrase']);
 			return bors_message(ec('Вы ошиблись при вводе букв, попробуйте ещё раз'));
 		}
 
