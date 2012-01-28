@@ -62,7 +62,8 @@ class bors_form_captcha_pear_image extends bors_forms_element
 
 	static function saver_prepare(&$data)
 	{
-		unlink(config('webroot_cache_dir').'/'.md5(session_id()) . '.nocache.png');
+		//TODO: криво. Придумать сброс. Возможно, через ту же сессию.
+		@unlink(config('webroot_cache_dir').'/'.md5(session_id()) . '.nocache.png');
 		if($_SERVER['REQUEST_METHOD'] == 'POST')
 		{
 			if(!empty($data['captcha_phrase']) && md5($data['captcha_phrase']) == @$data['captcha_hash'])
