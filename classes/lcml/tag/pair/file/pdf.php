@@ -25,7 +25,7 @@ class lcml_tag_pair_file_pdf extends bors_lcml_tag_pair
 	function parse_fast($url, $params)
 	{
 		$file_object = bors_find_first('airbase_web_file', array('web_url' => $url));
-		if($file_object/* && $file_object->title()*/)
+		if($file_object && $file_object->title())
 		{
 			$file = $file_object->file();
 			$full_file_name = "/data/files/wget-cache/$file";
@@ -57,6 +57,7 @@ class lcml_tag_pair_file_pdf extends bors_lcml_tag_pair
 
 		$file = $file_object->file();
 		$full_file_name = "/data/files/wget-cache/$file";
+		$file_cache_url = "http://balancer.ru/_bal/webcache/$file";
 
 		$cover = $full_file_name.'.cover.jpg';
 		$cover_url = "http://balancer.ru/_bal/webcache/".$file.'.cover.jpg';
@@ -68,17 +69,23 @@ class lcml_tag_pair_file_pdf extends bors_lcml_tag_pair
 		}
 
 		$title = $file_object->title();
-		if(!$title)
+		if(empty($title))
 		{
 			require_once '/usr/share/php/Zend/Pdf.php';
 			$pdf = Zend_Pdf::load($full_file_name);
-			$title = $pdf->properties['Title'];
+			$title = iconv('utf-8', 'utf-8//ignore', htmlspecialchars(trim($pdf->properties['Title'])));
 			if(!$title)
 				$title = basename($url);
 
 			$file_object->set_title($title);
 		}
 
-		return lcml("[round_box][img=$cover_url 100x100 left flow][h][url={$url}]{$title}[/url][/h][/round_box]");
+//		var_dump("[round_box][img=$cover_url 100x100 left flow nohref][h][url={$url}]{$title}[/url][/h][/round_box]");
+		return lcml("[round_box][img=$cover_url 200x100 left flow nohref]"
+			."[b]".(bors_file_type::icon('pdf')->html())."&nbsp;[url={$url}]{$title}[/url][/b][br]"
+			."[small]".ec('Файл в кеше: ')."[url={$file_cache_url}]&nbsp;".basename($file)."[/url][br]"
+			."Размер: "	.smart_size($file_object->size())
+			."[/small]"
+			."[/round_box]");
 	}
 }
