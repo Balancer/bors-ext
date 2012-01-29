@@ -36,6 +36,7 @@ class bors_external_youtube extends bors_object
 
 	static function parse_links($text)
 	{
+//		var_dump($text);
 //		$text = preg_replace('!<a href="https?://[^/]+flickr\.com/photos/\w+@\w+/(\d+)/"[^>]+><img src="[^"]+static.flickr.com/[^"]+\.jpg"[^>]+/></a>!is', '[flickr]$1[/flickr]', $text);
 
 		// [url=http://www.youtube.com/watch?v=a8C1iU-xAog]http://www.youtube.com/watch?v=a8C1iU-xAog[/url]
@@ -49,6 +50,7 @@ class bors_external_youtube extends bors_object
 		// https://www.youtube.com/watch?v=21El16OPZoc
 		// http://www.youtube.com/watch?feature=player_embedded&v=zZPNaMDD-A8
 		$text = preg_replace('!^\s*(https?://[^/]*youtube\.\w+/watch\S+)\s*$!mie', "bors_external_youtube::url2bb('$1');", $text);
+		$text = preg_replace('!^\s*\[html_iframe [^\]]+ src="https?://[^/]+youtube\.\w+/embed/([^"]+)"[^\]]+\]\[/html_iframe\]\s*$!mi', "[youtube]$1[/youtube]", $text);
 		return $text;
 	}
 
