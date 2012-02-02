@@ -82,9 +82,9 @@ class lcml_tag_pair_file_pdf extends bors_lcml_tag_pair
 
 		//TODO: Взять увеличение картинки с http://jmar.github.com/jquery-hoverZoom/
 //		var_dump("[round_box][img=$cover_url 100x100 left flow nohref][h][url={$url}]{$title}[/url][/h][/round_box]");
-		return lcml("[round_box][img=$cover_url 200x100 left flow nohref]"
-			."[b]".(bors_file_type::icon('pdf')->html())."&nbsp;[url={$url}]{$title}[/url][/b][br]"
-			."[small]".ec('Файл в кеше: ')."[url={$file_cache_url}]&nbsp;".basename($file)."[/url][br]"
+		return lcml("[round_box][img=$cover_url 200x100 left flow ajax='hoverZoom']"
+			."[b]".(bors_file_type::icon('pdf')->html())." [url={$url}]{$title}[/url][/b][br]"
+			."[small]".ec('Файл в кеше: ')."[url={$file_cache_url}] ".basename($file)."[/url][br]"
 			."Размер: "	.smart_size($file_object->size())
 			."[/small]"
 			."[/round_box]");
