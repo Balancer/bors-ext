@@ -23,7 +23,7 @@ class BorsTests
 				"NF $tests_list_file\n";
 		}
 
-		foreach(search_dir(dirname(__FILE__).'/tests', $mask='\.php$') as $file)
+		foreach(search_dir($GLOBALS['UNITTESTS_DIR'].'/tests', $mask='\.php$') as $file)
 		{
 			require_once($file);
 			if(preg_match('!unittests/tests/(.+)\.php$!', $file, $m))
