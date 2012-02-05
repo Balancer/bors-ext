@@ -21,7 +21,7 @@ class bors_user_hactions_dispatcher extends base_object
 		}
 		else
 		{
-//			$this->clean();
+			$this->clean();
 			return go($actor->url());
 		}
 

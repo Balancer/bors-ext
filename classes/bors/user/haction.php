@@ -20,6 +20,7 @@ class bors_user_haction extends base_object_db
 	static function add($user_id, $class_name, $method = NULL, $ttl = 8640000) // = 100 суток
 	{
 		$id = sha1(rand());
+		//TODO: при человечской замене проверить на http://www.aviaport.ru/users/forget_password/
 		return bors_new('aviaport_user_haction', array(
 			'id' => $id,
 			'actor_class_name' => $class_name,
