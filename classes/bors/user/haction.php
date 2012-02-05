@@ -20,7 +20,7 @@ class bors_user_haction extends base_object_db
 	static function add($user_id, $class_name, $method = NULL, $ttl = 8640000) // = 100 суток
 	{
 		$id = sha1(rand());
-		bors_new('bors_user_haction', array(
+		return bors_new('aviaport_user_haction', array(
 			'id' => $id,
 			'actor_class_name' => $class_name,
 			'actor_target_id' => $user_id,
@@ -31,5 +31,16 @@ class bors_user_haction extends base_object_db
 
 	function unsubscribe_channel_1($action)
 	{
+	}
+
+	function clean()
+	{
+		//TODO: при человеческом исправлении проверять на http://www.aviaport.ru/users/forget_password/
+		bors_delete('aviaport_user_haction', array(
+			'actor_class_name' => $this->actor_class_name(),
+			'actor_target_id' => $this->actor_target_id(),
+//			'actor_method' => $this->actor_method(),
+			'limit' => false,
+		));
 	}
 }
