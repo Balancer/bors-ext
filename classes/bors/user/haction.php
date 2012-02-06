@@ -9,6 +9,7 @@ class bors_user_haction extends base_object_db
 	{
 		return array(
 			'id',
+			'haction_class_name',
 			'actor_class_name',
 			'actor_target_id',
 			'actor_method',
@@ -23,10 +24,11 @@ class bors_user_haction extends base_object_db
 		$id = sha1(rand());
 		return bors_new(get_called_class(), array(
 			'id' => $id,
+			'haction_class_name' => get_called_class(),
 			'actor_class_name' => $class_name,
 			'actor_target_id' => $user_id,
 			'actor_method' => $method,
-			'actor_attributes' => $actor_attributes,
+			'actor_attributes' => $actor_attributes ? json_encode($actor_attributes) : NULL,
 			'expire_time' => time() + $ttl,
 		));
 	}

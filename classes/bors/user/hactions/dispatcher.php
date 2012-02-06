@@ -5,7 +5,12 @@ class bors_user_hactions_dispatcher extends base_object
 	function pre_parse()
 	{
 		//TODO: при человеческом исправлении проверять на http://www.aviaport.ru/users/forget_password/
-		$haction = bors_find_first('aviaport_user_haction', array('id' => $this->id()));
+		$haction = bors_find_first('bors_user_haction', array('id' => $this->id()));
+		if(!$haction)
+			return bors_message(ec('Извините, но выбранное Вами действие невозможно. Неверная, уже использованная или устаревшая ссылка.'));
+
+		//Страшный костыль, но пока непонятно, как иначе.
+		$haction = bors_find_first($haction->haction_class_name(), array('id' => $this->id()));
 		if(!$haction)
 			return bors_message(ec('Извините, но выбранное Вами действие невозможно. Неверная, уже использованная или устаревшая ссылка.'));
 
@@ -16,16 +21,16 @@ class bors_user_hactions_dispatcher extends base_object
 
 		$haction->set_attr('need_save', false);
 		if($method = $haction->actor_method())
-		{
-			if($actor->$method($haction->actor_attributes(), $haction) === true)
-				$ret = true;
-		}
+			$ret = $actor->$method(json_decode($haction->actor_attributes(), true), $haction);
 		else
-			$ret = go($actor->url());
+			$ret = $actor->url();
+
+		if($ret === true)
+			return true;
 
 		if(!$haction->attr('need_save'))
 			$haction->clean();
 
-		return $ret;
+		return go($ret);
 	}
 }
