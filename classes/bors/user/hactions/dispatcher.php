@@ -5,28 +5,27 @@ class bors_user_hactions_dispatcher extends base_object
 	function pre_parse()
 	{
 		//TODO: при человеческом исправлении проверять на http://www.aviaport.ru/users/forget_password/
-		$action = bors_find_first('aviaport_user_haction', array('id' => $this->id()));
-		if(!$action)
+		$haction = bors_find_first('aviaport_user_haction', array('id' => $this->id()));
+		if(!$haction)
 			return bors_message(ec('Извините, но выбранное Вами действие невозможно. Неверная, уже использованная или устаревшая ссылка.'));
 
-		if($action->expire_time() < time())
+		if($haction->expire_time() < time())
 			return bors_message(ec('Извините, выбранное Вами действие невозможно. Устаревшая ссылка.'));
 
-		$actor = bors_load($action->actor_class_name(), $action->actor_target_id());
+		$actor = bors_load($haction->actor_class_name(), $haction->actor_target_id());
 
-		if($method = $action->actor_method())
+		$haction->set_attr('need_save', false);
+		if($method = $haction->actor_method())
 		{
-			if($actor->$method($action, $this) === true)
-				return true;
+			if($actor->$method($haction->actor_attributes(), $haction) === true)
+				$ret = true;
 		}
 		else
-		{
-			$this->clean();
-			return go($actor->url());
-		}
+			$ret = go($actor->url());
 
-		bors_function_include('debug/hidden_log');
-		debug_hidden_log('error-haction', "Unknown error for ".$this->id());
-		return bors_message(ec('Извините, возникла ошибка обработки Вашего запроса. Ошибка зафиксирована в системном журнале и её внимательно изучат наши администраторы.'));
+		if(!$haction->attr('need_save'))
+			$haction->clean();
+
+		return $ret;
 	}
 }
