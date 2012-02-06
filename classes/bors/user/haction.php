@@ -12,12 +12,13 @@ class bors_user_haction extends base_object_db
 			'actor_class_name',
 			'actor_target_id',
 			'actor_method',
+			'actor_attributes',
 			'create_time' => 'UNIX_TIMESTAMP(`create_timestamp`)',
 			'expire_time' => 'UNIX_TIMESTAMP(`expire_timestamp`)',
 		);
 	}
 
-	static function add($user_id, $class_name, $method = NULL, $ttl = 8640000) // = 100 суток
+	static function add($user_id, $class_name, $method = NULL, $ttl = 8640000, $actor_attributes = NULL) // = 100 суток
 	{
 		$id = sha1(rand());
 		return bors_new(get_called_class(), array(
@@ -25,12 +26,9 @@ class bors_user_haction extends base_object_db
 			'actor_class_name' => $class_name,
 			'actor_target_id' => $user_id,
 			'actor_method' => $method,
+			'actor_attributes' => $actor_attributes,
 			'expire_time' => time() + $ttl,
 		));
-	}
-
-	function unsubscribe_channel_1($action)
-	{
 	}
 
 	function clean()
