@@ -24,3 +24,7 @@ function bors_unit_test_up()
 {
 	$dbh = new driver_mysql(config('unit-test.mysql.db'));
 }
+
+
+//TODO: сделать автонастройку проверки
+config_set('unittests.skip.internet', true);
