@@ -26,7 +26,7 @@ class bors_user_haction extends base_object_db
 			'actor_class_name' => $class_name,
 			'actor_target_id' => $user_id,
 			'actor_method' => $method,
-			'actor_attributes' => $actor_attributes,
+			'actor_attributes' => $actor_attributes ? json_encode($actor_attributes) : NULL,
 			'expire_time' => time() + $ttl,
 		));
 	}
