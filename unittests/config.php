@@ -18,6 +18,8 @@ config_set('debug.show_variables', true);
 config_set('mysql_tables_autocreate', true);
 config_set('smarty3_enable', true);
 
+config_set('cache_dir', '/tmp/bors-cache/unittests');
+
 require_once(dirname(__FILE__).'/config-host.php');
 
 function bors_unit_test_up()
