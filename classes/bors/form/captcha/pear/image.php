@@ -18,7 +18,7 @@ class bors_form_captcha_pear_image extends bors_forms_element
 		// Set CAPTCHA options (font must exist!)
 		$imageOptions = array(
 			'font_size'		=> $font_size,
-			'font_path'		=> '/usr/share/fonts/corefonts',
+			'font_path'		=> defval_ne($params, 'fonts_path', config('fonts_path', '/usr/share/fonts/corefonts')),
 			'font_file'		=> 'cour.ttf',
 			'text_color'	   => '#000000',
 			'lines_color'	  => '#008888',
