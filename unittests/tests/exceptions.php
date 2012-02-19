@@ -18,6 +18,10 @@ class exceptions_unittest extends PHPUnit_Framework_TestCase
     {
 		$x = bors_load('exceptions_unittest_helper', NULL);
 		$this->assertNotNull($x);
+<<<<<<< local
+//TODO: разобраться, почему не маскируются исключения в новом PhpUnit
+=======
+>>>>>>> other
 //		try { $s = $x->show(); }
 //		catch(Exception $e) { $this->assertEquals('Test exception', $e->getMessage()); }
 	}
