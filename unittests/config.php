@@ -25,6 +25,18 @@ function bors_unit_test_up()
 	$dbh = new driver_mysql(config('unit-test.mysql.db'));
 }
 
+function is_connected()
+{
+	if(($connected = @fsockopen("google.com", 80)))
+	{
+		$is_conn = true;
+		fclose($connected);
+	}
+	else
+		$is_conn = false;
+
+	return $is_conn;
+}
 
 //TODO: сделать автонастройку проверки
-config_set('unittests.skip.internet', true);
+config_set('unittests.skip.internet', ! is_connected());
