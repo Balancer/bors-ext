@@ -1,0 +1,8 @@
+.files-list { margin: 0; padding: 0 0 0 0.5em; list-style: none; }
+.files-list li { margin: 0; list-style: none; padding: 0 0 4px 25px; line-height: 1.5; background-position: 0px 2px; background-repeat: no-repeat; }
+.file-doc { background-image: url("/_bors/i16/file-types/doc.png"); }
+.file-jpeg { background-image: url("/_bors/i16/file-types/jpeg.png"); }
+.file-pdf { background-image: url("/_bors/i16/file-types/pdf.png"); }
+.file-rtf { background-image: url("/_bors/i16/file-types/rtf.png"); }
+.file-doc { background-image: url("/_bors-ext/i16/file-types/doc.png"); }
+.file-zip { background-image: url("/_bors-ext/i16/file-types/zip.png"); }

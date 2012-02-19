@@ -296,7 +296,7 @@ class bors_lib_servers_web
 		}
 
 		// Если показываем отладочную инфу, то описываем её в конец выводимой страницы комментарием.
-		if(config('debug_timing') && is_string($res))
+		if(config('debug.timing') && is_string($res))
 		{
 			$deb = "<!--\n=== debug-info ===\n"
 			."created = ".date('r')."\n";
