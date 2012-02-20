@@ -18,9 +18,27 @@ config_set('debug.show_variables', true);
 config_set('mysql_tables_autocreate', true);
 config_set('smarty3_enable', true);
 
+config_set('cache_dir', '/tmp/bors-cache/unittests');
+
 require_once(dirname(__FILE__).'/config-host.php');
 
 function bors_unit_test_up()
 {
 	$dbh = new driver_mysql(config('unit-test.mysql.db'));
 }
+
+function is_connected()
+{
+	if(($connected = @fsockopen("google.com", 80)))
+	{
+		$is_conn = true;
+		fclose($connected);
+	}
+	else
+		$is_conn = false;
+
+	return $is_conn;
+}
+
+//TODO: сделать автонастройку проверки
+config_set('unittests.skip.internet', ! is_connected());

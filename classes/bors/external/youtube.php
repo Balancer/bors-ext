@@ -50,6 +50,9 @@ class bors_external_youtube extends bors_object
 		// https://www.youtube.com/watch?v=21El16OPZoc
 		// http://www.youtube.com/watch?feature=player_embedded&v=zZPNaMDD-A8
 		$text = preg_replace('!^\s*(https?://[^/]*youtube\.\w+/watch\S+)\s*$!mie', "bors_external_youtube::url2bb('$1');", $text);
+//TODO: разобраться с http://balancer.ru/g/p2706190
+//		// http://www.youtube.com/v/C2zdNzmBanQ?version=3&hl=ru_RU
+//		$text = preg_replace('!^\s*(https?://[^/]*youtube\.\w+/v/([^\s&\?]+))\s*$!mi', "[youtube]$2[/youtube]", $text);
 		$text = preg_replace('!^\s*\[html_iframe [^\]]+ src="https?://[^/]+youtube\.\w+/embed/([^"]+)"[^\]]+\]\[/html_iframe\]\s*$!mi', "[youtube]$1[/youtube]", $text);
 		return $text;
 	}
