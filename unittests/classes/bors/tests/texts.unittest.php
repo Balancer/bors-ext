@@ -10,10 +10,25 @@ class bors_tests_texts_unittest extends PHPUnit_Framework_TestCase
 		$text = "<p><i>Test</i>";
         $this->assertEquals(bors_close_tags($text), $text.'</p>');
 
-		$text = "<p><i>Test";
-        $this->assertEquals(bors_close_tags($text), $text.'</i></p>');
+		$text = "<p><p><i>Test";
+        $this->assertEquals(bors_close_tags($text), $text.'</i></p></p>');
 
 		$text = "<p><i>Test</div></table>";
         $this->assertEquals(bors_close_tags($text), '<table><div>'.$text.'</i></p>');
+    }
+
+    public function test_bors_close_bbtags()
+    {
+		$text = "[p][i]Test[/i][/p]";
+        $this->assertEquals(bors_close_bbtags($text), $text);
+
+		$text = "[p][i]Test[/i]";
+        $this->assertEquals(bors_close_bbtags($text), $text.'[/p]');
+
+		$text = "[p][p][i]Test";
+        $this->assertEquals(bors_close_bbtags($text), $text.'[/i][/p][/p]');
+
+		$text = "[p][i]Test[/div][/table]";
+        $this->assertEquals(bors_close_bbtags($text), '[table][div]'.$text.'[/i][/p]');
     }
 }

@@ -1,4 +1,4 @@
 #!/bin/bash
 
-reset
+clear
 phpunit unittests-run.php

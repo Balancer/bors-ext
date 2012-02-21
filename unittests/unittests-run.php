@@ -36,6 +36,13 @@ class BorsTests
 		{
 			foreach(search_dir($dir.'/classes', $mask='\.php$') as $file)
 			{
+				// classes/bors/object/simple.unittest.php
+				if(preg_match('!^.*?/classes/([\w/]+)\.unittest\.php$!', $file, $m))
+				{
+					$class_name = str_replace('/', '_', $m[1]);
+					$suite->addTestSuite(self::bors_class_test($class_name));
+				}
+
 				$content = file_get_contents($file);
 				if(preg_match('!.*?class (\w+)!', $content, $m))
 					if(preg_match('!function __unit_test\(!', $content))
@@ -59,7 +66,7 @@ class BorsTests
 //		echo "class file = $class_name\n";
 		if(!file_exists(($test_class_file = preg_replace('/\.php$/', '.unittest.php', $class_file))))
 		{
-			echo "Not found {$test_class_file}";
+			echo "=== Not found '{$test_class_file}' ===\n";
 			return false;
 		}
 

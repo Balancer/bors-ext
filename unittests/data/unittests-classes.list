@@ -11,14 +11,6 @@ bors_tests_storage_mysql_db
 
 bors_tests_page
 
-bors_tests_xml_array2xml
-bors_tests_xml_array2xmlwp
-bors_tests_xml_xml2array
-
 bors_tests_templates_smarty2
 bors_tests_templates_smarty3
 bors_tests_templates_ext_smarty3
-
-
-
-
