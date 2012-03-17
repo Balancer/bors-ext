@@ -42,6 +42,8 @@ class bors_tests_object_db6_unittest extends PHPUnit_Framework_TestCase
 		$objects = bors_find_all($class, array('order' => '-id'));
         $this->assertEquals(2, count($objects));
         $this->assertEquals(456, $objects[0]->id());
+
+        $this->assertEquals(date('Y'), $objects[0]->ctime2()->date('Y'));
     }
 
 	public function setUp()
