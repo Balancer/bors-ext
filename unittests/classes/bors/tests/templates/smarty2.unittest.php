@@ -4,6 +4,9 @@ class bors_tests_templates_smarty2_unittest extends PHPUnit_Framework_TestCase
 {
     public function test()
     {
+		if(config('smarty3_enable'))
+			return;
+
 		$page = bors_load('bors_tests_templates_smarty2', NULL);
         $this->assertNotNull($page);
 

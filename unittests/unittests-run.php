@@ -1,19 +1,32 @@
 <?php
 
-require_once './setup.php';
+if($bus = getenv('BORS_UNITTEST_SITE'))
+	define('BORS_SITE', $bus);
+
+require_once dirname(__FILE__).'/setup.php';
 require_once BORS_CORE.'/init.php';
+
+config_set('phpunit_include', 'PHPUnit');
 
 if(!@include_once(config('phpunit_include').'/Autoload.php'))
 	require_once(config('phpunit_include').'/Framework.php');
 
 require_once('inc/filesystem.php');
 
+function unittest_dirs()
+{
+	if(getenv('BORS_UNITTEST_PROJECT_NAME'))
+		return array(BORS_SITE);
+
+	return bors_dirs();
+}
+
 class BorsTests
 {
     public static function suite()
     {
         $suite = new PHPUnit_Framework_TestSuite('BorsSuite');
-		foreach(bors_dirs() as $dir)
+		foreach(unittest_dirs() as $dir)
 		{
 			if(file_exists(($tests_list_file = $dir.'/data/unittests-classes.list')))
 				foreach(file($tests_list_file) as $class_name)
@@ -23,16 +36,17 @@ class BorsTests
 				"NF $tests_list_file\n";
 		}
 
-		foreach(search_dir($GLOBALS['UNITTESTS_DIR'].'/tests', $mask='\.php$') as $file)
-		{
-			require_once($file);
-			if(preg_match('!unittests/tests/(.+)\.php$!', $file, $m))
-				$suite->addTestSuite(str_replace('/','_', $m[1]).'_unittest');
-		}
+		if(!getenv('BORS_UNITTEST_PROJECT_NAME'))
+			foreach(search_dir($GLOBALS['UNITTESTS_DIR'].'/tests', $mask='\.php$') as $file)
+			{
+				require_once($file);
+				if(preg_match('!unittests/tests/(.+)\.php$!', $file, $m))
+					$suite->addTestSuite(str_replace('/','_', $m[1]).'_unittest');
+			}
 
 		$autotest = "class bors_class_autotest_helper extends PHPUnit_Framework_TestCase\n{\n\tfunction test_all()\n\t{\n";
 
-		foreach(bors_dirs() as $dir)
+		foreach(unittest_dirs() as $dir)
 		{
 			foreach(search_dir($dir.'/classes', $mask='\.php$') as $file)
 			{
@@ -60,7 +74,7 @@ class BorsTests
 
 	static function bors_class_test($class_name)
 	{
-//		var_dump(bors_dirs());
+//		var_dump(unittest_dirs());
 //		echo "Inc $class_name\n";
 		$class_file = class_include($class_name);
 //		echo "class file = $class_name\n";
