@@ -1,0 +1,9 @@
+{if $dirs}
+<h2>Подкаталоги</h2>
+<ul>
+{foreach $dirs as $d}
+<li><a href="{$d.url}">{$d.base}</a></li>
+{/foreach}
+</ul>
+{/if}
+
