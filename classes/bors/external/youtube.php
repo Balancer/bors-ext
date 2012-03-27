@@ -39,6 +39,9 @@ class bors_external_youtube extends bors_object
 //		var_dump($text);
 //		$text = preg_replace('!<a href="https?://[^/]+flickr\.com/photos/\w+@\w+/(\d+)/"[^>]+><img src="[^"]+static.flickr.com/[^"]+\.jpg"[^>]+/></a>!is', '[flickr]$1[/flickr]', $text);
 
+		$text = preg_replace('!^\s*http://youtu\.be/([\w\-]+)\?t=(\w+)\s*$!mie', "bors_external_youtube::id2bb('$1', '$2');", $text);
+		$text = preg_replace('!^\s*http://youtu\.be/([\w\-]+)/?\s*$!mie', "bors_external_youtube::id2bb('$1');", $text);
+
 		// [url=http://www.youtube.com/watch?v=a8C1iU-xAog]http://www.youtube.com/watch?v=a8C1iU-xAog[/url]
 		// [url=http://www.youtube.com/watch?v=JkpO2BliOVg]http://www.youtube.com/watch?v=JkpO2BliOVg[/url]
 		$text = preg_replace('!\s*\[url=(http://(www\.)?youtube\.com/watch\?v=[\w\-]+?)\]\1\[/url\]\s*!', "\n$1\n", $text);
@@ -54,6 +57,7 @@ class bors_external_youtube extends bors_object
 //		// http://www.youtube.com/v/C2zdNzmBanQ?version=3&hl=ru_RU
 //		$text = preg_replace('!^\s*(https?://[^/]*youtube\.\w+/v/([^\s&\?]+))\s*$!mi', "[youtube]$2[/youtube]", $text);
 		$text = preg_replace('!^\s*\[html_iframe [^\]]+ src="https?://[^/]+youtube\.\w+/embed/([^"]+)"[^\]]+\]\[/html_iframe\]\s*$!mi', "[youtube]$1[/youtube]", $text);
+
 		return $text;
 	}
 
@@ -64,7 +68,14 @@ class bors_external_youtube extends bors_object
 		$url = bors_entity_decode($url);
 		bors_function_include('url/parse');
 		$video_id = bors_url_parse($url, 'query', 'v');
+		$time_start = bors_url_parse($url, 'query', 't');
 		return "[youtube]{$video_id}[/youtube]";
+	}
+
+	// Трансляция готовых id/time в [youtube start="..."]<video-id>[/youtube]
+	static function id2bb($video_id, $time_start = 0)
+	{
+		return "[youtube".($time_start ? " start=\"$time_start\"" : '')."]{$video_id}[/youtube]";
 	}
 
 	function title()
@@ -87,10 +98,18 @@ class bors_external_youtube extends bors_object
 
 		$this->register($params);
 
+		$flv_url = "http://www.youtube.com/embed/{$this->id()}";
+		$page_url = "http://www.youtube.com/watch/?v={$this->id()}";
+		if($start = defval($params, 'start'))
+		{
+			$flv_url .= '?start='.$start;
+			$page_url .= '#t='.$start;
+		}
+
 		return "<div class=\"rs_box\" style=\"width: {$width}px;\">"
-			."<iframe width=\"{$width}\" height=\"{$height}\" src=\"http://www.youtube.com/embed/{$this->id()}\""
+			."<iframe width=\"{$width}\" height=\"{$height}\" src=\"{$flv_url}\""
 			." frameborder=\"0\" allowfullscreen></iframe><br/>"
-			."<small class=\"inbox\"><a href=\"http://www.youtube.com/watch/?v={$this->id()}\">{$this->title()}</a></small></div>";
+			."<small class=\"inbox\"><a href=\"{$page_url}\">{$this->title()}</a></small></div>";
 	}
 
 	function text(&$params=array())

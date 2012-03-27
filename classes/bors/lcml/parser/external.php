@@ -10,7 +10,7 @@ class bors_lcml_parser_external extends bors_lcml_parser
 	function html($text)
 	{
 		if(!config('lcml_external_parse_youtube_disable')
-				&& stripos($text, 'youtube.') !== false)
+				&& preg_match('/(youtube\.|youtu\.be)/', $text))
 			$text = bors_external_youtube::parse_links($text);
 
 		if(stripos($text, 'fotki.yandex') !== false)
