@@ -8,7 +8,7 @@ require_once BORS_CORE.'/init.php';
 
 config_set('phpunit_include', 'PHPUnit');
 
-if(!@include_once(config('phpunit_include').'/Autoload.php'))
+if(!include_once(config('phpunit_include').'/Autoload.php'))
 	require_once(config('phpunit_include').'/Framework.php');
 
 require_once('inc/filesystem.php');
