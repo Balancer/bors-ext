@@ -2,4 +2,7 @@
 {foreach from=$items item="x"}
 <li>{$x->titled_link()}</li>
 {/foreach}
+{if $this->args('new')}
+<li class="b">{$this->new_titled_link()}</li>
+{/if}
 </ul>
