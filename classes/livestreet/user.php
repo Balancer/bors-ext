@@ -2,6 +2,7 @@
 
 class livestreet_user extends bors_object_db
 {
+	function storage_engine() { return 'bors_storage_mysql'; }
 	function db_name() { return 'WEBAPPS_LIVESTREET'; }
 	function table_name() { return 'ls_user'; }
 
