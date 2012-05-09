@@ -18,7 +18,7 @@ class bors_admin_dev_chuser extends bors_admin_page
 		if(!$user)
 			return bors_message("Не могу найти пользователя '{$this->id()}'");
 
-		$user->cookies_set(true);
+		$user->cookies_set(3600, true);
 		return go_message('Вы теперь '.$user->title(), array('go' => '/'));
 	}
 }
