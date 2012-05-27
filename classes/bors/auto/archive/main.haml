@@ -1,0 +1,10 @@
+%div(style="margin: 100px 0 0 100px")
+	%table.btab
+		%tr
+			%th.big-extra Год
+			%th.big-extra Число записей
+		- foreach($years as $x)
+			%tr
+				%td.big-extra
+					%a{:href => "#{$x->year()}/"}= $x->year()
+				%td.big-extra= $x->count()

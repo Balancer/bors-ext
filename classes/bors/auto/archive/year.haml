@@ -1,0 +1,10 @@
+%div(style="margin: 100px 0 0 100px")
+	%table.btab
+		%tr
+			%th.big-extra Месяц
+			%th.big-extra Число записей
+		- foreach($months as $x)
+			%tr
+				%td.big-extra
+					%a{:href => "#{$x->month()}/"}= month_name($x->month())
+				%td.big-extra= $x->count()
