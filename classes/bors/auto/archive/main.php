@@ -27,6 +27,15 @@ class bors_auto_archive_main extends bors_page
 		return config('project.name');
 	}
 
+	function _section_name_def()
+	{
+		if($section_name = $this->args('section_name'))
+			return $section_name;
+
+		$parts = explode('_', $this->main_class());
+		return bors_plural($parts[1]);
+	}
+
 	function _main_class_def()
 	{
 		return $this->project_name().'_'.$this->item_type();
