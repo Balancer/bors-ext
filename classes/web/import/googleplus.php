@@ -67,6 +67,10 @@ class web_import_googleplus extends web_import_common
 		$text = preg_replace('!<a href="([^"]+?\.(png|jpg|jpeg|gif))"[^>]+?>[\w\.]+</a>!ie', "lcml('[img]$1[/img]');", $text);
 		$text = preg_replace('!<a href="https?://picasaweb.google.com/lh/photo/([^"\?/]+)\?feat=directlink" rel="nofollow">picasaweb.google.com</a>!ie', "lcml('[picasa]$1[/picasa]');", $text);
 
+// <p class='attachment photo'>     <a href='https://lh3.googleusercontent.com/-xF4QASaJ6Fs/T8CbBC8SJDI/AAAAAAAAHv0/aEp8_CYWj7Y/s0-d/IMG_4689-crop-resize.JPG' target='_blank'><img src='https://images0-focus-opensocial.googleusercontent.com/gadgets/proxy?container=focus&gadget=a&resize_h=100&url=https%3A%2F%2Flh3.googleusercontent.com%2F-xF4QASaJ6Fs%2FT8CbBC8SJDI%2FAAAAAAAAHv0%2FaEp8_CYWj7Y%2Fs0-d%2FIMG_4689-crop-resize.JPG' height='100'/><br/>  IMG_4689-crop-resize.JPG</a>     </p>
+		$text = preg_replace('!<p class=\'attachment photo\'>\s+<a href=\'https?://(.+?)/s0-d/(.+?)\'\s+target=\'_blank\'><img src=\'.+?\'.+?>(.+)?</a>\s+</p>!s',
+			"<a href=\"http://$1/s0/$2\"><img src=\"http://$1/s640/$2\" /></a><br/>", $text);
+
 		// http://images0-focus-opensocial.googleusercontent.com/gadgets/proxy?container=focus&gadget=a&resize_h=100&url=https%3A%2F%2Flh4.googleusercontent.com%2F-5ngFI6t9dHo%2FT5xqzi1BbtI%2FAAAAAAAAHAA%2Ffg7HBClefn8%2Fs0-d%2FIMG_26-04-2012_184111.jpg
 		// <a href='https://lh4.googleusercontent.com/-5ngFI6t9dHo/T5xqzi1BbtI/AAAAAAAAHAA/fg7HBClefn8/s0-d/IMG_26-04-2012_184111.jpg' target='_blank'><img src='http://images0-focus-opensocial.googleusercontent.com/gadgets/proxy?container=focus&gadget=a&resize_h=100&url=https%3A%2F%2Flh4.googleusercontent.com%2F-5ngFI6t9dHo%2FT5xqzi1BbtI%2FAAAAAAAAHAA%2Ffg7HBClefn8%2Fs0-d%2FIMG_26-04-2012_184111.jpg' height='100'/> IMG_26-04-2012_184111.jpg</a>
 		$text = preg_replace('!<a href=[\'"](https?://[^/]+?\.googleusercontent\.com/[^\'"]+?)[\'"][^>]+>'

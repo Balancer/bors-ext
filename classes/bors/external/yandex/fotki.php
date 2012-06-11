@@ -19,6 +19,8 @@ class bors_external_yandex_fotki
 	{
 		// <a href="http://fotki.yandex.ru/users/balancer73/view/404156/"><img src="http://img-fotki.yandex.ru/get/4702/22492983.10/0_62abc_3448e98c_M.jpg" width="203" height="132" title="Юпитер со спутниками над Москвой" alt="Юпитер со спутниками над Москвой" border="0"/></a><br/>«<a href="http://fotki.yandex.ru/users/balancer73/view/404156/">Юпитер со спутниками над Москвой</a>» на <a href="http://fotki.yandex.ru/">Яндекс.Фотках</a>
 		// http://img-fotki.yandex.ru/get/4702/22492983.10/0_62abc_3448e98c_M.jpg
+		// http://img-fotki.yandex.ru/get/6304/35931700.a6/0_89174_db77e2f1_orig
+//		$text = preg_replace('!^\s*http://img-fotki\.yandex\.ru/get/(\d+)/(\w+)\.\w+/0_([\da-fA-F]+)_(\w+)_(orig|M)\s*$!me', "'[yandex_fotki]$2/'.hexdec('$3').'[/yandex_fotki]'", $text);
 
 		// [url=http://fotki.yandex.ru/users/balancer73/view/404156/][img]http://img-fotki.yandex.ru/get/4702/22492983.10/0_62abc_3448e98c_M.jpg[/img][/url]
 		$text = preg_replace('!\[url=http://fotki\.yandex\.ru/users/(\w+)/view/(\d+)/\]\[img\]http://[^\[]+?\[/img\]\[/url\]!', "[yandex_fotki]$1/$2[/yandex_fotki]", $text);

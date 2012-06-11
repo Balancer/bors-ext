@@ -66,7 +66,7 @@ class bors_external_youtube extends bors_object
 	{
 //		echo "===".$url."===\n";
 		$url = bors_entity_decode($url);
-		bors_function_include('url/parse');
+		bors_use('url/bors_url_parse');
 		$video_id = bors_url_parse($url, 'query', 'v');
 		$time_start = bors_url_parse($url, 'query', 't');
 		return "[youtube]{$video_id}[/youtube]";
@@ -102,6 +102,9 @@ class bors_external_youtube extends bors_object
 		$page_url = "http://www.youtube.com/watch/?v={$this->id()}";
 		if($start = defval($params, 'start'))
 		{
+			if(preg_match('/(\d+)m(\d+)s/', $start, $m))
+				$start = 60*$m[1] + $m[2];
+
 			$flv_url .= '?start='.$start;
 			$page_url .= '#t='.$start;
 		}
