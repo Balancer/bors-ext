@@ -1,0 +1,11 @@
+{form method="get" action=$this->url() class_name="NULL" uri="NULL" form_class_name="NULL"}
+<table class="w100p null"><tr>
+<td>{input name="q" value=$this->query() class="w100p"}</td>
+<td width="10">{submit value="Найти"}</td>
+</tr></table>
+{/form}
+
+{foreach $search_result as $group_title => $items}
+<h2>{$group_title}</h2>
+{module class="bors_pages_module_paginated_items" items=$items table_columns=$table_columns }
+{/foreach}
