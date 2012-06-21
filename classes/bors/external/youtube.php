@@ -21,7 +21,7 @@ class bors_external_youtube extends bors_object
 	{
 		if(preg_match('/youtube/', $id))
 		{
-			bors_function_include('url/parse');
+			bors_function_include('url/bors_url_parse');
 			$id = bors_url_parse($id, 'query', 'v');
 		}
 
