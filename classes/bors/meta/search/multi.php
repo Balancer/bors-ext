@@ -12,7 +12,7 @@ class bors_meta_search_multi extends bors_smart_page
 		return urldecode(bors()->request()->data('q'));
 	}
 
-	function where()
+	function where($class_name)
 	{
 		if(!($q = $this->query()))
 			return array();
@@ -21,21 +21,18 @@ class bors_meta_search_multi extends bors_smart_page
 
 		$where = array();
 
-		foreach($this->search_classes() as $class_name)
+		$qq = array();
+		$properties = explode(' ', bors_lib_object::get_static($class_name, 'admin_searchable_properties'));
+
+		foreach($properties as $p)
 		{
-			$qq = array();
-			$properties = explode(' ', bors_lib_object::get_static($class_name, 'admin_searchable_properties'));
-
-			foreach($properties as $p)
-			{
-				bors_lib_orm::field($class_name, $p);
-				$qq[] = "`{$p['name']}` LIKE {$q}";
-			}
-
-			$where[] = '('.join(' OR ', $qq).')';
+			bors_lib_orm::field($class_name, $p);
+			$qq[] = "`{$p['name']}` LIKE {$q}";
 		}
 
-		$where['limit'] = 25;
+		$where[] = '('.join(' OR ', $qq).')';
+
+		$where['limit'] = $this->args('limit', 10);
 
 		return $where;
 	}
@@ -44,9 +41,9 @@ class bors_meta_search_multi extends bors_smart_page
 	{
 		$result = array();
 //		print_dd($this->search_classes());
-		if($w = $this->where())
+		foreach($this->search_classes() as $class_name)
 		{
-			foreach($this->search_classes() as $class_name)
+			if($w = $this->where($class_name))
 			{
 				if($items = bors_find_all($class_name, $w))
 				{
@@ -58,6 +55,7 @@ class bors_meta_search_multi extends bors_smart_page
 
 		return parent::body_data() + array(
 			'search_result' => $result,
+			'limit' => $this->args('limit', 10),
 		);
 	}
 
