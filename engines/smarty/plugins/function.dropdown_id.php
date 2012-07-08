@@ -8,7 +8,7 @@ function smarty_function_dropdown_id($params, &$smarty)
 
 	$params['name'] = '_'.$name;
 
-	$form = $smarty->get_template_vars('form');
+	$form = $smarty->getTemplateVars('form');
 	bors_form::append_attr('override_fields', $name);
 
 	$html = "<table class=\"null\"><tr><td>ID:</td><td>";
