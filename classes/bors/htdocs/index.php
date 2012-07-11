@@ -21,4 +21,9 @@ class bors_htdocs_index extends bors_page
 
 		return compact('dirs', 'files') + parent::body_data();
 	}
+
+	function config_class()
+	{
+		return config('auto.dirlist_config');
+	}
 }

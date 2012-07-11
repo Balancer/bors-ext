@@ -1,7 +1,11 @@
 <?php
 
-class bors_admin_dev_chuser extends bors_admin_page
+class bors_admin_dev_chuser extends bors_page
 {
+	function access() { return $this; }
+	function can_read() { return true; }
+	function url() { return $this->called_url(); }
+
 	function pre_show()
 	{
 		if(!config('is_developer'))
@@ -19,6 +23,7 @@ class bors_admin_dev_chuser extends bors_admin_page
 			return bors_message("Не могу найти пользователя '{$this->id()}'");
 
 		$user->cookies_set(3600, true);
+		exit('ok');
 		return go_message('Вы теперь '.$user->title(), array('go' => '/'));
 	}
 }
