@@ -19,6 +19,6 @@ class jquery
 
 	static function on_ready($js_code)
 	{
-		template_jquery_document_ready($js_code)
+		template_jquery_document_ready($js_code);
 	}
 }
