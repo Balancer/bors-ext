@@ -2,7 +2,7 @@
 
 class bors_views_main extends bors_paginated
 {
-	function _title_def() { return bors_lib_object::get_foo($this->main_class(), 'class_title_m'); }
+	function _title_def() { return bors_ucfirst(bors_lib_object::get_foo($this->main_class(), 'class_title_m')); }
 	function nav_name() { return bors_lib_object::get_foo($this->main_class(), 'class_title_m'); }
 
 	function _main_class_def()
