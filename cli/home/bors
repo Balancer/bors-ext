@@ -1,0 +1,5 @@
+#!/usr/bin/php
+<?php
+
+require $_SERVER['HOME'].'/.config/bors/loader.php';
+require BORS_EXT.'/cli/bors.php';

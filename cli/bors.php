@@ -23,6 +23,9 @@ class bors_util
 				return $this->alter($argv);
 		}
 
+		if(preg_match('/^\w+$/', $action) && class_include($cls = 'bors_util_'.$action))
+			return $cls::run($argv);
+
 		return $this->do_not_found("Not found action $action\n");
 	}
 
