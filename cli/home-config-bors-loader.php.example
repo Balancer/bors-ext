@@ -1,0 +1,4 @@
+<?php
+
+define('BORS_CORE', '/home/balancer/BORS/bors-core');
+require BORS_CORE.'/init.php';

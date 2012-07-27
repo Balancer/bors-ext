@@ -6,6 +6,10 @@
 
  * [Markdown](markdown/) - язык разметки, используеющийся в этой документации
 
+PEAR, Zend Framework и т.п.
+---------------------------
+ * [HTML_Table](http://pear.php.net/manual/en/package.html.html-table.intro.php), API to create HTML tables
+ * [Zend_Text_Table](http://framework.zend.com/manual/ru/zend.text.table.introduction.html)
 
 Расширения PECL (требуют компиляции и имеются не на всех хостингах)
 -------------------------------------------------------------------
@@ -23,3 +27,8 @@
 
  * [RightJS](http://rightjs.org/)
  * [Creole Markup](http://simplewiki.org/)
+
+Отдельные сторонние классы и рецепты
+------------------------------------
+ * [PHP Array to Text Tables](http://tonylandis.com/php/php-text-tables-class/)
+ * [PHP: Array to Text Table Generation Class](https://gist.github.com/31477)
