@@ -1,0 +1,3 @@
+%ul
+	- foreach($items as $x)
+		%li= blib_time::short($x->create_time()).': '.$x->titled_link()

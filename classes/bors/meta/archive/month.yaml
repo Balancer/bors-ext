@@ -1,0 +1,13 @@
+extends: bors_page
+
+year(): $this->id()
+month(): $this->page()
+
+_title_def(): '"Архив ".$this->target_class_title_pg()." за ".$this->month_name_rp()." ".$this->year()." года"'
+
+_where_def(): array()
+
+_target_class_title_pg(): bors_lib_object::get_foo($this->main_class(), 'class_title_pg');
+
+url(): '$this->base_url().$this->year()."/".$this->month()."/"'
+month_name_rp(): 'bors_lower(blib_month::name($this->month()))'

@@ -1,0 +1,13 @@
+- foreach($years as $year => $months)
+	%table.btab{:style => "width:auto; float: left; margin: 20px;"}
+		%caption
+			%a{:href => "#{$self->base_url()}#{$year}/"}= $year.' год'
+		%tr
+			%th Месяц
+			%th= $objects_title
+		-foreach($months as $month => $x)
+			%tr
+				%td
+					%a{:href => "#{$self->base_url()}#{$year}/#{$month}/"}= $x['month_name']
+				%td= $x['count']
+

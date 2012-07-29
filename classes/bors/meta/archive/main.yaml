@@ -1,0 +1,7 @@
+extends: bors_page
+
+_title_def(): '"Архив ".$this->target_class_title_pg()'
+
+_where_def(): array()
+
+_target_class_title_pg(): bors_lib_object::get_foo($this->main_class(), 'class_title_pg');
