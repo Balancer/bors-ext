@@ -1,0 +1,22 @@
+<div class="box">
+<h3>Дочерние объекты {$target->class_title_rp()} «{$target->nav_name()}»</h3>
+<ul>
+{foreach from=$children item="x"}
+<li>{$x->class_title()}&nbsp;{$x->admin()->imaged_titled_link()}</li>
+{foreachelse}
+<li>Дочерних объектов не найдено</li>
+{/foreach}
+
+{if $append_class}
+<li><a href="{$append_foo->admin()->url('new')}?parent={$target_path}" class="child_page_add">Добавить дочернюю страницу</a>
+		<form action="{$append_foo->admin()->url('new')}" class="child_page_add" method="post" style="display: none">
+			Название новой дочерней страницы:<br/>
+			<input name="title" value="" size="30" maxlength="255" />
+			<input type="submit" value="Создать страницу" />
+			<input type="hidden" name="parent" value={$target_path} />
+			<input type="hidden" name="act" value="add" />
+		</form>
+</li>
+{/if}
+</ul>
+</div>
