@@ -1,22 +1,40 @@
-<div class="box shadow">
-<h3>Дочерние объекты {$target->class_title_rp()} «{$target->nav_name()}»</h3>
-<ul>
-{foreach from=$children item="x"}
-<li>{$x->class_title()}&nbsp;{$x->admin()->imaged_titled_link()}</li>
-{foreachelse}
-<li>Дочерних объектов не найдено</li>
-{/foreach}
+<table class="btab w100p shadow">
+<caption>Дочерние страницы {$target->class_title_rp()} «{$target->nav_name()}»</caption>
 
 {if $append_class}
-<li><a href="{$append_foo->admin()->url('new')}?parent={$target_path}" class="child_page_add">Добавить дочернюю страницу</a>
-		<form action="{$append_foo->admin()->url('new')}" class="child_page_add" method="post" style="display: none">
-			Название новой дочерней страницы:<br/>
+<tr><td colspan="2">
+		<form action="{$append_foo->admin()->url('new')}" class="child_page_add" method="post">
+			Название новой дочерней страницы:
 			<input name="title" value="" size="30" maxlength="255" />
-			<input type="submit" value="Создать страницу" />
+			<input type="submit" value="Добавить" />
 			<input type="hidden" name="parent" value={$target_path} />
 			<input type="hidden" name="act" value="add" />
 		</form>
-</li>
+</td></tr>
 {/if}
 </ul>
 </div>
+
+{if $children}
+<tr>
+	<th>Страница</th>
+	<th>Сортировка</th>
+</tr>
+{/if}
+{foreach from=$children item="x"}
+<tr>
+	<td>{$x->admin()->imaged_titled_link()}</td>
+	<td>
+{if not $x@first}
+		<a href="/_bors/ajaxmod/admin/children/pages/up" class="move-up">вверх</a>
+{/if}
+{if not $x@last}
+		<a href="/_bors/ajaxmod/admin/children/pages/down" class="move-down">вниз</a>
+{/if}
+	</td>
+</tr>
+{foreachelse}
+<tr><td colspan="2">Дочерних объектов не найдено</td></tr>
+{/foreach}
+</table>
+
