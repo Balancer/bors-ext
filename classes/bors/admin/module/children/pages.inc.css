@@ -1,0 +1,19 @@
+.move-up {
+	overflow: hidden;
+	display: block;
+	float: left;
+	width: 16px;
+	height: 16px;
+	text-indent: -5000px;
+	background: url(/_bors/i/up-16.gif) 0 0 no-repeat;
+}
+
+.move-down {
+	overflow: hidden;
+	display: block;
+	float: left;
+	width: 16px;
+	height: 16px;
+	text-indent: -5000px;
+	background: url(/_bors/i/down-green-16.gif) 0 0 no-repeat;
+}

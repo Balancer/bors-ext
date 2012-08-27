@@ -5,3 +5,12 @@ $(function() {
 		return false;
 	});
 });
+
+/*
+$(function() {
+	$("a.ajaxmod").click(function(){
+		alert(this)
+		return false;
+	});
+});
+*/

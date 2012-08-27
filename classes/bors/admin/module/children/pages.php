@@ -17,6 +17,7 @@ class bors_admin_module_children_pages extends bors_module
 			'append_class' => $append_class,
 			'append_foo' => $append_class ? new $append_class(NULL) : NULL,
 			'target_path' => blib_urls::path($target->url()),
+			'admin' => $this->args('admin'),
 		));
 	}
 }

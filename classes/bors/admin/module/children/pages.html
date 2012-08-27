@@ -6,7 +6,7 @@
 		<form action="{$append_foo->admin()->url('new')}" class="child_page_add" method="post">
 			Название новой дочерней страницы:
 			<input name="title" value="" size="30" maxlength="255" />
-			<input type="submit" value="Добавить" />
+			<input type="submit" value="Создать" />
 			<input type="hidden" name="parent" value={$target_path} />
 			<input type="hidden" name="act" value="add" />
 		</form>
@@ -26,10 +26,10 @@
 	<td>{$x->admin()->imaged_titled_link()}</td>
 	<td>
 {if not $x@first}
-		<a href="/_bors/ajaxmod/admin/children/pages/up" class="move-up">вверх</a>
+		<a href="/_bors/ajax/actionmod/admin/children/pages/up?object={$target->internal_uri_ascii()}&line={$x@index}&property=children_list&ref={$admin->url()|urlencode}" class="move-up ajaxmod">вверх</a>
 {/if}
 {if not $x@last}
-		<a href="/_bors/ajaxmod/admin/children/pages/down" class="move-down">вниз</a>
+		<a href="/_bors/ajax/actionmod/admin/children/pages/down?object={$target->internal_uri_ascii()}&line={$x@index}&property=children_list&ref={$admin->url()|urlencode}" class="move-down ajaxmod">вниз</a>
 {/if}
 	</td>
 </tr>
