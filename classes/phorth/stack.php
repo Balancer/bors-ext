@@ -9,8 +9,9 @@ class phorth_stack
 		return array_pop($this->_stack);
 	}
 
-	function push()
+	function push(phorth_word $x)
 	{
-		return array_push($this->_stack);
+		array_push($this->_stack, $x);
+		return $x;
 	}
 }
