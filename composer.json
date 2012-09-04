@@ -6,7 +6,7 @@
 			"name": "Roman =Balancer= Karshiev",
 			"email": "balancer@balancer.ru"
 		}
-	]
+	],
 
     "require": {
         "balancer/bors-core": "*"
