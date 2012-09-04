@@ -1,0 +1,10 @@
+{
+	"name": "balancer/bors-ext",
+	"description": "BORS© PHP Framework extensions",
+	"authors": [
+		{
+			"name": "Roman =Balancer= Karshiev",
+			"email": "balancer@balancer.ru"
+		}
+	]
+}
