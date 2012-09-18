@@ -69,7 +69,7 @@ class bors_external_youtube extends bors_object
 		bors_use('url/bors_url_parse');
 		$video_id = bors_url_parse($url, 'query', 'v');
 		$time_start = bors_url_parse($url, 'query', 't');
-		return "[youtube]{$video_id}[/youtube]";
+		return "[youtube".($time_start ? " start=\"$time_start\"" : '')."]{$video_id}[/youtube]";
 	}
 
 	// Трансляция готовых id/time в [youtube start="..."]<video-id>[/youtube]
@@ -105,7 +105,7 @@ class bors_external_youtube extends bors_object
 			if(preg_match('/(\d+)m(\d+)s/', $start, $m))
 				$start = 60*$m[1] + $m[2];
 
-			$flv_url .= '?start='.$start;
+			$flv_url .= '?start='.$start.'#t='.$start;
 			$page_url .= '#t='.$start;
 		}
 
