@@ -65,8 +65,10 @@ class bors_external_youtube extends bors_object
 	static function url2bb($url)
 	{
 //		echo "===".$url."===\n";
-		$url = bors_entity_decode($url);
 		bors_use('url/bors_url_parse');
+		bors_use('html/bors_entity_decode');
+
+		$url = bors_entity_decode($url);
 		$video_id = bors_url_parse($url, 'query', 'v');
 		$time_start = bors_url_parse($url, 'query', 't');
 		return "[youtube".($time_start ? " start=\"$time_start\"" : '')."]{$video_id}[/youtube]";
