@@ -10,5 +10,9 @@
 
     "require": {
         "balancer/bors-core": "*"
+    },
+
+    "autoload": {
+		"classmap": ["classes/"]
     }
 }
