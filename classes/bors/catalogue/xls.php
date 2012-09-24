@@ -76,4 +76,19 @@ class bors_catalogue_xls extends bors_object
 		return $csv;
 //		return true;
 	}
+
+	function _order_def() { return 'title'; }
+	function _where_def() { return array(); }
+
+	function _items_def()
+	{
+		$class_name = $this->get('main_class');
+		if(!$class_name)
+			bors_throw(ec('Не задано имя класса для экспорта'));
+
+		$where = $this->where();
+		$where['order'] = $this->get('order');
+
+		return bors_find_all($class_name, $where);
+	}
 }
