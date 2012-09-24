@@ -17,13 +17,17 @@ class bors_admin_dev_chuser extends bors_page
 		if(!$me->get('is_admin'))
 			return bors_message("Только администраторам!");
 
-		$user = bors_find_first('bors_user', array('login' => $this->id()));
+		$id = $this->id();
+		$user = bors_find_first('bors_user', array('login' => $id));
+
+		if(!$user && is_numeric($id))
+			$user = bors_load('bors_user', $id);
 
 		if(!$user)
 			return bors_message("Не могу найти пользователя '{$this->id()}'");
 
 		$user->cookies_set(3600, true);
-		exit('ok');
+//		exit('You are '.$user);
 		return go_message('Вы теперь '.$user->title(), array('go' => '/'));
 	}
 }
