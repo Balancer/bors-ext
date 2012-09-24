@@ -9,6 +9,7 @@ class bors_admin_module_children_pages extends bors_module
 			bors_throw(ec('Попытка вызвать модуль связей для несуществующего объекта.'));
 
 		$children = $target->child_objects();
+
 		$append_class = $this->arg('append_class');
 
 		return array_merge(parent::body_data(), array(
