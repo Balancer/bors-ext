@@ -58,6 +58,10 @@ class bors_external_youtube extends bors_object
 //		$text = preg_replace('!^\s*(https?://[^/]*youtube\.\w+/v/([^\s&\?]+))\s*$!mi', "[youtube]$2[/youtube]", $text);
 		$text = preg_replace('!^\s*\[html_iframe [^\]]+ src="https?://[^/]+youtube\.\w+/embed/([^"]+)"[^\]]+\]\[/html_iframe\]\s*$!mi', "[youtube]$1[/youtube]", $text);
 
+		// Пример: http://www.balancer.ru/g/p2933240
+		// <object width="420" height="315"><param name="movie" value="http://www.youtube.com/v/hqXeq4olSdg?version=3&amp;hl=en_GB"></param><param name="allowFullScreen" value="true"></param><param name="allowscriptaccess" value="always"></param><embed src="http://www.youtube.com/v/hqXeq4olSdg?version=3&amp;hl=en_GB" type="application/x-shockwave-flash" width="420" height="315" allowscriptaccess="always" allowfullscreen="true"></embed></object>
+		$text = preg_replace('!<object width="\d+" height="\d+"><param name="movie" value="(https?://www.youtube[^"]+)"></param>.+?</embed></object>!se', "bors_external_youtube::url2bb('$1');", $text);
+
 		return $text;
 	}
 
@@ -69,7 +73,15 @@ class bors_external_youtube extends bors_object
 		bors_use('html/bors_entity_decode');
 
 		$url = bors_entity_decode($url);
-		$video_id = bors_url_parse($url, 'query', 'v');
+
+		// Пример: http://www.balancer.ru/g/p2933240
+		if(preg_match('!http://www.youtube.com/v/(.+?)\?version=!', $url, $m))
+			$video_id = $m[1];
+		else
+		{
+			$video_id = bors_url_parse($url, 'query', 'v');
+		}
+
 		$time_start = bors_url_parse($url, 'query', 't');
 		return "[youtube".($time_start ? " start=\"$time_start\"" : '')."]{$video_id}[/youtube]";
 	}
