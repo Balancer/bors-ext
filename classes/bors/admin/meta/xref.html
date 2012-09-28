@@ -1,3 +1,18 @@
-{form}
-{dropdown name="xref" list=$list}
+{if $xref_list}
+<div class="box shadow">
+<h3>Установленные {$this->xref_target_foo_object()->class_title_m()}</h3>
+<ul>
+{foreach $xref_list as $x}
+<li>{$x->target()->admin()->imaged_titled_link()}&nbsp;{icon image="unlink" action="unlink" target=$x ref=$this->url()}</li>
+{/foreach}
+</ul>
+</div>
+{/if}
+
+<div class="box shadow">
+<h3>Добавить {bors_lower($this->xref_target_foo_object()->class_title())}</h3>
+{form act="add"}
+{dropdown name="xref_id" list=$targets_list value=''}
+{submit value="Добавить"}
 {/form}
+</div>
