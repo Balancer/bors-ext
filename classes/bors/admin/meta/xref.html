@@ -2,8 +2,8 @@
 <div class="box shadow">
 <h3>Установленные {$this->xref_target_foo_object()->class_title_m()}</h3>
 <ul>
-{foreach $xref_list as $x}
-<li>{$x->target()->admin()->imaged_titled_link()}&nbsp;{icon image="unlink" action="unlink" target=$x ref=$this->url()}</li>
+{foreach $xref_list as $xref}
+<li><a href="{$xref->edit_url()}">{$xref->target()->title()}</a>&nbsp;{icon image="edit" link=$xref->target()->admin_url() title="Перейти к {$xref->target()->class_title_dp()}"}&nbsp;{icon image="unlink" action="unlink" target=$xref ref=$this->url() title="Удалить связь"}{block name="additional_in_list"}{/block}</li>
 {/foreach}
 </ul>
 </div>
@@ -11,8 +11,17 @@
 
 <div class="box shadow">
 <h3>Добавить {bors_lower($this->xref_target_foo_object()->class_title())}</h3>
-{form act="add"}
-{dropdown name="xref_id" list=$targets_list value=''}
+{form act="add" th="-"}
+{dropdown name="xref_id" list=$targets_list value='' th=$this->xref_target_foo_object()->class_title()}
+{if $additional}
+{foreach $additional as $x}
+{if $x.type == 'bool'}
+{checkbox name=$x.property checked=false label=$x.title th="Метки"}
+{else}
+<tr><th class="warning" colspan="2">Неизвестный тип {$x.type}</th></tr>
+{/if}
+{/foreach}
+{/if}
 {submit value="Добавить"}
 {/form}
 </div>

@@ -9,11 +9,20 @@ class bors_admin_meta_xref extends bors_admin_page
 {
 	function body_data()
 	{
+		$additional = array();
+		foreach($this->xref_foo_object()->get('additional_properties') as $p)
+		{
+			$x = bors_lib_orm::parse_property($this->xref_class_name(), $p);
+//			var_dump($x);
+			$additional[] = $x;
+		}
+
 		return array(
 			'targets_list' => bors_find($this->xref_target_class_name())->all(),
 			'xref_list' => bors_find(
 					$this->xref_class_name())->where($this->xref_foo_object()->object_field_name(),
 				$this->id())->all(),
+			'additional' => $additional,
 		) + parent::body_data();
 	}
 
@@ -40,7 +49,8 @@ class bors_admin_meta_xref extends bors_admin_page
 
 		$class_name::add(
 			$this->id(),
-			$data['xref_id']
+			$data['xref_id'],
+			$data
 		);
 
 		return go($data['uri']);
