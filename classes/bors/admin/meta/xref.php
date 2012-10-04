@@ -13,7 +13,7 @@ class bors_admin_meta_xref extends bors_admin_page
 		foreach($this->xref_foo_object()->get('additional_properties') as $p)
 		{
 			$x = bors_lib_orm::parse_property($this->xref_class_name(), $p);
-//			var_dump($x);
+//			var_dump($p, $x);
 			$additional[] = $x;
 		}
 

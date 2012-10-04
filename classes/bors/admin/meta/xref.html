@@ -17,8 +17,10 @@
 {foreach $additional as $x}
 {if $x.type == 'bool'}
 {checkbox name=$x.property checked=false label=$x.title th="Метки"}
+{elseif $x.type == 'string'}
+{input name=$x.property th=$x.title value=""}
 {else}
-<tr><th class="warning" colspan="2">Неизвестный тип {$x.type}</th></tr>
+<tr><th class="warning" colspan="2">Неизвестный тип {$x.type} (<xmp>{$x|print_r:true}</xmp>)</th></tr>
 {/if}
 {/foreach}
 {/if}
