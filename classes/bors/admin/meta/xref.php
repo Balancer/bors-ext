@@ -7,6 +7,9 @@
 
 class bors_admin_meta_xref extends bors_admin_page
 {
+//	function can_action() { return $this->xref_target_foo_object()->can_action(); }
+	function access() { return $this->xref_foo_object()->access(); }
+
 	function body_data()
 	{
 		$additional = array();
