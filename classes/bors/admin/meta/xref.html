@@ -12,7 +12,8 @@
 <div class="box shadow">
 <h3>Добавить {bors_lower($this->xref_target_foo_object()->class_title())}</h3>
 {form act="add" th="-"}
-{dropdown name="xref_id" list=$targets_list value='' th=$this->xref_target_foo_object()->class_title()}
+{* dropdown name="xref_id" list=$targets_list value='' th=$this->xref_target_foo_object()->class_title() *}
+{combobox name="xref_id" json=$json value='' th=$this->xref_target_foo_object()->class_title() width="500" per_page="20"}
 {if $additional}
 {foreach $additional as $x}
 {if $x.type == 'bool'}

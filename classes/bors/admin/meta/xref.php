@@ -22,6 +22,7 @@ class bors_admin_meta_xref extends bors_admin_page
 
 		return array(
 			'targets_list' => bors_find($this->xref_target_class_name())->all(),
+			'json' => '/_bors/data/lists/'.$this->xref_target_class_name().'.json',
 			'xref_list' => bors_find(
 					$this->xref_class_name())->where($this->xref_foo_object()->object_field_name(),
 				$this->id())->all(),
@@ -48,6 +49,7 @@ class bors_admin_meta_xref extends bors_admin_page
 
 	function on_action_add($data)
 	{
+//		var_dump($data); exit();
 		$class_name = $this->xref_class_name();
 
 		$class_name::add(
