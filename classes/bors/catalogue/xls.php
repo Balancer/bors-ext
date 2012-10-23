@@ -20,8 +20,11 @@ class bors_catalogue_xls extends bors_object
 	function renderer() { return $this; }
 	function render()
 	{
+		$err_save = ini_get('error_reporting');
+		ini_set('error_reporting', $err_save & ~E_NOTICE);
 
 		require_once 'Spreadsheet/Excel/Writer.php';
+
 		$workbook = new Spreadsheet_Excel_Writer($this->fname);
 		$workbook->setVersion(8);
 //		$workbook->_codepage = 0x04E3; //грязный хак, для писать по русски, http://ru-php.livejournal.com/1219823.html
@@ -71,6 +74,7 @@ class bors_catalogue_xls extends bors_object
 		}
 
 		$workbook->close();
+		ini_set('error_reporting', $err_save);
 		$csv = file_get_contents($this->fname);
 		unlink($this->fname);
 		return $csv;
