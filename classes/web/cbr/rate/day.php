@@ -25,19 +25,27 @@ class web_cbr_rate_day extends bors_object
 
 	function init()
 	{
-		$xml = &new Xml;
-		$content = file_get_contents('http://www.cbr.ru/scripts/XML_daily.asp?date_req='.strftime('%d.%m.%Y', strtotime($this->date)));
-		$xml->parse($content);
-
-		if(!($site_date = strtotime($xml->dom['ValCurs'][0]['Date'])))
+		$ch = new bors_cache();
+		$url = 'http://www.cbr.ru/scripts/XML_daily.asp?date_req='.strftime('%d.%m.%Y', strtotime($this->date));
+		$dom = $ch->get('cbr_rate_xml_parsed', $url);
+		if(!$dom)
 		{
-			debug_hidden_log('cbr-date', "Invalid date {$xml->dom['ValCurs'][0]['Date']}");
+			$xml = new Xml;
+			$content = blib_http::get_cached($url, 3600, true);
+			$xml->parse($content);
+			$dom = $xml->dom;
+			$ch->set($dom, 3600);
+		}
+
+		if(!($site_date = strtotime($dom['ValCurs'][0]['Date'])))
+		{
+			debug_hidden_log('cbr-date', "Invalid date {$dom['ValCurs'][0]['Date']}");
 			return;
 		}
 
 		$this->set_attr('site_date', strftime('%Y-%m-%d', $site_date));
 
-		$valutes = @$xml->dom['ValCurs'][0]['Valute'];
+		$valutes = @$dom['ValCurs'][0]['Valute'];
 
 		if(!$valutes)
 		{
