@@ -54,6 +54,7 @@ class BorsTests
 				if(preg_match('!^.*?/classes/([\w/]+)\.unittest\.php$!', $file, $m))
 				{
 					$class_name = str_replace('/', '_', $m[1]);
+//					echo "$file -> $class_name\n";
 					$suite->addTestSuite(self::bors_class_test($class_name));
 				}
 

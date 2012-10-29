@@ -22,7 +22,7 @@ class bors_meta_search_multi extends bors_smart_page
 		$where = array();
 
 		$qq = array();
-		$properties = explode(' ', bors_lib_object::get_static($class_name, 'admin_searchable_properties'));
+		$properties = explode(' ', bors_lib_object::get_foo($class_name, 'admin_searchable_properties'));
 
 		foreach($properties as $p)
 		{

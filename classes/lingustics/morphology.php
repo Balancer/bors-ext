@@ -21,14 +21,13 @@ class lingustics_morphology
 			return join(' ', $result);
 		}
 
-		$words = $word[0];
-
 		static $case_rus = array(
 			'nom' => 'ИМ',
 			'gen' => 'РД',
 			'dat' => 'ДТ',
 			'acc' => 'ВН',
 			'ins' => 'ТВ',
+			'abl' => 'ТВ',
 			'pre' => 'ПР',
 			'mult' => 'МН',
 			'plur' => 'МН',
@@ -36,10 +35,23 @@ class lingustics_morphology
 
 		$cases = array();
 		foreach(preg_split('/\s*,\s*/', $case) as $c)
-			$cases[] = $case_rus[$c];
+			$cases[] = ($c2 = ec(@$case_rus[$c])) ? $c2 : $c;
 
-		$g = $m->find_word($word);
+		if(!($g = $m->find_word($word)))
+			return $word;
+
 		$w = $m->word_form_by_grammems($g, $cases);
+
 		return $w ? $w : $word;
+	}
+
+	static function __unit_test($suite)
+	{
+		$suite->assertEquals('москву',       bors_lower(lingustics_morphology::case_rus('москва', 'acc')));
+		$suite->assertEquals('компанию',     bors_lower(lingustics_morphology::case_rus('компания', 'ВН')));
+		$suite->assertEquals('авиакомпанию', bors_lower(lingustics_morphology::case_rus('авиакомпания', 'acc')));
+		$suite->assertEquals('авиакомпании', bors_lower(lingustics_morphology::case_rus('авиакомпания', 'plur')));
+		$suite->assertEquals('авиакомпаний', bors_lower(lingustics_morphology::case_rus('авиакомпания', 'gen,plur')));
+		$suite->assertEquals('авиакомпании', bors_lower(lingustics_morphology::case_rus('авиакомпания', 'nom,plur')));
 	}
 }
