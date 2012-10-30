@@ -1,1 +1,10 @@
 li.type-department{background-image:url(/_bors-ext/i16/department.gif)}
+
+a.social {
+	padding-left: 20px;
+	background-repeat: no-repeat;
+}
+
+a.social-facebook {
+	background-image: url(/_bors-ext/i16/services/facebook.png)
+}
