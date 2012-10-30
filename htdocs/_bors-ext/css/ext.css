@@ -5,6 +5,8 @@ a.social {
 	background-repeat: no-repeat;
 }
 
-a.social-facebook {
-	background-image: url(/_bors-ext/i16/services/facebook.png)
-}
+a.social-facebook	{ background-image: url(/_bors-ext/i16/services/facebook.png) }
+a.social-googleplus	{ background-image: url(/_bors-ext/i16/services/googleplus.png) }
+a.social-livejournal{ background-image: url(/_bors-ext/i16/services/livejournal.png) }
+a.social-twitter	{ background-image: url(/_bors-ext/i16/services/twitter.png) }
+a.social-vkontakte	{ background-image: url(/_bors-ext/i16/services/vkontakte.png) }
