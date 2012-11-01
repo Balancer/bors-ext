@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <title>{$this->browser_title()}</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="">
+    <meta name="author" content="">
+	<link href='http://fonts.googleapis.com/css?family=Stalinist+One' rel='stylesheet' type='text/css'>
+
+{foreach item=css from=$css_list}
+	<link rel="stylesheet" type="text/css" href="{$css}" />
+{/foreach}
+
+
+    <style type="text/css">
+      body {literal}{{/literal}
+        padding-top: 60px;
+        padding-bottom: 40px;
+      }
+
+h1 {literal}{{/literal}
+	font-family: 'Stalinist One', cursive;
+}
+
+    </style>
+
+    <!-- Le HTML5 shim, for IE6-8 support of HTML5 elements -->
+    <!--[if lt IE 9]>
+      <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+
+    <!-- Le fav and touch icons -->
+    <link rel="shortcut icon" href="/favicon.ico">
+  </head>
+
+  <body>
+
+    <div class="navbar navbar-inverse navbar-fixed-top">
+      <div class="navbar-inner">
+        <div class="container">
+          <a class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </a>
+          <a class="brand" href="{$this->project()->url()}"><i class="icon-home icon-white"></i> {$this->project()->nav_name()}</a>
+          <div class="nav-collapse collapse">
+            <ul class="nav">
+{*
+              <li class="active"><a href="#">Home</a></li>
+              <li><a href="#about">About</a></li>
+              <li><a href="#contact">Contact</a></li>
+*}
+              <li class="dropdown">
+                <a href="#" class="dropdown-toggle" data-toggle="dropdown">Наши проекты <b class="caret"></b></a>
+                <ul class="dropdown-menu">
+                  <li><a href="http://balancer.ru/forum/">Форумы</a></li>
+                  <li><a href="http://club.balancer.ru/">Клуб</a></li>
+                  <li><a href="http://ls.balancer.ru/">Блоги</a></li>
+                  <li><a href="http://airbase.ru/">Авиабаза</a></li>
+                  <li><a href="http://navy.balancer.ru/">Флот</a></li>
+{*
+                  <li class="divider"></li>
+                  <li class="nav-header">Nav header</li>
+                  <li><a href="#">Separated link</a></li>
+                  <li><a href="#">One more separated link</a></li>
+*}
+                </ul>
+              </li>
+
+            </ul>
+
+<form class="form-search navbar-search pull-left" action="http://www.balancer.ru/tools/search/result/" method="get">
+ <div class="input-append">
+  <input type="text" class="search-query" placeholder="Введите слова для поиска" name="q">
+<button type="submit" class="btn btn-inverse"><i class="icon-search icon-white"></i></button>
+</div>
+</form>
+
+{if not $me}
+
+{* http://mifsud.me/adding-dropdown-login-form-bootstraps-navbar/ *}
+			<ul class="nav pull-right">
+				<li><a href="http://www.balancer.ru/forum/punbb/register.php">Зарегистрироваться</a></li>
+          <li class="divider-vertical"></li>
+          <li class="dropdown">
+            <a class="dropdown-toggle" href="http://www.balancer.ru/forum/punbb/login.php" data-toggle="dropdown">Войти <strong class="caret"></strong></a>
+            <div class="dropdown-menu" style="padding: 15px; padding-bottom: 0px;">
+				<form action="/do-login/" method="post" accept-charset="UTF-8">
+					<input id="user_username" style="margin-bottom: 15px;" type="text" name="req_username" size="30" />
+  					<input id="user_password" style="margin-bottom: 15px;" type="password" name="req_password" size="30" />
+{*
+					<input id="user_remember_me" style="float: left; margin-right: 10px;" type="checkbox" name="user[remember_me]" value="1" />
+					<label class="string optional" for="user_remember_me"> Запомнить меня</label> *}
+
+					<input class="btn btn-primary" style="clear: left; width: 100%; height: 32px; font-size: 13px;" type="submit" name="commit" value="Войти" />
+				</form>
+            </div>
+          </li>
+        </ul>
+
+{else}
+		<ul class="nav pull-right">
+          <li class="divider-vertical"></li>
+          <li class="dropdown">
+            <a class="dropdown-toggle" href="{$me->url()}" data-toggle="dropdown"><i class="icon-user icon-white"></i> {$me->title()} <strong class="caret"></strong></a>
+		</li>
+		</ul>
+{/if}
+
+          </div><!--/.nav-collapse -->
+        </div>
+      </div>
+    </div>
+
+    <div class="container">
+
+      <!-- Main hero unit for a primary marketing message or call to action -->
+      <div class="hero-unit">
+        <h1>{$this->page_title()}</h1>
+
+		{$this->description()}
+
+      </div>
+
+{module class="bors_module_breadcrumb_list" template="bootstrap"}
+
+	{$this->body()}
+
+      <hr>
+
+      <footer>
+        <p>&copy; Company 2012</p>
+      </footer>
+
+	{if $bottom_counters}{include file=$bottom_counters}{/if}
+
+    </div> <!-- /container -->
+
+{foreach from=$js_include item="s"}
+	<script type="text/javascript" src="{$s}"></script>
+{/foreach}
+
+
+  </body>
+
+{foreach from=$js_include_post item="s"}
+<script type="text/javascript" src="{$s}"></script>
+{/foreach}
+{if $javascript_post || $jquery_document_ready}
+<script type="text/javascript"><!--
+{foreach from=$javascript_post item="s"}
+{$s}
+{/foreach}
+{if $jquery_document_ready}
+$(document).ready(function(){literal}{{/literal}
+{foreach from=$jquery_document_ready item="s"}
+{$s}
+{/foreach}
+})
+{/if}
+
+$(function() {literal}{{/literal}
+  // Setup drop down menu
+  $('.dropdown-toggle').dropdown();
+
+  // Fix input element click problem
+  $('.dropdown input, .dropdown label').click(function(e) {literal}{{/literal}
+    e.stopPropagation();
+  });
+});
+
+--></script>
+{/if}
+
+</html>
