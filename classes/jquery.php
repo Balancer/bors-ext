@@ -17,6 +17,11 @@ class jquery
 		template_jquery_plugin($name);
 	}
 
+	static function css($name)
+	{
+		template_jquery_plugin_css($name);
+	}
+
 	static function on_ready($js_code)
 	{
 		// Если это имя файла, то грузим его контент
