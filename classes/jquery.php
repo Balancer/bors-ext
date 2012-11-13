@@ -19,6 +19,10 @@ class jquery
 
 	static function on_ready($js_code)
 	{
+		// Если это имя файла, то грузим его контент
+		if(preg_match('!^[\w\-\./]+\.js$!', $js_code))
+			$js_code = file_get_contents($js_code);
+
 		template_jquery_document_ready($js_code);
 	}
 
