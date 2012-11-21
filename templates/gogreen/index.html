@@ -63,7 +63,10 @@
 <div id="footertop"> </div>
 
 <div id="footer">
-<div class="footerleft">Copyright {$this->get_find('site_copiright', 'Balancer')} | Powered by <a href="http://bors.balancer.ru">BORS©</a></div>
+<div class="footerleft">
+	Copyright {$this->get_find('site_copiright', 'Balancer')} | Powered by <a href="http://bors.balancer.ru">BORS©</a>
+	{if $bottom_counters}{include file=$bottom_counters}{/if}
+</div>
 <div class="footerright"><a href="http://yoctotemplates.com/free-web-templates/go-green/">Go Green</a> | Design by <a href="http://www.yoctotemplates.com">Yocto Templates</a></div>
 <div style="clear: both;"> </div>
 </div>
