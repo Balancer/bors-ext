@@ -14,6 +14,7 @@ class bors_catalogue_xls extends bors_object
 	{
 		$ret = parent::pre_show();
 		header("Content-type: application/ms-excel");
+		header('Content-Disposition: attachment; filename="'.$this->title().'.xls"');
 		return $ret;
 	}
 
@@ -59,7 +60,7 @@ class bors_catalogue_xls extends bors_object
 //		$hf->setBgColor('Yellow'); 
 
 		$col = 0;
-		foreach(array_keys($fields) as $h)
+		foreach(array_values($fields) as $h)
 			$worksheet->write(0, $col++, $h, $hf);
 
 		$row = 1;
@@ -67,7 +68,7 @@ class bors_catalogue_xls extends bors_object
 		{
 			$col = 0;
 
-			foreach($fields as $title => $property)
+			foreach($fields as $property => $title)
 				$worksheet->write($row, $col++, trim($x->get_ne($property)));
 
 			$row++;
@@ -84,6 +85,11 @@ class bors_catalogue_xls extends bors_object
 	function _order_def() { return 'title'; }
 	function _where_def() { return array(); }
 
+	function _title_def()
+	{
+		return bors_foo($this->main_class())->class_title_m();
+	}
+
 	function _items_def()
 	{
 		$class_name = $this->get('main_class');
@@ -92,7 +98,6 @@ class bors_catalogue_xls extends bors_object
 
 		$where = $this->where();
 		$where['order'] = $this->get('order');
-
-		return bors_find_all($class_name, $where);
+		return bors_each($class_name, $where);
 	}
 }
