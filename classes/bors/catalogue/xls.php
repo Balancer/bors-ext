@@ -13,8 +13,15 @@ class bors_catalogue_xls extends bors_object
 	function pre_show()
 	{
 		$ret = parent::pre_show();
+		$fname = bors_ucfirst($this->nav_name());
+		if(!$fname)
+			$fname = bors_ucfirst($this->title());
+
+		if(!$fname)
+			$fname = $this->class_name();
+
 		header("Content-type: application/ms-excel");
-		header('Content-Disposition: attachment; filename="'.$this->title().'.xls"');
+		header('Content-Disposition: attachment; filename="'.$fname.'.xls"');
 		return $ret;
 	}
 
@@ -87,7 +94,8 @@ class bors_catalogue_xls extends bors_object
 
 	function _title_def()
 	{
-		return bors_foo($this->main_class())->class_title_m();
+		$class = $this->get('main_class');
+		return $class ? bors_foo($class)->class_title_m() : NULL;
 	}
 
 	function _items_def()
