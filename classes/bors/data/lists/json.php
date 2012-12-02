@@ -24,6 +24,8 @@ class bors_data_lists_json extends bors_json
 
 		if($p = bors()->request()->data('p'))
 			$find->page($p, bors()->request()->data('s'));
+		else
+			$find->limit(200);
 
 		$find->order('title');
 
