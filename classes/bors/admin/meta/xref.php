@@ -10,6 +10,15 @@ class bors_admin_meta_xref extends bors_admin_page
 //	function can_action() { return $this->xref_target_foo_object()->can_action(); }
 	function access() { return $this->xref_foo_object()->access(); }
 
+	function body_template_ext()
+	{
+		$type = $this->get('admin_page_type');
+		if($type)
+			return $type.'.html';
+
+		return parent::body_template_ext();
+	}
+
 	function body_data()
 	{
 		$additional = array();
@@ -66,5 +75,43 @@ class bors_admin_meta_xref extends bors_admin_page
 		$xref = bors_load_uri($data['target']);
 		$xref->delete();
 		return go($data['ref']);
+	}
+
+	function xref_ids()
+	{
+		$class_name = $this->xref_class_name();
+		$foo = bors_foo($class_name);
+		return $foo->target_ids(array($foo->object_field_name() => $this->id()));
+	}
+
+	function on_action_save($data)
+	{
+		$class_name = $this->xref_class_name();
+		$foo = bors_foo($class_name);
+		$object_field = $foo->object_field_name();
+		$target_field = $foo->target_field_name();
+
+//		var_dump($data, $target_field);
+
+		$object_id = $data['object_id'];
+
+		if(!$object_id)
+			return go($data['uri']);
+
+		foreach(bors_find_all($class_name, array($object_field => $object_id)) as $xref)
+			if(!empty($data['xref_ids']) && !in_array($xref->get($target_field), $data['xref_ids']))
+				$xref->delete();
+
+		if(!empty($data['xref_ids']))
+		{
+			foreach($data['xref_ids'] as $target_id)
+				$class_name::add(
+					$this->id(),
+					$target_id,
+					$data
+				);
+		}
+
+		return go($data['uri']);
 	}
 }

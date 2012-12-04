@@ -1,0 +1,18 @@
+<div class="box shadow">
+<h3>{bors_ucfirst($this->xref_target_foo_object()->class_title_m())}</h3>
+{form act="save" th="-"}
+{checkbox_list name="xref_ids" list=$targets_list th=$this->xref_target_foo_object()->class_title()}
+{if $additional}
+{foreach $additional as $x}
+{if $x.type == 'bool'}
+{checkbox name=$x.property checked=false label=$x.title th="Метки"}
+{elseif $x.type == 'string'}
+{input name=$x.property th=$x.title value=""}
+{else}
+<tr><th class="warning" colspan="2">Неизвестный тип {$x.type} (<xmp>{$x|print_r:true}</xmp>)</th></tr>
+{/if}
+{/foreach}
+{/if}
+{submit value="Сохранить"}
+{/form}
+</div>
