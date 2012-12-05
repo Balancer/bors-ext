@@ -16,6 +16,9 @@ class bors_admin_meta_xref extends bors_admin_page
 		if($type)
 			return $type.'.html';
 
+		if($this->get('object_target_swap'))
+			return 'swap.html';
+
 		return parent::body_template_ext();
 	}
 
@@ -29,12 +32,25 @@ class bors_admin_meta_xref extends bors_admin_page
 			$additional[] = $x;
 		}
 
+//		var_dump($this->xref_class_name(), $this->xref_foo_object()->object_field_name(), $this->id());
+
+		if($this->get('object_target_swap'))
+			$xref_list = bors_find(
+				$this->xref_class_name())
+					->where($this->xref_foo_object()->target_field_name(),	$this->id())
+					->all();
+		else
+			$xref_list = bors_find(
+				$this->xref_class_name())
+					->where($this->xref_foo_object()->object_field_name(),	$this->id())
+					->all();
+
 		return array(
 			'targets_list' => bors_find($this->xref_target_class_name())->all(),
-			'json' => '/_bors/data/lists/'.$this->xref_target_class_name().'.json',
-			'xref_list' => bors_find(
-					$this->xref_class_name())->where($this->xref_foo_object()->object_field_name(),
-				$this->id())->all(),
+			'json' => $this->get('object_target_swap') ?
+				'/_bors/data/lists/'.$this->xref_object_class_name().'.json'
+					: '/_bors/data/lists/'.$this->xref_target_class_name().'.json',
+			'xref_list' => $xref_list,
 			'additional' => $additional,
 		) + parent::body_data();
 	}
@@ -43,6 +59,17 @@ class bors_admin_meta_xref extends bors_admin_page
 	{
 		$class_name = $this->xref_class_name();
 		return new $class_name(NULL);
+	}
+
+	function xref_object_class_name()
+	{
+		return $this->xref_foo_object()->object_class_name();
+	}
+
+	function xref_object_foo_object()
+	{
+		$target_class_name = $this->xref_object_class_name();
+		return new $target_class_name(NULL);
 	}
 
 	function xref_target_class_name()
@@ -61,11 +88,18 @@ class bors_admin_meta_xref extends bors_admin_page
 //		var_dump($data); exit();
 		$class_name = $this->xref_class_name();
 
-		$class_name::add(
-			$this->id(),
-			$data['xref_id'],
-			$data
-		);
+		if($this->get('object_target_swap'))
+			$class_name::add(
+				$data['xref_id'],
+				$this->id(),
+				$data
+			);
+		else
+			$class_name::add(
+				$this->id(),
+				$data['xref_id'],
+				$data
+			);
 
 		return go($data['uri']);
 	}

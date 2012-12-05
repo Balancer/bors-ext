@@ -1,0 +1,29 @@
+{if $xref_list}
+<div class="box shadow">
+<h3>Установленные {$this->xref_object_foo_object()->class_title_m()}</h3>
+<ul>
+{foreach $xref_list as $xref}
+<li><a href="{$xref->edit_url()}">{$xref->object()->title()}</a>{block name="after_name_in_list"}{/block}&nbsp;{icon image="edit" link=$xref->object()->admin_url() title="Перейти к {$xref->object()->class_title_dp()}"}&nbsp;{icon image="unlink" action="unlink" target=$xref ref=$this->url() title="Удалить связь"}{block name="additional_in_list"}{/block}</li>
+{/foreach}
+</ul>
+</div>
+{/if}
+
+<div class="box shadow">
+<h3>Добавить {bors_lower($this->xref_object_foo_object()->class_title_vp())}</h3>
+{form act="add" th="-"}
+{combobox name="xref_id" json=$json value='' th=$this->xref_object_foo_object()->class_title() width="500" per_page="20"}
+{if $additional}
+{foreach $additional as $x}
+{if $x.type == 'bool'}
+{checkbox name=$x.property checked=false label=$x.title th="Метки"}
+{elseif $x.type == 'string'}
+{input name=$x.property th=$x.title value=""}
+{else}
+<tr><th class="warning" colspan="2">Неизвестный тип {$x.type} (<xmp>{$x|print_r:true}</xmp>)</th></tr>
+{/if}
+{/foreach}
+{/if}
+{submit value="Добавить"}
+{/form}
+</div>
