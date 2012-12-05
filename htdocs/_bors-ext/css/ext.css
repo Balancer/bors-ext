@@ -14,3 +14,5 @@ a.social-twitter	{ background-image: url(/_bors-ext/i16/services/twitter.png) }
 a.social-vimeo		{ background-image: url(/_bors-ext/i16/services/vimeo.png) }
 a.social-vkontakte	{ background-image: url(/_bors-ext/i16/services/vkontakte.png) }
 a.social-youtube	{ background-image: url(/_bors-ext/i16/services/youtube.png) }
+
+li.type-banned	{background-image: url(/_bors-ext/i16/object-types/banned.gif)}
