@@ -1,0 +1,6 @@
+rustypo
+=======
+
+Разработка мамбота: © 2006–2011 Рябов Денис, dryabov@yandex.ru
+Поддержка осуществляется на форуме: http://joomlaforum.ru/index.php/topic,10544
+Репозиторий: https://github.com/dryabov/rustypo
