@@ -1,19 +1,30 @@
+ul.none {
+	margin: 0;
+	padding: 0;
+}
+
+/* http://aviaport.wrk.ru/directory/aviafirms/socials/ */
+ul.none li {
+	margin: 0;
+	icon-style: none;
+}
+
 li.type-department{background-image:url(/_bors-ext/i16/department.gif)}
 
-a.social {
+.social {
 	padding-left: 20px;
 	line-height: 18px;
 	background-repeat: no-repeat;
 }
 
-a.social-facebook	{ background-image: url(/_bors-ext/i16/services/facebook.png) }
-a.social-googleplus	{ background-image: url(/_bors-ext/i16/services/googleplus.png) }
-a.social-linkedin	{ background-image: url(/_bors-ext/i16/services/linkedin.png) }
-a.social-livejournal{ background-image: url(/_bors-ext/i16/services/livejournal.png) }
-a.social-twitter	{ background-image: url(/_bors-ext/i16/services/twitter.png) }
-a.social-vimeo		{ background-image: url(/_bors-ext/i16/services/vimeo.png) }
-a.social-vkontakte	{ background-image: url(/_bors-ext/i16/services/vkontakte.png) }
-a.social-youtube	{ background-image: url(/_bors-ext/i16/services/youtube.png) }
+.social-facebook	{ background-image: url(/_bors-ext/i16/services/facebook.png) }
+.social-googleplus	{ background-image: url(/_bors-ext/i16/services/googleplus.png) }
+.social-linkedin	{ background-image: url(/_bors-ext/i16/services/linkedin.png) }
+.social-livejournal{ background-image: url(/_bors-ext/i16/services/livejournal.png) }
+.social-twitter	{ background-image: url(/_bors-ext/i16/services/twitter.png) }
+.social-vimeo		{ background-image: url(/_bors-ext/i16/services/vimeo.png) }
+.social-vkontakte	{ background-image: url(/_bors-ext/i16/services/vkontakte.png) }
+.social-youtube	{ background-image: url(/_bors-ext/i16/services/youtube.png) }
 
 li.type-banned	{background-image: url(/_bors-ext/i16/object-types/banned.gif)}
 li.type-cabinet	{background-image: url(/_bors-ext/i16/object-types/cabinet.png)}
