@@ -25,6 +25,10 @@ define('THINSP',     "\x05");
 define('DASH',       "\x06");
 define('NUMDASH',    "\x07");
 
+class JPlugin
+{
+}
+
 class plgContentRustypo extends JPlugin
 {
 	protected static $Refs = array(); // буфер для хранения тегов
