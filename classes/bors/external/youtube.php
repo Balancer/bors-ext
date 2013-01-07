@@ -62,6 +62,9 @@ class bors_external_youtube extends bors_object
 		// <object width="420" height="315"><param name="movie" value="http://www.youtube.com/v/hqXeq4olSdg?version=3&amp;hl=en_GB"></param><param name="allowFullScreen" value="true"></param><param name="allowscriptaccess" value="always"></param><embed src="http://www.youtube.com/v/hqXeq4olSdg?version=3&amp;hl=en_GB" type="application/x-shockwave-flash" width="420" height="315" allowscriptaccess="always" allowfullscreen="true"></embed></object>
 		$text = preg_replace('!<object width="\d+" height="\d+"><param name="movie" value="(https?://www.youtube[^"]+)"></param>.+?</embed></object>!se', "bors_external_youtube::url2bb('$1');", $text);
 
+		// http://www.youtube.com/embed/hNUeSUXOc-w?wmode=opaque — http://www.balancer.ru/g/p3015686
+		$text = preg_replace('!^\s*https?://(www\.)?youtube\.com/embed/([\w\-]+)\?wmode=opaque\s*$!mie', "bors_external_youtube::id2bb('$2');", $text);
+
 		return $text;
 	}
 

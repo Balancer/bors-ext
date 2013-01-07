@@ -37,9 +37,9 @@ class web_cbr_rate_day extends bors_object
 			$ch->set($dom, 3600);
 		}
 
-		if(!($site_date = strtotime($dom['ValCurs'][0]['Date'])))
+		if(!($site_date = strtotime(@$dom['ValCurs'][0]['Date'])))
 		{
-			debug_hidden_log('cbr-date', "Invalid date {$dom['ValCurs'][0]['Date']}");
+			debug_hidden_log('cbr-date', "Invalid date '".@$dom['ValCurs'][0]['Date']."' in $url");
 			return;
 		}
 
