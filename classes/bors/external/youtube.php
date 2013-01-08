@@ -48,6 +48,9 @@ class bors_external_youtube extends bors_object
 		// [url=http://youtube.com/watch?v=cF_rMpiwzQA&search=loituma]http://youtube.com/watch?v=cF_rMpiwzQA&search=loituma[/url]
 		$text = preg_replace('!\s*\[url=(http://(www\.)?youtube\.com/watch\?v=[\w\-]+[^\]]+?)\]\1\[/url\]\s*!', "\n$1\n", $text);
 
+		// http://www.youtube.com/watch?v=zJMVZXLFaRU#t=2085s via http://www.balancer.ru/g/p3030014
+		$text = preg_replace('!^\s*(https?://[^/]*youtube\.\w+/watch\S+)#t=(\d+)s\s*$!mie', "bors_external_youtube::url2bb('$1', '$2');", $text);
+
 		// http://www.youtube.com/watch?v=X76LmiHVFsM&feature=player_embedded
 		// http://www.youtube.com/watch?v=TXxcR3qgyYQ&playnext=1&list=PL21AA194D7FBBA2D9
 		// https://www.youtube.com/watch?v=21El16OPZoc
@@ -69,7 +72,7 @@ class bors_external_youtube extends bors_object
 	}
 
 	// Трансляция ссылки на YouTube ролик в [youtube]<video-id>[/youtube]
-	static function url2bb($url)
+	static function url2bb($url, $time_start = 0)
 	{
 //		echo "===".$url."===\n";
 		bors_use('url/bors_url_parse');
@@ -85,7 +88,9 @@ class bors_external_youtube extends bors_object
 			$video_id = bors_url_parse($url, 'query', 'v');
 		}
 
-		$time_start = bors_url_parse($url, 'query', 't');
+		if(!$time_start)
+			$time_start = bors_url_parse($url, 'query', 't');
+
 		return "[youtube".($time_start ? " start=\"$time_start\"" : '')."]{$video_id}[/youtube]";
 	}
 
