@@ -20,14 +20,25 @@ class bors_util_class
 
 		echo "\twork with $class_name: $action $name(".@$type.")\n";
 
+		if(!preg_match('/^[a-z]\w+[a-z]$/', $class_name))
+		{
+			blib_cli::out("%C%RIncorrect class name: '$class_name'%C%n");
+			break;
+		}
+
 		switch($action)
 		{
+			// bors class _directory_aviation_wtc create
 			case 'create':
+				$type = $name; // Так как в команде на один параметр меньше.
+
 				if(!$type)
 					$type = 'yaml_db';
 				bors_tools_codegen::class_create($type, $class_name, BORS_SITE);
 				break;
 
+			// bors class airlines.php add create_time timestamp
+			// bors class _directory_company add is_published
 			case 'add':
 				$foo = bors_foo($class_name);
 				$storage = $foo->storage();
