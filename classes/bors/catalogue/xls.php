@@ -90,7 +90,50 @@ class bors_catalogue_xls extends bors_object
 	}
 
 	function _order_def() { return 'title'; }
-	function _where_def() { return array(); }
+
+	function _where_def()
+	{
+		$join_class = $this->get('inner_join_filter');
+		$join_type = 'inner';
+		if(!$join_class)
+		{
+			$join_class = $this->get('join_counter_class');
+			$join_type = 'left';
+		}
+
+		if($join_class)
+		{
+			if(preg_match('/^(\w+)\((\w+)\)$/', $join_class, $m))
+			{
+				$inner_field = $m[2];
+				$join_class = $m[1];
+			}
+			else
+				$inner_field = bors_core_object_defaults::item_name($this->main_class()).'_id';
+
+			$db_name = bors_lib_orm::db_name($join_class);
+			$table_name = bors_lib_orm::table_name($join_class);
+
+			if($this->get('counts_in_list'))
+			{
+				if($join_type == 'inner')
+				{
+					$where[$join_type.'_join'] = "`$db_name`.`$table_name` ON ({$this->main_class()}.id = $inner_field)";
+					$where['group'] = $inner_field;
+					$where['*set'] = 'COUNT(*) AS `group_count`';
+				}
+				else
+					$where['*set'] = "'$join_class' AS `b_counter_class`";
+			}
+			else
+				$where[] = "{$this->main_class()}.id IN (SELECT $inner_field FROM `$db_name`.`$table_name`)";
+
+		}
+		else
+			$this->set_attr('__no_join', true);
+
+		return $where;
+	}
 
 	function _title_def()
 	{
@@ -106,6 +149,7 @@ class bors_catalogue_xls extends bors_object
 
 		$where = $this->where();
 		$where['order'] = $this->get('order');
+//		var_dump($where); exit();
 		return bors_each($class_name, $where);
 	}
 }
