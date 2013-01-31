@@ -4,7 +4,7 @@
 	@object: ctime2 = bors_time(create_time)
 */
 
-class bors_tests_object_db6 extends base_object_db
+class bors_tests_object_db6 extends bors_object_db
 {
 	function storage_engine() { return 'bors_storage_mysql'; }
 

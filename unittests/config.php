@@ -17,7 +17,6 @@ if(!getenv('BORS_UNITTEST_PROJECT_NAME'))
 	config_set('debug.show_variables', true);
 
 	config_set('mysql_tables_autocreate', true);
-	config_set('smarty3_enable', true);
 
 	require_once(dirname(__FILE__).'/config-host.php');
 }

@@ -5,7 +5,7 @@ class bors_tests_object_db6_unittest extends PHPUnit_Framework_TestCase
 	public function testObject()
 	{
 		$class = 'bors_tests_object_db6';
-		$object = object_load($class, -12345);
+		$object = bors_load($class, -12345);
         $this->assertNull($object);
 		$object = object_new_instance($class, array(
 			'id' => '123',
@@ -14,14 +14,14 @@ class bors_tests_object_db6_unittest extends PHPUnit_Framework_TestCase
 		$object->store();
         $this->assertNotNull($object);
 
-		$first = objects_first($class, array('title' => 'test'));
+		$first = bors_find_first($class, array('title' => 'test'));
         $this->assertNotNull($first);
         $this->assertEquals('123', $first->id());
 		$time = '123456789';
         $first->set_create_time($time, true);
         $first->store();
 
-		$object = objects_first($class, array('create_time' => $time));
+		$object = bors_find_first($class, array('create_time' => $time));
         $this->assertNotNull($object);
         $this->assertEquals('123', $object->id());
 
@@ -48,9 +48,8 @@ class bors_tests_object_db6_unittest extends PHPUnit_Framework_TestCase
 
 	public function setUp()
 	{
-		$se = call_user_func(array('bors_tests_object_db6', 'storage_engine'));
-		$se = object_load($se);
-		$se->drop_table('bors_tests_object_db6');
-		$se->create_table('bors_tests_object_db6');
+		$storage = bors_foo('bors_tests_object_db6')->storage();
+		$storage->drop_table('bors_tests_object_db6');
+		$storage->create_table('bors_tests_object_db6');
 	}
 }

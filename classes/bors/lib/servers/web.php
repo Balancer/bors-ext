@@ -311,8 +311,6 @@ class bors_lib_servers_web
 					$deb .= "cache static expire = ". date('r', time()+$cs)."\n";
 			}
 
-			$deb .= "smarty = ".(config('smarty3_enable') ? 3 : 2)."\n";
-
 			if($deb_vars = debug_vars_info())
 			{
 				$deb .= "\n=== debug vars: ===\n";
