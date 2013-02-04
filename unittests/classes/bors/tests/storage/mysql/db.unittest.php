@@ -41,8 +41,7 @@ class bors_tests_storage_mysql_db_unittest extends PHPUnit_Framework_TestCase
 
 	public function setUp()
 	{
-		$se = call_user_func(array('bors_tests_storage_mysql_db', 'storage_engine'));
-		$se = new $se;
+		$se = bors_foo('bors_tests_storage_mysql_db')->storage();
 		$se->drop_table('bors_tests_storage_mysql_db');
 		$se->create_table('bors_tests_storage_mysql_db');
 	}

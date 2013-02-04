@@ -90,7 +90,8 @@ class lcml_tag_pair_itab extends bors_lcml_tag_pair
 
 		$bbcode = "[itab]{$bbtext}[/itab]";
 
-		$direct_html = lcml_tag_pair_itab::html($bbtext);
+		$x = new lcml_tag_pair_itab(NULL);
+		$direct_html = $x->html($bbtext);
 
 		$suite->assertRegExp('!<tr>.*<th>Самолёт</th>.*<th>Нормальная взлётная масса, кг</th>.*</tr>.*<tr>.*<td>Су-27</td>!s', $direct_html);
 		$suite->assertRegExp('!<tr>.*<td>Су-27</td>.*<td>22500</td>.*</tr>.*<tr>.*<td>МиГ-29</td>!s', $direct_html);

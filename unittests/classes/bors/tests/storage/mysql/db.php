@@ -1,6 +1,6 @@
 <?php
 
-class bors_tests_storage_mysql_db extends base_object_db
+class bors_tests_storage_mysql_db extends bors_object_db
 {
 	function storage_engine() { return 'bors_storage_mysql'; }
 	function db_name() { return config('unit-test.mysql.db'); }

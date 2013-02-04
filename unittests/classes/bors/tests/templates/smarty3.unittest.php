@@ -2,9 +2,9 @@
 
 class bors_tests_templates_smarty3_unittest extends PHPUnit_Framework_TestCase
 {
-    public function test($class = 'bors_tests_templates_smarty3')
+    public function test()
     {
-		$page = bors_load($class, NULL);
+		$page = bors_load('bors_tests_templates_ext_smarty3', NULL);
         $this->assertNotNull($page);
 
 		$body = explode("\n", $page->body());

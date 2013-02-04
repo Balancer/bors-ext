@@ -1,6 +1,6 @@
 <?php
 
-class storages_mysql_unittest_object extends base_object_db
+class storages_mysql_unittest_object extends bors_object_db
 {
 	function db_name() { return config('unit-test.mysql.db'); }
 	function table_name() { return 'storages_mysql_unittest_objects'; }

@@ -12,7 +12,7 @@ class bors_templates_drupal7
 		return NULL;
 	}
 
-	function fetch($template, $data)
+	static function fetch($template, $data)
 	{
 		$htroot = preg_replace('!^.+htdocs/!', '/', $template);
 

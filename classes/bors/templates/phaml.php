@@ -7,7 +7,7 @@
 
 class bors_templates_phaml
 {
-	function fetch($template, $data)
+	static function fetch($template, $data)
 	{
 		require_once config('phamlp_path').'/haml/HamlParser.php';
 
