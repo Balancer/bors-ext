@@ -4,6 +4,9 @@ class bors_tests_storage_mysql_db_unittest extends PHPUnit_Framework_TestCase
 {
     public function testObject()
     {
+		if(config('phpunit.skip_db'))
+			return;
+
 		$object = bors_load('bors_tests_storage_mysql_db', -12345);
         $this->assertNull($object);
 		$object = object_new_instance('bors_tests_storage_mysql_db', array(
@@ -41,6 +44,9 @@ class bors_tests_storage_mysql_db_unittest extends PHPUnit_Framework_TestCase
 
 	public function setUp()
 	{
+		if(config('phpunit.skip_db'))
+			return;
+
 		$se = bors_foo('bors_tests_storage_mysql_db')->storage();
 		$se->drop_table('bors_tests_storage_mysql_db');
 		$se->create_table('bors_tests_storage_mysql_db');

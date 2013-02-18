@@ -4,6 +4,9 @@ class bors_tests_object_db6_unittest extends PHPUnit_Framework_TestCase
 {
 	public function testObject()
 	{
+		if(config('phpunit.skip_db'))
+			return;
+
 		$class = 'bors_tests_object_db6';
 		$object = bors_load($class, -12345);
         $this->assertNull($object);
@@ -48,6 +51,9 @@ class bors_tests_object_db6_unittest extends PHPUnit_Framework_TestCase
 
 	public function setUp()
 	{
+		if(config('phpunit.skip_db'))
+			return;
+
 		$storage = bors_foo('bors_tests_object_db6')->storage();
 		$storage->drop_table('bors_tests_object_db6');
 		$storage->create_table('bors_tests_object_db6');

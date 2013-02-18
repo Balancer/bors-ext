@@ -4,6 +4,9 @@ class loaders_yaml_unittest extends PHPUnit_Framework_TestCase
 {
     public function test()
     {
+		if(config('phpunit.skip_db'))
+			return;
+
 		$db = new driver_mysql(config('unit-test.mysql.db'));
 		$db->query('DROP TABLE IF EXISTS bors_tests_yaml_test1s;');
 

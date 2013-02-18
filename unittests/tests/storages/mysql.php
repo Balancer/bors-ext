@@ -20,6 +20,9 @@ class storages_mysql_unittest extends PHPUnit_Framework_TestCase
 {
     public function test()
     {
+		if(config('phpunit.skip_db'))
+			return;
+
 		$db = new driver_mysql(config('unit-test.mysql.db'));
 		$db->query('DROP TABLE IF EXISTS storages_mysql_unittest_objects;');
 		$cls = 'storages_mysql_unittest_object';

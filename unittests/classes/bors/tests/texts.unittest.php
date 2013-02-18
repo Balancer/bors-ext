@@ -1,5 +1,7 @@
 <?php
 
+require_once('inc/texts.php');
+
 class bors_tests_texts_unittest extends PHPUnit_Framework_TestCase
 {
 	public function test_bors_close_tags()

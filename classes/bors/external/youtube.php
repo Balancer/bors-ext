@@ -107,10 +107,17 @@ class bors_external_youtube extends bors_object
 
 		$gdata_url = "http://gdata.youtube.com/feeds/api/videos/".$this->id();
 		$html = bors_lib_http::get_cached($gdata_url, 86400*7);
-		$doc = new DOMDocument;
-//		echo "\n=================\n$html\n=================\n";
-		@$doc->loadHTML($html);
-		return $this->__setc($doc->getElementsByTagName("title")->item(0)->nodeValue);
+		if(class_exists('DOMDocument'))
+		{
+			$doc = new DOMDocument;
+//			echo "\n=================\n$html\n=================\n";
+			@$doc->loadHTML($html);
+			$title = $doc->getElementsByTagName("title")->item(0)->nodeValue;
+		}
+		else
+			$title = $this->id();
+
+		return $this->__setc($title);
 	}
 
 	function html(&$params=array())

@@ -1,4 +1,9 @@
 #!/bin/bash
 
 clear
-phpunit unittests-run.php
+if [ -e ~/bin/phpunit.phar ]; then
+	~/bin/phpunit.phar unittests-run.php
+else
+	phpunit unittests-run.php
+fi
+

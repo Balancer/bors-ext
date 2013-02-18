@@ -6,15 +6,19 @@ class bors_tests_xml_array2xmlwp_unittest extends PHPUnit_Framework_TestCase
     {
 		require_once('inc/xml/array2xml_wp.php');
 
-		for($i=1; $i<=2; $i++)
+		$this->assertTrue(function_exists('array2xml'));
+
+		if(function_exists('array2xml'))
 		{
-			$base = 'a2xwp'.sprintf('%02d', $i);
-			require(dirname(__FILE__)."/$base.php");
-			$xml = file_get_contents(dirname(__FILE__)."/$base.xml");
+			for($i=1; $i<=2; $i++)
+			{
+				$base = 'a2xwp'.sprintf('%02d', $i);
+				require(dirname(__FILE__)."/$base.php");
+				$xml = file_get_contents(dirname(__FILE__)."/$base.xml");
 
-			$x = array2xml_wp($data);
-    	    $this->assertEquals($xml, $x);
+				$x = array2xml_wp($data);
+    		    $this->assertEquals($xml, $x);
+			}
 		}
-
     }
 }
