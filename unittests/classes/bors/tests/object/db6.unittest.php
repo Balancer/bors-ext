@@ -30,7 +30,7 @@ class bors_tests_object_db6_unittest extends PHPUnit_Framework_TestCase
 
         $this->assertEquals('real_id_field', $object->id_field());
         $this->assertEquals('real_title_field', $object->title_field());
-        $this->assertEquals('bors_tests_object_db6s', $object->table_name());
+        $this->assertEquals('test_object_db6s', $object->table_name());
 
 		// Тестим юникод
 		$object = bors_new($class, array(
