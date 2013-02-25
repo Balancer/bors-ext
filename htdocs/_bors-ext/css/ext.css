@@ -28,3 +28,6 @@ li.type-department{background-image:url(/_bors-ext/i16/department.gif)}
 
 li.type-banned	{background-image: url(/_bors-ext/i16/object-types/banned.gif)}
 li.type-cabinet	{background-image: url(/_bors-ext/i16/object-types/cabinet.png)}
+li.type-excel	{background-image: url(/_bors/i16/file-types/excel.png)}
+li.type-link	{background-image: url(/_bors-ext/i16/object-types/link.png)}
+li.type-person	{background-image: url(/_bors-ext/i16/object-types/person.png)}
