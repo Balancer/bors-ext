@@ -126,6 +126,7 @@ class livestreet_native_user
 
 	static function update_country($action, $user)
 	{
+		/*
 		if($user->getProfileCountry())
 		{
 			if (!($oCountry=$action->User_GetCountryByName($user->getProfileCountry())))
@@ -137,10 +138,12 @@ class livestreet_native_user
 
 			$action->User_SetCountryUser($oCountry->getId(), $user->getId());
 		}
+		*/
 	}
 
 	static function update_city($action, $user)
 	{
+		/*
 		if($user->getProfileCity())
 		{
 			if (!($oCity=$action->User_GetCityByName($user->getProfileCity())))
@@ -152,5 +155,6 @@ class livestreet_native_user
 
 			$action->User_SetCityUser($oCity->getId(), $user->getId());
 		}
+		*/
 	}
 }
