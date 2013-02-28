@@ -6,6 +6,8 @@ class livestreet_user extends bors_object_db
 	function db_name() { return 'WEBAPPS_LIVESTREET'; }
 	function table_name() { return 'ls_user'; }
 
+	function ignore_on_new_instance() { return true; }
+
 	function table_fields()
 	{
 		return array(
