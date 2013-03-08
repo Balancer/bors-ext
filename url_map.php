@@ -6,4 +6,6 @@ bors_url_map(array(
 	'.* => bors_htdocs_loader',
 
 	'/_bors/ajax/actionmod/(.+) => bors_ajax_actionmod_actor(1)',
+
+	'/_bors/callback/(\w+)/? => bors_external_callback(1)',
 ));
