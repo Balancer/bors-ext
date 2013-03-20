@@ -7,7 +7,7 @@
 class bors_page_dropbox extends bors_page
 {
 	function can_be_empty() { return false; }
-	function loaded() { return (bool) $this->object(); }
+	function is_loaded() { return (bool) $this->object(); }
 
 	function title() { return $this->object()->title(); }
 	function body() { return $this->object()->body(); }

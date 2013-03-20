@@ -3,7 +3,7 @@
 class bors_htdocs_loader extends bors_page
 {
 	function can_be_empty() { return false; }
-	function loaded()
+	function is_loaded()
 	{
 		if(!config('auto.dirlist_enable'))
 			return false;

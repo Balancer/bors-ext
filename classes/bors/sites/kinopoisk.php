@@ -2,7 +2,7 @@
 
 class bors_sites_kinopoisk extends bors_object
 {
-	function loaded()
+	function is_loaded()
 	{
 		if($this->__havefc())
 			return $this->__lastc();
