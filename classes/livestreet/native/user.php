@@ -42,6 +42,12 @@ class livestreet_native_user
 
 		$ls_user = $action->User_GetUserById($user_id);
 
+		if(!$ls_user)
+		{
+			debug_hidden_log('livestreet-error', "Unknown ls_user with id=$user_id");
+			return;
+		}
+
 		if($password)
 			$ls_user->setPassword(func_encrypt($password));
 
