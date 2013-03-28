@@ -2,22 +2,37 @@
 
 class bors_data_lists_json extends bors_json
 {
-	function can_read() { return bors_lib_object::get_foo($this->id(), 'can_read'); }
-	function access() { return bors_lib_object::get_foo($this->id(), 'access'); }
+	function can_read() { return bors_lib_object::get_foo($this->list_class_name(), 'can_read'); }
+	function access() { return bors_lib_object::get_foo($this->list_class_name(), 'access'); }
+
+	function list_class_name()
+	{
+		$list_class_name = $this->id();
+		if(!preg_match('/^\w+$/', $list_class_name))
+			$list_class_name = bors()->request()->data('class');
+
+		return $list_class_name;
+	}
 
 	function data()
 	{
 //		file_put_contents('/tmp/json.log', print_r($_SERVER, true), FILE_APPEND);
 
-		$list_class_name = $this->id();
+		$list_class_name = $this->list_class_name();
 
 //	q=Шере&p=1&s=10&contentType=application/json; charset=utf-8
+
+		$r = bors()->request();
 
 		$find = bors_find($list_class_name);
 
 		if($q = bors()->request()->data('q'))
-			$find->like('title', $q);
-
+		{
+			if($search_properties = $r->data('search'))
+				$find->like_any(explode(',', $search_properties), $q);
+			else
+				$find->like('title', $q);
+		}
 //			file_put_contents('/tmp/json.log', $q, FILE_APPEND);
 
 		$total = $find->count();
@@ -27,11 +42,30 @@ class bors_data_lists_json extends bors_json
 		else
 			$find->limit(200);
 
-		$find->order('title');
+		$find->order($r->data('order', 'title'));
 
 		$result = array();
-		foreach($find->all() as $x)
-			$result[] = array('id' => $x->id(), 'name' => $x->title());
+
+		if($tpl = $r->data('tpl'))
+		{
+			$tpl = json_decode($tpl, true);
+			foreach($find->all() as $x)
+			{
+				$r2 = array();
+				foreach($tpl as $ret_f => $obj_f)
+					$r2[$ret_f] = $x->get($obj_f);
+				$result[] = $r2;
+			}
+		}
+		else
+			foreach($find->all() as $x)
+				$result[] = array('id' => $x->id(), 'name' => $x->title());
+
+		if($r->data('results') == 'root')
+			return $result;
+
+		if($rn = $r->data('results'))
+			return array($rn => $result);
 
 		return array('results' => $result, 'total' => $total);
 	}
