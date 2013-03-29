@@ -91,7 +91,11 @@
 					<ul class="nav pull-right">
 						<li class="divider-vertical"></li>
 						<li class="dropdown">
-							<a class="dropdown-toggle" href="{$me->url()}" data-toggle="dropdown"><i class="icon-user icon-white"></i> {$me->title()} <strong class="caret"></strong></a>
+							<a class="dropdown-toggle" href="#" data-toggle="dropdown"><i class="icon-user icon-white"></i> {$me->title()} <strong class="caret"></strong></a>
+							<ul class="dropdown-menu">
+								<li><a href="{$me->url()}">Профиль</a></li>
+								<li><a href="/?logout">Выход</a></li>
+							</ul>
 						</li>
 					</ul>
 {/if}
