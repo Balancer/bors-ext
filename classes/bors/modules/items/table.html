@@ -1,4 +1,4 @@
-<table class="btab w100p">
+<table class="{$table_css}">
 <thead>
 <tr>
 {foreach $item_fields as $prop_name => $prop_title}
@@ -7,7 +7,7 @@
 </tr>
 </thead>
 <tbody>
-{foreach from=$items item="x"}
+{foreach $items as $id => $x}
 <tr{if $x->get('items_list_table_row_class')} class="{join(' ', $x->get('items_list_table_row_class'))}"{/if}>
 	{foreach $item_fields as $prop_name => $prop_title}
 		<td>{$x->get($prop_name)}</td>

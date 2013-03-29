@@ -5,7 +5,8 @@ class bors_modules_items_table extends bors_module
 	function main_class()
 	{
 		$items = $this->args('items');
-		return $items[0]->class_name();
+		$first = is_array($items) ? array_pop($items) : $items->pop();
+		return $first->class_name();
 	}
 
 	function body_data()
@@ -17,7 +18,10 @@ class bors_modules_items_table extends bors_module
 			if(!$foo->get('skip_auto_admin_new'))
 				$new_link_title = $foo->class_title_vp();
 
-		$fields = $this->get('item_fields');
+		$fields = $this->args('item_fields');
+		if(!$fields)
+			$fields = $this->get('item_fields');
+
 		if(!$fields)
 			$fields = $foo->item_list_admin_fields();
 
@@ -43,6 +47,7 @@ class bors_modules_items_table extends bors_module
 			'new_link_title' => $new_link_title,
 			'item_fields' => $parsed_fields,
 			'admin_search_url' => $this->page() > 1 ? false : $this->get('admin_search_url'),
+			'table_css' => $this->args('table_css', 'bors_modules_items_table'),
 		));
 	}
 
