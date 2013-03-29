@@ -23,6 +23,17 @@
 
 	<!-- Le fav and touch icons -->
 	<link rel="shortcut icon" href="/favicon.ico">
+{foreach from=$js_include item="s"}
+	<script type="text/javascript" src="{$s}"></script>
+{/foreach}
+
+{if not empty($javascript)}
+	<script type="text/javascript"><!--
+{foreach from=$javascript item="s"}
+{$s}
+{/foreach}
+--></script>
+{/if}
 </head>
 
 <body>
@@ -110,10 +121,6 @@
 {/if}
 
 	</div> <!-- /container -->
-
-{foreach from=$js_include item="s"}
-	<script type="text/javascript" src="{$s}"></script>
-{/foreach}
 
 </body>
 
