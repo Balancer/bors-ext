@@ -6,12 +6,17 @@ class bors_modules_items_table extends bors_module
 	{
 		$items = $this->args('items');
 		$first = is_array($items) ? array_pop($items) : $items->pop();
-		return $first->class_name();
+		return $first ? $first->class_name() : NULL;
 	}
 
 	function body_data()
 	{
-		$foo = bors_foo($this->main_class());
+		$class_name = $this->main_class();
+
+		if(!$class_name)
+			return array();
+
+		$foo = bors_foo($class_name);
 
 		$new_link_title = false;
 		if(!$this->get('skip_auto_admin_new'))
