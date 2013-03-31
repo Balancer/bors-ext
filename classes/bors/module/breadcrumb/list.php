@@ -50,7 +50,10 @@ class bors_module_breadcrumb_list extends bors_module
 				continue;
 			}
 
-			$parent_obj = object_load($parent);
+			if(is_object($parent))
+				$parent_obj = $parent;
+			else
+				$parent_obj = object_load($parent);
 //			echo "p($obj): $parent -> $parent_obj<br/>";
 			if(!$parent_obj || $parent_obj->internal_uri() == $obj->internal_uri())
 				continue;
