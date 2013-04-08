@@ -4,9 +4,9 @@ class bors_page_meta_search extends bors_page_meta_main
 {
 	function title() { return ec('Поиск по ').$this->foo_object()->class_title_dpm(); }
 	function nav_name() { return ec('поиск'); }
-	function is_auto_url_mapped_class() { return true; }
+	function auto_map() { return true; }
 
-	function main_class() { bors_throw(ec('Не определён класс для поиска')); }
+	function _main_class_def() { bors_throw(ec('Не определён класс для поиска')); }
 
 	function q() { return trim(urldecode(@$_GET['q'])); }
 	function qfc()
@@ -91,14 +91,32 @@ class bors_page_meta_search extends bors_page_meta_main
 		if($this->qfc())
 			$qfc = "'".addslashes($this->qfc())."%'";
 
+		$any = @$_GET['w'] == 'a';
+
 		$qq = array();
 
 		$main_class = $this->main_class();
 		$foo = new $main_class(NULL);
 
-		$properties = $foo->get('searchable_properties', 'title');
+		if($qfc)
+			$properties = $foo->get('searchable_alpha_properties', array());
+
+		if(empty($properties))
+			$properties = $foo->get('searchable_title_properties', array());
+
+		$all_properties   = $foo->get('searchable_properties', array());
+
 		if(!is_array($properties))
 			$properties = explode(' ', $properties);
+
+		if(!is_array($all_properties))
+			$all_properties = explode(' ', $all_properties);
+
+		if($any)
+			$properties += $all_properties;
+
+		if(!$properties)
+			bors_throw("Не указаны поля для поиска (searchable_title_properties)");
 
 		foreach($properties as $p)
 		{
