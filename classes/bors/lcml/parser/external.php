@@ -16,6 +16,9 @@ class bors_lcml_parser_external extends bors_lcml_parser
 		if(stripos($text, 'fotki.yandex') !== false)
 			$text = bors_external_yandex_fotki::parse_links($text);
 
+		if(stripos($text, 'googleusercontent') !== false)
+			$text = bors_external_picasa::parse_links($text);
+
 		return $text;
 	}
 
