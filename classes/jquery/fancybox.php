@@ -3,6 +3,8 @@
 /*
 	http://fancyapps.com/fancybox/#license
 
+	Посмотреть на тему прямых ссылок: http://wordpress.org/support/topic/plugin-easy-fancybox-display-direct-link-in-title
+
 	Альтернативы на изучение:
 	http://www.no-margin-for-errors.com/projects/prettyphoto-jquery-lightbox-clone/#prettyPhoto
 	http://habrahabr.ru/search/?q=%5Blightbox%5D&target_type=posts

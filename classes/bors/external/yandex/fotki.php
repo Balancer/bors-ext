@@ -52,8 +52,11 @@ class bors_external_yandex_fotki
 
 		$title = $info['title'];
 
+		if(preg_match('/_orig$/', $orig['href']))
+			$orig['href'] .= '.jpg';
+
 		return "<div class=\"rs_box mtop8\" style=\"width: {$xl['width']}px;\">"
-			."<a href=\"{$orig['href']}\" class=\"cloud-zoom\" id=\"zoom-".rand()."\" rel=\"position:'inside'\">"
+			."<a href=\"{$orig['href']}\" class=\"cloud-zoom thumbnailed-image-link\" id=\"zoom-".rand()."\" rel=\"position:'inside'\">"
 			."<img src=\"{$xl['href']}\" alt=\"[image]\" title=\"".htmlspecialchars($title)."\" width=\"{$xl['width']}\" height=\"{$xl['height']}\" />"
 			."</a><br/>"
 			."<small class=\"inbox\"><a href=\"{$info['links']['self']}\">{$title}</a> @&nbsp;<a href=\"{$info['links']['album']}\">Яндекс.Фотки</a></small>"
