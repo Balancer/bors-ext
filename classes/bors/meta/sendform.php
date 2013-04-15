@@ -47,8 +47,9 @@ class bors_meta_sendform extends bors_page
 
 		$html[] = $form->html_close();
 
-		foreach($notes as $id => $note)
-			$html[] = '<div style="padding-left: 20px;"><span style="color:red">'.str_repeat('*', $id).'</span> &mdash; '.$note."</div>";
+		if($notes)
+			foreach($notes as $id => $note)
+				$html[] = '<div style="padding-left: 20px;"><span style="color:red">'.str_repeat('*', $id).'</span> &mdash; '.$note."</div>";
 
 		return join("\n", $html);
 	}
