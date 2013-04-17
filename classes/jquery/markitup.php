@@ -6,12 +6,13 @@ class jquery_markitup
 	{
 		template_jquery();
 		$base = config('jquery.markitup.base');
+		$set  = config('jquery.markitup.sets.bbcode');
 
 		template_css("$base/skins/simple/style.css");
-		template_css("/_bors3rdp/jquery/plugins/".config('jquery.markitup.sets.bbcode')."/style.css");
+		template_css("$set/style.css");
 
 		template_js_include("$base/jquery.markitup.js");
-		template_js_include("/_bors3rdp/jquery/plugins/".config('jquery.markitup.sets.bbcode')."/set.js");
+		template_js_include("$set/set.js");
 
 		template_js("jQuery(document).ready(function() {
 jQuery('$id').markItUp($settings).css('height', function() {
