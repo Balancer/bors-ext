@@ -1,5 +1,7 @@
 <?php
 
+// Тестировать можно на http://admin.aviaport.wrk.ru/job/vacancies/3737/
+
 class jquery_markitup
 {
 	static function appear($id, $settings = 'mySettings')
