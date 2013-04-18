@@ -39,8 +39,13 @@ class bors_external_youtube extends bors_object
 //		var_dump($text);
 //		$text = preg_replace('!<a href="https?://[^/]+flickr\.com/photos/\w+@\w+/(\d+)/"[^>]+><img src="[^"]+static.flickr.com/[^"]+\.jpg"[^>]+/></a>!is', '[flickr]$1[/flickr]', $text);
 
+		// <iframe width="560" height="315" src="http://www.youtube.com/embed/ROrpKx3aIjA" frameborder="0" allowfullscreen></iframe>
+		// http://www.balancer.ru/g/p3124994
+		$text = preg_replace('!<iframe width="\d+" height="\d+" src="http://www\.youtube\.com/embed/([^"]+)"[^>]+></iframe>!ie', "bors_external_youtube::id2bb('$1');", $text);
+
 		$text = preg_replace('!^\s*http://youtu\.be/([\w\-]+)\?t=(\w+)\s*$!mie', "bors_external_youtube::id2bb('$1', '$2');", $text);
 		$text = preg_replace('!^\s*http://youtu\.be/([\w\-]+)/?\s*$!mie', "bors_external_youtube::id2bb('$1');", $text);
+
 
 		// [url=http://www.youtube.com/watch?v=a8C1iU-xAog]http://www.youtube.com/watch?v=a8C1iU-xAog[/url]
 		// [url=http://www.youtube.com/watch?v=JkpO2BliOVg]http://www.youtube.com/watch?v=JkpO2BliOVg[/url]
