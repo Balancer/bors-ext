@@ -1,7 +1,15 @@
 <?php
 
 /*
-	http://fancyapps.com/fancybox/#license
+	==============================================================
+	fancyBox is a tool that offers a nice and elegant way to add
+	zooming functionality for images, html content and multi-media
+	on your webpages.
+	==============================================================
+
+	Красивый jQ-плагин для просмтра картинок с зумом.
+
+	http://fancyapps.com/fancybox/
 
 	Посмотреть на тему прямых ссылок: http://wordpress.org/support/topic/plugin-easy-fancybox-display-direct-link-in-title
 
@@ -78,6 +86,6 @@ class jquery_fancybox
 		// Пример применения на все картинки: http://jsfiddle.net/bG4gR/
 		// $("a[href$='.jpg'],a[href$='.png'],a[href$='.gif']").attr('rel', 'gallery').fancybox();
 //		jquery::on_ready("$(\"a[href\$='.jpg'],a[href\$='.png'],a[href\$='.gif']\").attr(\"rel\", \"gallery\").fancybox(".($attrs?$jsattrs:'').")", $attr);
-		jquery::on_ready("$('.thumbnailed-image-link').attr(\"rel\", \"gallery\").fancybox(".($attrs?$jsattrs:'').")", $attr);
+		jquery::on_ready("$('.thumbnailed-image-link').attr(\"rel\", \"gallery\").fancybox(".($attrs?$jsattrs:'').")");
 	}
 }
