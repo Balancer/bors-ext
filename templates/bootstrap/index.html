@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ru">
 <head>
 	<meta charset="utf-8">
 	<title>{$this->browser_title()}</title>
@@ -58,9 +58,16 @@
 {/foreach}
 --></script>
 {/if}
+
+{foreach item=s from=$head_append}
+{$s}
+{/foreach}
 </head>
 
 <body>
+{* via http://habrahabr.ru/post/150328/ *}
+<!--[if lt IE 9]><script src="http://phpbbex.com/oldies/oldies.js" charset="utf-8"></script><![endif]-->
+
 	<div class="navbar navbar-inverse navbar-fixed-top">
 		<div class="navbar-inner">
 			<div class="container">
