@@ -6,10 +6,22 @@
 
 class jquery
 {
-	static function load()
+	static function load($link = NULL)
 	{
-		// Со временем поменять местами
-		template_jquery();
+		static $is_loaded = false;
+		if($is_loaded)
+			return;
+
+		if(!$link)
+		{
+			if(config('jquery.use_cdn'))
+				$link = 'http://code.jquery.com/jquery-'.config('jquery.version').'.min.js';
+			else
+				$link = 'pre:/_bors-3rd/bower/components/jquery/jquery.min.js';
+		}
+
+		bors_use($link);
+		$is_loaded = true;
 	}
 
 	static function plugin($name)
@@ -51,5 +63,25 @@ class jquery
 		$html = ""; // jquery::use_html();
 		$html .= "<script type=\"text/javascript\" rel=\"test123\"><!--\n\$(document).ready(function() {\n{$js_code}\n});\n--></script>\n";
 		return $html.'<!--new123-->';
+	}
+
+	static function chrome_alt_fix()
+	{
+		return;
+
+//		template_js('function showAlt(){$(this).replaceWith(this.alt)}');
+//		template_js('function addShowAlt(selector){$(selector).error(showAlt).attr("src", $(selector).src)}');
+
+//		self::on_ready('addShowAlt("img");');
+
+		template_js_include("http://www.balancer.ru/_bors-ext/js/detect-image-enabled.js");
+
+		self::on_ready('if(1) {
+//		$.getScript("http://www.balancer.ru/_bors-ext/js/detect-image-enabled.js");
+		if(top.is_image_disabled) {
+			$("img[alt]").filter(function(){return $(this).attr("alt")}).replaceWith(function(){
+				alt = $(this).attr("alt")
+				return alt
+			})}}');
 	}
 }
