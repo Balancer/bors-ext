@@ -11,6 +11,9 @@ class wysibb
 	{
 		jquery::load();
 		jquery::plugin(config('jquery.wysibb.path').'/jquery.wysibb.min.js');
-		jquery::on_ready("\$($element).wysibb();");
+		jquery::on_ready("\$('$element').wysibb();");
+		$theme = "/_bors-3rd/bower/components/jqjquery-wysibb/theme/default/wbbtheme.css";
+//		$theme = http://cdn.wysibb.com/css/default/wbbtheme.css;
+		bors_page::add_template_data_array('head_append', "<link rel=\"stylesheet\" href=\"{$theme}\" />");
 	}
 }
