@@ -16,11 +16,11 @@ class jquery_markitup
 		template_js_include("$base/jquery.markitup.js");
 		template_js_include("$set/set.js");
 
-		template_js("jQuery(document).ready(function() {
+		jquery::on_ready("
 jQuery('$id').markItUp($settings).css('height', function() {
 	var h = jQuery(this).css('line-height').match(/(\d+)(.*)/)
 	return (h[1]*jQuery(this).attr('rows'))+h[2]
-}) ; });");
+});");
 
 //	jQuery('#bbcode').height(300);
 	}
