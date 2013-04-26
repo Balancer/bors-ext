@@ -203,6 +203,8 @@
 		{include file=$bottom_counters}
 {/if}
 
+{block name="copyright"}{/block}
+
 	</div> <!-- /container -->
 
 <script type="text/javascript"><!--
