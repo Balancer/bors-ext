@@ -37,7 +37,7 @@ class bors_meta_sendform extends bors_page
 
 			$title = popval($params, 'title');
 			if(preg_match('/^(.+)\[(\d+)\]$/', $title, $m))
-				// Голубой цвет используется на http://mbfi.wrk.ru/callback/
+				// Голубой цвет используется на mbfi/callback
 				$title = $m[1].'&nbsp;<span style="color:blue">'.str_repeat('*', $m[2]).'</span>';
 			set_def($params, 'title', $title);
 
@@ -50,9 +50,38 @@ class bors_meta_sendform extends bors_page
 
 		if($notes)
 			foreach($notes as $id => $note)
-				// Голубой цвет используется на http://mbfi.wrk.ru/callback/
+				// Голубой цвет используется на mbfi/callback
 				$html[] = '<div style="padding-left: 20px;"><span style="color:blue">'.str_repeat('*', $id).'</span> &mdash; '.$note."</div>";
 
 		return join("\n", $html);
+	}
+
+	// mbfi/callback
+	function field_string($req_field_name, $data)
+	{
+		foreach($this->form_fields() as $field_name => $params)
+		{
+			if(!is_array($params))
+			{
+				$params = array(
+					'title'	=> $params,
+					'type'	=> 'string',
+					'value' => NULL,
+				);
+			}
+
+			set_def($params, 'name', $field_name);
+			set_def($params, 'type', 'string');
+
+			if($field_name == $req_field_name)
+			{
+				$list = defval($params, 'list');
+//				var_dump($data[$req_field_name], $list, $list[$data[$req_field_name]]);
+				if(is_array($list))
+					return $list[$data[$req_field_name]];
+
+				return $data[$req_field_name];
+			}
+		}
 	}
 }
