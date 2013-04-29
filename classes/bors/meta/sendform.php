@@ -37,7 +37,8 @@ class bors_meta_sendform extends bors_page
 
 			$title = popval($params, 'title');
 			if(preg_match('/^(.+)\[(\d+)\]$/', $title, $m))
-				$title = $m[1].'&nbsp;<span style="color:red">'.str_repeat('*', $m[2]).'</span>';
+				// Голубой цвет используется на http://mbfi.wrk.ru/callback/
+				$title = $m[1].'&nbsp;<span style="color:blue">'.str_repeat('*', $m[2]).'</span>';
 			set_def($params, 'title', $title);
 
 			$html[] = $form->element_html_smart($params);
@@ -49,7 +50,8 @@ class bors_meta_sendform extends bors_page
 
 		if($notes)
 			foreach($notes as $id => $note)
-				$html[] = '<div style="padding-left: 20px;"><span style="color:red">'.str_repeat('*', $id).'</span> &mdash; '.$note."</div>";
+				// Голубой цвет используется на http://mbfi.wrk.ru/callback/
+				$html[] = '<div style="padding-left: 20px;"><span style="color:blue">'.str_repeat('*', $id).'</span> &mdash; '.$note."</div>";
 
 		return join("\n", $html);
 	}
