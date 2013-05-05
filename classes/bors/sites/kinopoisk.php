@@ -15,7 +15,7 @@ class bors_sites_kinopoisk extends bors_object
 			'kinopoisk_url' => $url,
 		);
 
-		$page = bors_lib_http::get_cached($url);
+		$page = str_replace("\r", "", bors_lib_http::get_cached($url));
 //		file_put_contents(__DIR__.'/test.html', $page);
 
 /*
@@ -31,7 +31,7 @@ class bors_sites_kinopoisk extends bors_object
 		if(preg_match('!itemprop="alternativeHeadline">(.+?)</span>!', $page, $m))
 			$data['original_title'] = self::html_decode($m[1]);
 
-		if(preg_match('!<table class="info\s*">(.+?)</table>!s', $page, $t))
+		if(preg_match('!<table class="info[^>]+>(.+?)</table>!s', $page, $t))
 		{
 			foreach(explode("</tr>", $t[1]) as $r)
 			{
@@ -43,7 +43,7 @@ class bors_sites_kinopoisk extends bors_object
 		}
 
 		$roles = array();
-		if(preg_match('!В главных ролях:</span>(.*?)(</td>|<span class="title">)!s', $page, $t))
+		if(preg_match('!В главных ролях:</h4>(.*?)</ul>!s', $page, $t))
 		{
 			foreach(explode("\n", $t[1]) as $r)
 			{
@@ -63,25 +63,26 @@ class bors_sites_kinopoisk extends bors_object
 </tr>
 */
 
-		$countries = array();
-		if(empty($data['страна']) && preg_match('!страна</td>.*?<td(.+?)</td>!s', $page, $t))
+		$mld = array();
+		if(preg_match_all("!<tr[^>]*>\s*<td class=\"type\"\s*>(\S+)</td>\n\s*<td(.+?)</td>\s*</tr>!s", $page, $t, PREG_SET_ORDER))
 		{
-			foreach(explode("\n", $t[1]) as $r)
+			foreach($t as $tt)
 			{
-				if(preg_match('!>(.*?)</a>!', $r, $m))
-					$countries[] = self::html_decode($m[1]);
+				if(!empty($data[$tt[1]]))
+					continue;
+
+				foreach(explode("\n", $tt[2]) as $r)
+				{
+					if(preg_match('!>(.*?)</a>!', $r, $m))
+						$mld[] = self::html_decode($m[1]);
+				}
+
+				$data[$tt[1]] = join(', ', $mld);
 			}
-			$data['страна'] = join(', ', $countries);
 		}
 
-		if(preg_match('!<a href="/level/\d+/film/'.$film_id.'/" class="continue"[^>]+>\s+<span>([\d\.]+)</span>!si', $page, $m))
+		if(preg_match('!<span class="rating_ball">([\d\.]+)</span>!si', $page, $m))
 			$data['рейтинг'] = floatVal($m[1]);
-		elseif(preg_match('!<div class="div1"><a href=".+?" class="continue" style="background: url.+?; text-decoration: none">([\d\.]+)<span style=!si', $page, $m))
-			$data['рейтинг'] = $m[1];
-		elseif(preg_match('!<div style="color: #f60;.*?class="continue".*?xt-decoration: none">([\d\.]+)<span!si', $page, $m))
-			$data['рейтинг'] = $m[1];
-		elseif(preg_match('!<span>([\d\.]+)</span><span style="font:100 14px tahoma, verdana" itemprop="ratingCount">!si', $page, $m))
-			$data['рейтинг'] = $m[1];
 
 		if(preg_match('!IMDB:\s+([\d\.]+)\s+!si', $page, $m))
 			$data['IMDB'] = floatVal($m[1]);
@@ -114,7 +115,7 @@ class bors_sites_kinopoisk extends bors_object
 		elseif(preg_match('!Скорее всего, вы ищете:.+?href="http://www.kinopoisk.ru/level/1/film/(\d+)/sr/1/">([^<].+?)</a>.+?class="year">(\d{4})</span>.+?<span class="gray">(.+?)</span>!s', $search_page, $m))
 		{
 			$kinopoisk_id = intval($m[1]);
-			echo self::html_decode("{$m[2]} [".($m[4] ? "{$m[4]}, " : '' ) . "{$m[3]}]? [y/n/id]").' ';
+			echo self::html_decode("1: {$m[2]} [".($m[4] ? "{$m[4]}, " : '' ) . "{$m[3]}]? [y/n/id]").' ';
 			$cho = self::read();
 			if(is_numeric($cho))
 				$kinopoisk_id = $cho;
@@ -124,7 +125,7 @@ class bors_sites_kinopoisk extends bors_object
 		elseif(preg_match('!Скорее всего, вы ищете:.+?href="http://www.kinopoisk.ru/level/1/film/(\d+)/sr/1/">(.+?)</a>.+?/(\d{4})/".+?<font color="#999999">\.\.\. (.*?)</font>!s', $search_page, $m))
 		{
 			$kinopoisk_id = intval($m[1]);
-			echo self::html_decode("{$m[2]} [".($m[4] ? "{$m[4]}, " : '' ) . "{$m[3]}]? [y/n/id]").' ';
+			echo self::html_decode("2: {$m[2]} [".($m[4] ? "{$m[4]}, " : '' ) . "{$m[3]}]? [y/n/id]").' ';
 			$cho = self::read();
 			if(is_numeric($cho))
 				$kinopoisk_id = $cho;
@@ -134,7 +135,7 @@ class bors_sites_kinopoisk extends bors_object
 		elseif(preg_match('!Скорее всего, вы ищете:.+?href="/level/1/film/(\d+)/sr/1/">(.+?)</a>.+?class=orange>(\d{4})</a></td>!s', $search_page, $m))
 		{
 			$kinopoisk_id = intval($m[1]);
-			echo self::html_decode("{$m[2]} [{$m[3]}]? [y/n/id]").' ';
+			echo self::html_decode("3: {$m[2]} [{$m[3]}]? [y/n/id]").' ';
 			$cho = self::read();
 			if(is_numeric($cho))
 				$kinopoisk_id = $cho;
@@ -144,7 +145,7 @@ class bors_sites_kinopoisk extends bors_object
 		elseif(preg_match('!Скорее всего, вы ищете:.*?<p class="pic"><a href="/level/1/film/(\d+)/sr/1/">.*?<p class="name"><a href="/level/1/film/\1/sr/1/">(.*?)</a>.*?<span class="year">(\d+)</span></p>!s', $search_page, $m))
 		{
 			$kinopoisk_id = intval($m[1]);
-			echo self::html_decode("{$m[2]} [{$m[3]}]? [y/n/id]").' ';
+			echo self::html_decode("4: {$m[2]} [{$m[1]}, {$m[3]}]? [y/n/id]").' ';
 			$cho = self::read();
 			if(is_numeric($cho))
 				$kinopoisk_id = $cho;
@@ -180,7 +181,8 @@ class bors_sites_kinopoisk extends bors_object
 	{
 //		$kinopoisk_id = bors_sites_kinopoisk::search('Нечто', 2011);
 //		$kinopoisk_id = bors_sites_kinopoisk::search('Watchmen', 2009);
-		$kinopoisk_id = bors_sites_kinopoisk::search('Со склонов Кокурико', 2011);
+//		$kinopoisk_id = bors_sites_kinopoisk::search('Со склонов Кокурико', 2011);
+		$kinopoisk_id = 661049;
 		echo "ID=$kinopoisk_id\n";
 		$data = bors_sites_kinopoisk::film_id_to_data($kinopoisk_id);
 		var_dump($data);
