@@ -53,6 +53,27 @@ class bors_sites_kinopoisk extends bors_object
 			$data['роли'] = join(', ', $roles);
 		}
 
+/*
+<tr class="">
+    <td class="type"   >страна</td>
+    <td class=""   >
+        <div style="position: relative">
+            <a href="/level/10/m_act%5Bcountry%5D/9/" >Япония</a>                    </div>
+    </td>
+</tr>
+*/
+
+		$countries = array();
+		if(empty($data['страна']) && preg_match('!страна</td>.*?<td(.+?)</td>!s', $page, $t))
+		{
+			foreach(explode("\n", $t[1]) as $r)
+			{
+				if(preg_match('!>(.*?)</a>!', $r, $m))
+					$countries[] = self::html_decode($m[1]);
+			}
+			$data['страна'] = join(', ', $countries);
+		}
+
 		if(preg_match('!<a href="/level/\d+/film/'.$film_id.'/" class="continue"[^>]+>\s+<span>([\d\.]+)</span>!si', $page, $m))
 			$data['рейтинг'] = floatVal($m[1]);
 		elseif(preg_match('!<div class="div1"><a href=".+?" class="continue" style="background: url.+?; text-decoration: none">([\d\.]+)<span style=!si', $page, $m))
@@ -158,7 +179,8 @@ class bors_sites_kinopoisk extends bors_object
 	static function __dev()
 	{
 //		$kinopoisk_id = bors_sites_kinopoisk::search('Нечто', 2011);
-		$kinopoisk_id = bors_sites_kinopoisk::search('Watchmen', 2009);
+//		$kinopoisk_id = bors_sites_kinopoisk::search('Watchmen', 2009);
+		$kinopoisk_id = bors_sites_kinopoisk::search('Со склонов Кокурико', 2011);
 		echo "ID=$kinopoisk_id\n";
 		$data = bors_sites_kinopoisk::film_id_to_data($kinopoisk_id);
 		var_dump($data);
