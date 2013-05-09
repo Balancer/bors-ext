@@ -9,4 +9,6 @@ bors_url_map(array(
 	'/_bors/ajax/actionmod/(.+) => bors_ajax_actionmod_actor(1)',
 
 	'/_bors/callback/(\w+)/? => bors_external_callback(1)',
+	'/_bors/act/(\w+)/(\w+)/? => bors_ext_action(1,target=2)',
+//	'/_bors/act/(\w+)/? => bors_ext_action(1,NULL)',
 ));
