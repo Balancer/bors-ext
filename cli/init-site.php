@@ -6,23 +6,25 @@ if(!defined('BORS_CORE'))
 //	Сперва ищем bors-core в дереве текущего каталога
 //	На всякий случай запомним последнее нахождение подкаталога classes
 $latest_classes = NULL;
-if(!defined('BORS_CORE'))
+$dir = getcwd();
+
+do
 {
-	$dir = getcwd();
-	do
+	$dir = dirname($dir);
+
+	if(is_dir("$dir/classes"))
+		$latest_classes = $dir;
+
+	if(!defined('BORS_CORE'))
 	{
-		$dir = dirname($dir);
-
-		if(is_dir("$dir/classes"))
-			$latest_classes = $dir;
-
 		if(file_exists($core = "$dir/bors-core"))
 		{
 			define('BORS_CORE', $core);
 			break;
 		}
-	} while ($dir > '/');
-}
+	}
+
+} while ($dir > '/');
 
 //	Если не нашли, ищем в дереве каталога самого исходного файла
 // 	А текущее дерево (по найденному ранее classes) добавим в BORS_APPEND
@@ -45,6 +47,9 @@ if(!defined('BORS_CORE'))
 
 if($latest_classes && !defined('BORS_APPEND'))
 	define('BORS_APPEND', $latest_classes);
+
+if(!defined('BORS_SITE'))
+	define('BORS_SITE', BORS_APPEND);
 
 include_once(BORS_CORE.'/init.php');
 config_set('system.use_sessions', false);
