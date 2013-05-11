@@ -51,6 +51,9 @@ if($latest_classes && !defined('BORS_APPEND'))
 if(!defined('BORS_SITE'))
 	define('BORS_SITE', BORS_APPEND);
 
+if(!defined('BORS_HOST') && file_exists($bh = dirname(BORS_CORE).'/bors-host'))
+	define('BORS_HOST', $bh);
+
 include_once(BORS_CORE.'/init.php');
 config_set('system.use_sessions', false);
 
