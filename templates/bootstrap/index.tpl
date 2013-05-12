@@ -177,9 +177,9 @@
 	<div class="container">
 
 		<div class="page-header">
-		<h1>{airbase_fun::replace_2013($this->page_title())}
+		<h1>{$this->page_title()}
 			<small>
-			{if $this->description()}<br/>{airbase_fun::replace_2013($this->description())}{/if}
+			{if $this->description()}<br/>{$this->description()}{/if}
 			{if $this->keywords_linked()}<br />{$this->keywords_linked()}{/if}
 			</small></h1>
 		</div>
