@@ -29,19 +29,19 @@ class bors_util_tab2php
 		$code = array();
 
 		$code[] = "<?php\n";
-		$code[] = "class {$project}_{$class_name} extends base_object_db\n{";
+		$code[] = "class {$project}_{$class_name} extends bors_object_db\n{";
 		$code[] = "\tfunction storage_engine() { return 'bors_storage_mysql'; }";
 		$code[] = "\tfunction db_name() { return '$db'; }";
 		$code[] = "\tfunction table_name() { return '$table'; }";
 		$code[] = "\n\tfunction class_title() { return ec('Объект $class_name'); }
-	function class_title_rp() { return ec('объекта $class_name'); }
-	function class_title_vp() { return ec('объект $class_name'); }
-	function class_title_m() { return ec('объекты $class_name'); }
-	function class_title_tpm() { return ec('объектами $class_name'); }
+//	function class_title_rp() { return ec('объекта $class_name'); }
+//	function class_title_vp() { return ec('объект $class_name'); }
+//	function class_title_m() { return ec('объекты $class_name'); }
+//	function class_title_tpm() { return ec('объектами $class_name'); }
 
 	function access_name() { return '$items_name'; }\n";
 
-		$code[] = "\tfunction table_fields()\n\t{\n\t\treturn array(\n";
+		$code[] = "\tfunction table_fields()\n\t{\n\t\treturn array(";
 
 		$fields = array();
 		foreach(explode("\n", $x['Create Table']) as $s)
@@ -69,9 +69,7 @@ class bors_util_tab2php
 				switch($type)
 				{
 					case 'timestamp':
-						$append = " => 'UNIX_TIMESTAMP(`$field`)'";
-						if($args)
-							$args['name'] = $append;
+						$args['name'] = "'UNIX_TIMESTAMP(`$field`)'";
 						break;
 					case 'text':
 						$args['type'] = "'bbcode'";
@@ -107,17 +105,17 @@ class bors_util_tab2php
 						$append .= ', ';
 					$append .= "'$k' => $v";
 				}
-				$code[] = "\t\t\t'{$field}' => array($append),\n";
+				$code[] = "\t\t\t'{$field}' => array($append),";
 			}
 			else
-				$code[] = "\t\t\t'{$field}'$append,\n";
+				$code[] = "\t\t\t'{$field}'$append,";
 		}
 
-		$code[] = "\t\t);\n";
-		$code[] = "\t}\n";
+		$code[] = "\t\t);";
+		$code[] = "\t}";
 
-		$code[] = "\n\tfunction url(\$page=NULL) { return config('main_site_url').'/$items_name/'.\$this->id().'/'; }\n";
-		$code[] = "\n\tfunction admin_url() { return config('admin_site_url').'/$items_name/'.\$this->id().'/'; }\n";
+		$code[] = "\n\tfunction url(\$page=NULL) { return config('main_site_url').'/$items_name/'.\$this->id().'/'; }";
+		$code[] = "\n\tfunction admin_url() { return config('admin_site_url').'/$items_name/'.\$this->id().'/'; }";
 
 		$code[] = "}\n";
 
