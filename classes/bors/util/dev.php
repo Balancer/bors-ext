@@ -6,6 +6,12 @@ class bors_util_dev
 	{
 		$test = $argv[0];
 
+		if(preg_match('/^(\w+)\.dev\.php$/', $test, $m))
+		{
+			require($test);
+			return;
+		}
+
 		if(preg_match('/^(\w+)\.php$/', $test, $m))
 		{
 			$content = file_get_contents($test);
