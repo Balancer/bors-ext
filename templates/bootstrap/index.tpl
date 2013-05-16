@@ -194,6 +194,16 @@
 {if $notice_message}<div class="alert">{$notice_message}</div>{/if}
 {if $success_message}<div class="alert alert-success" >{$success_message}</div>{/if}
 
+{if $page_tabs}
+<ul class="nav nav-tabs">
+{foreach from=$page_tabs key="u" item="t"}
+<li{if $main_uri|url_equals:$u
+	or $current_page|url_equals:$u
+	or $this->url()|url_equals:$u
+} class="active"{/if}><a href="{$u}">{$t}</a></li>
+{/foreach}
+</ul>
+{/if}
 
 		{$this->body()}
 
