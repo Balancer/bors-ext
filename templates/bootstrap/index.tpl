@@ -11,7 +11,11 @@
 {if $this->get('keywords_string')}
 	<meta name="keywords" content="{$this->keywords_string()|htmlspecialchars}"/>
 {/if}
-	<meta name="author" content="">
+
+{if not empty($meta)}{foreach key=key item=value from=$meta}
+	<meta name="{$key}" content="{$value|htmlspecialchars}" />
+{/foreach}{/if}
+
 {foreach item=css from=$css_list}
 	<link rel="stylesheet" type="text/css" href="{$css}" />
 {/foreach}
