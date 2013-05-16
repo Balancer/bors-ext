@@ -99,10 +99,11 @@
 
 {if $this->get('navbar')}
 	{foreach $this->get('navbar') as $bar_title => $bar_items} {* проход по элементам навбара *}
+		{if is_array($bar_items)}
 						<li class="dropdown">
 							<a href="#" class="dropdown-toggle" data-toggle="dropdown">{$bar_title} <b class="caret"></b></a>
 							<ul class="dropdown-menu">
-		{foreach $bar_items as $title1 => $items1} {* проход по первому уровню меню навбара *}
+			{foreach $bar_items as $title1 => $items1} {* проход по первому уровню меню навбара *}
 			{if is_array($items1)}
 				{if $items1.url}
 					{$url = $items1.url}
@@ -121,11 +122,14 @@
 									</ul>
 								</li>
 			{else}
-								<li><a href="{$bar_items}">{$bar_title}</a></li>
+								<li><a href="{$items1}">{$title1}</a></li>
 			{/if}
-		{/foreach}
+			{/foreach}
 							</ul>
 						</li>
+		{else}
+			<li><a href="{$bar_items}">{$bar_title}</a></li>
+		{/if}
 	{/foreach}
 {/if}
 					</ul>

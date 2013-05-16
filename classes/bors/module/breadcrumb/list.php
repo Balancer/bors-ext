@@ -12,7 +12,7 @@ class bors_module_breadcrumb_list extends bors_module
 	{
 		$this->visited_pairs = array();
 
-		$obj = &$this->id();
+		$obj = $this->id();
 
         return array(
 			'links' => $this->link_line($this->args('show_self', true)),
