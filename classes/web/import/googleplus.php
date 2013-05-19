@@ -107,6 +107,15 @@ class web_import_googleplus extends web_import_common
 				.'(https%3A%2F%2F[^>]+?\.googleusercontent.com%2F[^>]+?)[\'"][^>]+?/>([^<]+?)</a>!ie',
 			"lcml('[img href=\"$1\" src=\"'.urldecode(\"$2\").'\"]');", $text);
 
+		//	<div style="float: left; margin-bottom: 5px; margin-right: 10px;">
+		//		<a href="http://www.youtube.com/watch?v=Sx2nAcAj0Rk">
+		//			<img src='http://images1-focus-opensocial.googleusercontent.com/gadgets/proxy?url=http://i4.ytimg.com/vi/Sx2nAcAj0Rk/hqdefault.jpg&amp;container=focus&amp;gadget=a&amp;rewriteMime=image/*&amp;refresh=31536000&amp;resize_w=402&amp;no_expand=1' width='402' height='226' style="border: none;" />
+		//	</a></div>
+
+		$text = preg_replace_callback('!<div [^>]+>\s*<a href="http://www.youtube.com/watch\?v=([^"&]+).*?"><img [^>]+/></a>\s*</div>!is',
+			function($m) { return lcml("[youtube]".html_entity_decode($m[1])."[/youtube]"); },
+			$text);
+
 		$text = preg_replace('!(<img[^>]+/>) (\S+)!', "$1<br/>\n $2", $text);
 
 		$text = preg_replace('!^<a href="(http://([^/"]+)[^"]+)"[^>]*>\2</a><br />!mie', "lcml('$1');", $text);
