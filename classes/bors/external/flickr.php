@@ -10,6 +10,7 @@ class bors_external_flickr extends bors_external_meta
 		$text = preg_replace('!^\s*https?://[^/]*flickr\.com/(#/)?photos/\w+@\w+/(\d+)/?\S*\s*$!mi', '[flickr]$2[/flickr]', $text);
 
 		// http://www.flickr.com/photos/ju_cooper/6701868497/
+		// http://www.flickr.com/photos/sjc1969/8784722102/ — http://www.balancer.ru/g/p3155955
 		$text = preg_replace('!^\s*https?://[^/]*flickr\.com/(#/)?photos/\w+/(\d+)/?\s*$!mi', '[flickr]$2[/flickr]', $text);
 		return $text;
 	}

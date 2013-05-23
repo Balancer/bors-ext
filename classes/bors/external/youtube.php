@@ -83,7 +83,11 @@ class bors_external_youtube extends bors_object
 		bors_use('url/bors_url_parse');
 		bors_use('html/bors_entity_decode');
 
-		$url = bors_entity_decode($url);
+		if(strpos($url, '%') !== false)
+			$url = urldecode($url);
+
+		if(strpos($url, '&') !== false)
+			$url = bors_entity_decode($url);
 
 		// Пример: http://www.balancer.ru/g/p2933240
 		if(preg_match('!http://www.youtube.com/v/(.+?)\?version=!', $url, $m))

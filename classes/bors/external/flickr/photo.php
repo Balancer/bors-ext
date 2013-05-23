@@ -36,11 +36,13 @@ class bors_external_flickr_photo
 		if(!$this->info)
 			return ec("<div class=\"red_box\">Данное фото на Flickr фото не найдено или доступ к нему запрещён</div>");
 
-		$sz = $this->medium_size();
+		$s640	= $this->find_size(640);
+		$s1024	= $this->find_size(1024);
+		$s0	= $this->find_size(0);
 
-		return "<div class=\"round_box shadow8\" style=\"margin: 8px 0 8px 0; width: {$sz['width']}px; height: {$sz['height']};\">
- <a href=\"{$this->flickr_url()}\"><img src=\"{$this->medium_url()}\" /></a><br/>
- <small><a href=\"{$this->flickr_url()}\">{$this->flickr_title()}</a> @ <a href=\"{$this->owner_url()}\">{$this->owner_title()}</a></small>
+		return "<div class=\"round_box shadow8\" style=\"margin: 8px 0 8px 0; width: {$s640['width']}px; height: {$s640['height']};\">
+ <a href=\"{$s1024['source']}\" class=\"cloud-zoom thumbnailed-image-link\" rel=\"gallery\"><img src=\"{$this->medium_url()}\" /></a><br/>
+ <small><a href=\"{$this->flickr_url()}\" target=\"_blank\">{$this->flickr_title()}</a> @ <a href=\"{$this->owner_url()}\" target=\"_blank\">{$this->owner_title()}</a>; [<a href=\"{$s0['url']}\" target=\"_blank\">полный размер: {$s0['width']}x{$s0['height']}</a>]</small>
 </div>";
 	}
 
@@ -53,9 +55,23 @@ class bors_external_flickr_photo
 
 	function sizes() { return $this->flickr->photos_getSizes($this->photo_id); }
 
-	function medium_size()
+	function find_size($size)
 	{
 		$ss = $this->sizes();
-		return $ss[4];
+
+		usort($ss, function($a, $b) { return $a['width'] - $b['width']; });
+
+		$max_s = array('width' => 0);
+
+		foreach($ss as $s)
+		{
+			if($size && $s['width'] >= $size)
+				return $s;
+
+			if($s['width'] > $max_s['width'])
+				$max_s = $s;
+		}
+
+		return $max_s;
 	}
 }
