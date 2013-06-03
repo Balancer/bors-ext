@@ -26,7 +26,19 @@ class jquery
 
 	static function plugin($name)
 	{
-		template_jquery_plugin($name);
+		if(bors_page::template_data('jquery_plugin_'.$name.'_has_added'))
+			return;
+
+		// Если это одно название, то это имя
+		if(preg_match('/^\w[\w\.\-]*\w$/', $name) && !preg_match('/\.js$/', $name))
+			bors_page::add_template_data_array('js_include', '/_bors3rdp/jquery/plugins/jquery.'.$name.'.js');
+		// Если путь не от корня сайта и не полный URL
+		elseif($name[0] != '/' && !preg_match('/^http/', $name))
+			bors_page::add_template_data_array('js_include', '/_bors3rdp/jquery/plugins/'.$name);
+		else
+			bors_page::add_template_data_array('js_include', $name);
+
+		bors_page::add_template_data('jquery_plugin_'.$name.'_has_added', true);
 	}
 
 	static function css($name)

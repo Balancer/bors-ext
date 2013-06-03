@@ -3,7 +3,7 @@
 class mybb_forum extends bors_object_db
 {
 	function storage_engine() { return 'bors_storage_mysql'; }
-	function db_name() { return 'WEBAPPS_MYBB'; }
+	function db_name() { return config('mybb.db'); }
 	function table_name() { return 'mybb_forums'; }
 
 	function class_title() { return ec('Форум'); }

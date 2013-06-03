@@ -3,7 +3,7 @@
 class mybb_post extends bors_object_db
 {
 	function storage_engine() { return 'bors_storage_mysql'; }
-	function db_name() { return 'WEBAPPS_MYBB'; }
+	function db_name() { return config('mybb.db'); }
 	function table_name() { return 'mybb_posts'; }
 
 	function class_title() { return ec('Сообщение'); }
@@ -21,12 +21,12 @@ class mybb_post extends bors_object_db
 			'owner_name' => 'username',
 			'create_time' => 'dateline',
 			'source' => 'message',
-			'ipaddress',
+			'user_ip' => 'ipaddress',
 			'longipaddress',
 			'includesig',
 			'smilieoff',
 			'edituid',
-			'edittime',
+			'edit_time' => 'edittime',
 			'is_visible' => 'visible',
 			'posthash',
 		);
