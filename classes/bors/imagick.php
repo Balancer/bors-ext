@@ -110,11 +110,30 @@ class bors_imagick extends bors_object
 				$img = new Imagick($this->image->file_name_with_path());
 
 				$face = $this->image->face_area();
-//				var_dump($face);
-				$fw = $face['w'];
-				$fh = $face['h'];
-				$fx = $face['x'];
-				$fy = $face['y'];
+				if(is_array($face))
+				{
+					$fw = $face['w'];
+					$fh = $face['h'];
+					$fx = $face['x'];
+					$fy = $face['y'];
+				}
+				else
+				{
+					$fw = $iw;
+					$fh = $ih;
+					$fx = 0;
+					$fy = 0;
+				}
+
+				if($fw < $w && $fh < $h)
+				{
+					$fcx = $fx+$fw/2;
+					$fcy = $fy+$fh/2;
+					$fx = max(0, $fcx - $w/2);
+					$fy = max(0, $fcy - $h/2);
+					$fw = $w;
+					$fh = $h;
+				}
 
 				if($w/$h > $fw/$fh)
 				{
