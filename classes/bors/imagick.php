@@ -59,6 +59,12 @@ class bors_imagick extends bors_object
 		return $this;
 	}
 
+	function resize($geometry)
+	{
+		$this->add_action('resize', $geometry);
+		return $this;
+	}
+
 	function face_fill($geometry)
 	{
 		$this->add_action('face-fill', $geometry);
@@ -81,11 +87,14 @@ class bors_imagick extends bors_object
 
 	function do_action(&$img, $action, $geometry)
 	{
-		$w = $h = $dx = $dy = 0;
+		$w = $h = $dx = $dy = NULL;
 		if(preg_match('/^(\d+)x(\d+)([\+\-]\d+)([\+\-]\d+)$/', $geometry, $m))
 			list($foo, $w, $h, $dx, $dy) = $m;
 		elseif(preg_match('/^(\d+)x(\d+)$/', $geometry, $m))
 			list($foo, $w, $h) = $m;
+
+		$iw = $img->getImageWidth();
+		$ih = $img->getImageHeight();
 
 		switch($action)
 		{
@@ -99,8 +108,6 @@ class bors_imagick extends bors_object
 			case 'face-fill':
 				// Сбрасываем картинку в исходное состояние
 				$img = new Imagick($this->image->file_name_with_path());
-				$iw = $img->getImageWidth();
-				$ih = $img->getImageHeight();
 
 				$face = $this->image->face_area();
 //				var_dump($face);
@@ -134,7 +141,31 @@ class bors_imagick extends bors_object
 				$img->cropThumbnailImage($w, $h);
 				break;
 			case 'fill':
-				$img->cropThumbnailImage($w, $h, false);
+/*
+				if($w/$h < $iw/$ih)
+				{
+					// Если кроп шире, чем оригинал
+					$th = round($h);
+					$tw = round($iw/$ih * $th);
+					$dy = 0;
+					if(is_null($dx))
+						$dx = round(($tw - $w)/2);
+				}
+				else
+				{
+					$tw = round($w);
+					$th = round($ih/$iw * $tw);
+					$dx = 0;
+					if(is_null($dy))
+						$dy = round(($th - $h)/2);
+				}
+*/
+//				var_dump("$iw x $ih", "$w x $h", "$tw x $th", $dx, $dy); exit();
+				// Сперва отресайзим до вписывания в нужный размер
+//				$img->adaptiveResizeImage($tw, $th, true);
+				$img->cropThumbnailImage($w, $h);
+				// А потом обрежем под него
+//				$img->chopImage($w, $h, $dx, $dy);
 				break;
 			case 'resize':
 				$img->adaptiveResizeImage($w, $h, true);
@@ -197,7 +228,7 @@ class bors_imagick extends bors_object
 		if(!$this->image_size)
 			$this->image_size = getimagesize($this->base_dir().'/'.$this->file_name());
 
-		return @$this->image_size['type'];
+		return @$this->image_size[$type];
 	}
 
 	function width()  { return $this->imagesize(0); }
