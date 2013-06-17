@@ -2,7 +2,7 @@
 
 class bors_task extends bors_object_db
 {
-	function db_name() { return 'BORS'; }
+	function db_name() { return 'AP_BORS'; }
 	function table_name() { return 'bors_tasks'; }
 
 	function table_fields()
