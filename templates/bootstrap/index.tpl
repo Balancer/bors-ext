@@ -101,42 +101,10 @@
 	{/if}
 {/if}
 
-{if $this->get('navbar')}
-	{foreach $this->get('navbar') as $bar_title => $bar_items} {* проход по элементам навбара *}
-		{if is_array($bar_items)}
-						<li class="dropdown">
-							<a href="#" class="dropdown-toggle" data-toggle="dropdown">{$bar_title} <b class="caret"></b></a>
-							<ul class="dropdown-menu">
-			{foreach $bar_items as $title1 => $items1} {* проход по первому уровню меню навбара *}
-			{if is_array($items1)}
-				{if $items1.url}
-					{$url = $items1.url}
-					{$items1.url = NULL}
-				{else}
-					{$url = '#'}
-				{/if}
-								<li class="dropdown-submenu">
-									<a href="{$url}" tabindex="-1">{$title1}..</a>
-									<ul class="dropdown-menu">
-				{foreach $items1 as $title2 => $items2} {* проход по развернувшемуся подменю *}
-					{if $items2}
-										<li><a href="{$items2}">{$title2}</a></li>
-					{/if}
-				{/foreach}
-									</ul>
-								</li>
-			{else}
-								<li><a href="{$items1}">{$title1}</a></li>
-			{/if}
-			{/foreach}
-							</ul>
-						</li>
-		{else}
-			<li><a href="{$bar_items}">{$bar_title}</a></li>
-		{/if}
-	{/foreach}
-{/if}
+{bootstrap_nav_bar bar=$this->get('navbar')}
+
 					</ul>
+
 
 {if $this->get('search_request_url')}
 					<form class="form-search navbar-search pull-left" action="{$this->get('search_request_url')}" method="get">
