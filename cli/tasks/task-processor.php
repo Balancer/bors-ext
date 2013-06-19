@@ -1,5 +1,8 @@
 <?php
 
+global $pos;
+$pos = $argv[1];
+
 //config_set('mysql_trace_show', true);
 config_set('debug_hidden_log_dir', __DIR__);
 
@@ -7,7 +10,8 @@ $delay = 0.5;
 
 function do_work()
 {
-	echo '.';
+	global $pos;
+	echo "\r$pos";
 //	blib_cli::out("\t%wDo work by ".getmypid()."%n");
 	$processor = bors_foo('bors_tasks_processor');
 

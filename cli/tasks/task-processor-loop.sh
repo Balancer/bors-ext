@@ -11,8 +11,7 @@ cleanup()
 trap cleanup SIGINT SIGTERM
 
 while true; do
-	echo
-	echo -n processor start
-	bors run task-processor.php &
+	echo processor start
+	bors run task-processor.php $1 &
 	wait $!
 done

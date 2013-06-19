@@ -6,6 +6,11 @@ class bors_tasks_processor extends bors_cli
 
 	function do_work()
 	{
+		// Проверяем, есть ли, вообще, задачи в очереди. Чтобы не мусорить потом
+		// update, если они не нужны
+		if(!bors_count($this->task_class(), array('runs_count<' => 3)))
+			return;
+
 		$processor_id = md5(microtime().uniqid());
 		$foo = bors_foo($this->task_class());
 		$db = $foo->db();
