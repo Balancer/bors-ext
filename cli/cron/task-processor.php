@@ -3,14 +3,18 @@
 //config_set('mysql_trace_show', true);
 config_set('debug_hidden_log_dir', __DIR__);
 
+$delay = 0.5;
+
 function do_work()
 {
+	echo '.';
 //	blib_cli::out("\t%wDo work by ".getmypid()."%n");
 	$processor = bors_foo('bors_tasks_processor');
 
 	$res = $processor->do_work();
 	if($res)
 	{
+		echo '+';
 		blib_cli::out("%CResult%n");
 		var_dump($res);
 	}
@@ -47,7 +51,7 @@ while(true)
 	if($next_run_time < microtime(true))
 		$next_run_time = microtime(true);
 
-	$next_run_time += 1;
+	$next_run_time += $delay;
 
 	bors_var_cache::set($next_name, $next_run_time);
 

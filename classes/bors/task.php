@@ -19,6 +19,7 @@ class bors_task extends bors_object_db
 			'process_time' => array('name' => 'UNIX_TIMESTAMP(`process_ts`)'),
 			'process_expire_time' => array('name' => 'UNIX_TIMESTAMP(`process_expire_ts`)'),
 			'processor_id',
+			'runs_count',
 		);
 	}
 

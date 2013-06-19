@@ -20,7 +20,7 @@ class bors_tasks_processor extends bors_cli
 		// Сбрасываем всех воркеров, если наступил таймаут задачи — наверное, воркер умер.
 		$db->update(
 			$foo->table_name(),
-			array('process_expire_ts < NOW()'),
+			array('(process_expire_ts < NOW() OR process_expire_ts IS NULL)'),
 			array(
 				'raw process_expire_ts'	=> NULL,
 				'raw processor_id'		=> NULL,
@@ -34,6 +34,7 @@ class bors_tasks_processor extends bors_cli
 				'processor_id IS NULL',			// Задача никому не назначена
 				'process_expire_ts IS NULL',	// Задача не в процессе обработки
 				'exec_ts IS NULL',				// Задача не запланирована на будущее
+				'runs_count<' => 3,				// Задача запускалась не более трёх раз (иначе — постоянная ошибка)
 				'order' => 'priority DESC,create_ts',
 				'limit' => 1,
 			),
@@ -47,6 +48,9 @@ class bors_tasks_processor extends bors_cli
 		$task = bors_find_first($this->task_class(), array('processor_id' => $processor_id));
 		if(!$task)
 			return NULL;
+
+		$task->set_runs_count($task->runs_count() + 1);
+		$task->store();
 
 		$worker = bors_load($task->worker_class_name(), NULL);
 		if(!$worker)
