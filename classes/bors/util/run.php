@@ -11,7 +11,7 @@ class bors_util_run
 	{
 		$file = $argv[0];
 
-		if(preg_match('/^(\w+)\.php$/', $file, $m))
+		if(preg_match('/\.php$/', $file, $m))
 		{
 			require $file;
 			return;
