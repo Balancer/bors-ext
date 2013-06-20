@@ -11,7 +11,8 @@ $delay = 0.5;
 function do_work()
 {
 	global $pos;
-	echo "\r$pos";
+//	echo "\r$pos";
+	blib_cli::out("\r%K$pos%n");
 //	blib_cli::out("\t%wDo work by ".getmypid()."%n");
 	$processor = bors_foo('bors_tasks_processor');
 
