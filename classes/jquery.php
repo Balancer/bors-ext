@@ -29,6 +29,8 @@ class jquery
 		if(bors_page::template_data('jquery_plugin_'.$name.'_has_added'))
 			return;
 
+		jquery::load();
+
 		// Если это одно название, то это имя
 		if(preg_match('/^\w[\w\.\-]*\w$/', $name) && !preg_match('/\.js$/', $name))
 			bors_page::add_template_data_array('js_include', '/_bors3rdp/jquery/plugins/jquery.'.$name.'.js');

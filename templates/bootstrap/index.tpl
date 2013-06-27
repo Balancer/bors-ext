@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+<!DOCTYPE html>{block name="configure"}{/block}
 <html lang="ru">
 <head>
 	<meta charset="utf-8">
@@ -150,9 +150,20 @@
 		</div>
 	</div>
 
+{if $use_system_menu}
+	<div class="container-fluid">
+		<div class="row-fluid">
+			<div class="span2">
+	{block name="system_menu"}{/block}
+			</div>
+			<div class="span10">
+{else}
 	<div class="container">
+{/if}
 
-		<div class="page-header">
+{module class="bors_module_breadcrumb_list" template="bootstrap"}
+
+		<div class="page-header well">
 		<h1>{$this->page_title()}
 			<small>
 			{if $this->description()}<br/>{$this->description()}{/if}
@@ -160,7 +171,6 @@
 			</small></h1>
 		</div>
 
-{module class="bors_module_breadcrumb_list" template="bootstrap"}
 
 {if $error_message}<div class="alert alert-error"   >{$error_message}</div>{/if}
 {if $notice_message}<div class="alert">{$notice_message}</div>{/if}
@@ -190,6 +200,11 @@
 {/if}
 
 {block name="copyright"}{/block}
+
+{if $use_system_menu}
+			</div>
+		</div>
+{/if}
 
 	</div> <!-- /container -->
 

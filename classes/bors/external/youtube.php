@@ -36,16 +36,15 @@ class bors_external_youtube extends bors_object
 
 	static function parse_links($text)
 	{
-//		var_dump($text);
 //		$text = preg_replace('!<a href="https?://[^/]+flickr\.com/photos/\w+@\w+/(\d+)/"[^>]+><img src="[^"]+static.flickr.com/[^"]+\.jpg"[^>]+/></a>!is', '[flickr]$1[/flickr]', $text);
 
 		// <iframe width="560" height="315" src="http://www.youtube.com/embed/ROrpKx3aIjA" frameborder="0" allowfullscreen></iframe>
 		// http://www.balancer.ru/g/p3124994
 		$text = preg_replace('!<iframe width="\d+" height="\d+" src="http://www\.youtube\.com/embed/([^"]+)"[^>]+></iframe>!ie', "bors_external_youtube::id2bb('$1');", $text);
 
+		$text = preg_replace('!^\s*http://youtu\.be/([\w\-]+)#t=(\w+)\s*$!mie', "bors_external_youtube::id2bb('$1', '$2');", $text);
 		$text = preg_replace('!^\s*http://youtu\.be/([\w\-]+)\?t=(\w+)\s*$!mie', "bors_external_youtube::id2bb('$1', '$2');", $text);
 		$text = preg_replace('!^\s*http://youtu\.be/([\w\-]+)/?\s*$!mie', "bors_external_youtube::id2bb('$1');", $text);
-
 
 		// [url=http://www.youtube.com/watch?v=a8C1iU-xAog]http://www.youtube.com/watch?v=a8C1iU-xAog[/url]
 		// [url=http://www.youtube.com/watch?v=JkpO2BliOVg]http://www.youtube.com/watch?v=JkpO2BliOVg[/url]
@@ -54,7 +53,7 @@ class bors_external_youtube extends bors_object
 		$text = preg_replace('!\s*\[url=(http://(www\.)?youtube\.com/watch\?v=[\w\-]+[^\]]+?)\]\1\[/url\]\s*!', "\n$1\n", $text);
 
 		// http://www.youtube.com/watch?v=zJMVZXLFaRU#t=2085s via http://www.balancer.ru/g/p3030014
-		$text = preg_replace('!^\s*(https?://[^/]*youtube\.\w+/watch\S+)#t=(\d+)s\s*$!mie', "bors_external_youtube::url2bb('$1', '$2');", $text);
+		$text = preg_replace('!^\s*(https?://[^/]*youtube\.\w+/watch\S+)#t=(\w+)\s*$!mie', "bors_external_youtube::url2bb('$1', '$2');", $text);
 
 		// http://www.youtube.com/watch?v=X76LmiHVFsM&feature=player_embedded
 		// http://www.youtube.com/watch?v=TXxcR3qgyYQ&playnext=1&list=PL21AA194D7FBBA2D9
