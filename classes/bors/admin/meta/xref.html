@@ -1,6 +1,6 @@
 {if $xref_list}
 <div class="box shadow">
-<h3>Установленные {$this->xref_target_foo_object()->class_title_m()}</h3>
+<h3>Установленные {$this->xref_target_foo_object()->class_title_m()|htmlspecialchars}</h3>
 <ul>
 {foreach $xref_list as $xref}
 <li><a href="{$xref->edit_url()}">{$xref->target()->title()}</a>{block name="after_name_in_list"}{/block}&nbsp;{icon image="edit" link=$xref->target()->admin_url() title="Перейти к {$xref->target()->class_title_dp()}"}&nbsp;{icon image="unlink" action="unlink" target=$xref ref=$this->url() title="Удалить связь"}{block name="additional_in_list"}{/block}</li>
@@ -10,7 +10,7 @@
 {/if}
 
 <div class="box shadow">
-<h3>Добавить {bors_lower($this->xref_target_foo_object()->class_title_vp())}</h3>
+<h3>Добавить {bors_lower($this->xref_target_foo_object()->class_title_vp())|htmlspecialchars}</h3>
 {form act="add" th="-"}
 {* dropdown name="xref_id" list=$targets_list value='' th=$this->xref_target_foo_object()->class_title() *}
 {combobox name="xref_id" json=$json value='' th=$this->xref_target_foo_object()->class_title() width="500" per_page="20"}

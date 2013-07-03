@@ -2,7 +2,7 @@
 <html lang="en">
   <head>
     <meta charset="utf-8">
-    <title>{$this->browser_title()}</title>
+    <title>{$this->browser_title()|htmlspecialchars}</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="">
     <meta name="author" content="">
@@ -118,7 +118,7 @@ h1 {literal}{{/literal}
 
       <!-- Main hero unit for a primary marketing message or call to action -->
       <div class="hero-unit">
-        <h1>{$this->page_title()}</h1>
+        <h1>{$this->page_title()|htmlspecialchars}</h1>
 
 		{$this->description()}
 

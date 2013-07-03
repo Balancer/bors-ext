@@ -22,7 +22,7 @@
 		$(".tabs > ul").tabs();
 	});
 	{/literal}</script>
-	<title>{$this->browser_title()}</title>
+	<title>{$this->browser_title()|htmlspecialchars}</title>
 </head>
 
 <body>
@@ -146,7 +146,7 @@
 		<!-- Content (Right Column) -->
 		<div id="content" class="box">
 
-			<h1>{$this->page_title()}</h1>
+			<h1>{$this->page_title()|htmlspecialchars}</h1>
 
 {$this->body()}
 

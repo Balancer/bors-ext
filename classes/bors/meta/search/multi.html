@@ -6,6 +6,6 @@
 {/form}
 
 {foreach $search_result as $group_title => $items}
-<h2>{$group_title}</h2>
+<h2>{$group_title|htmlspecialchars}</h2>
 {module class="bors_pages_module_paginated_items" items=$items table_columns=$table_columns more_limit=$limit more="search" }
 {/foreach}

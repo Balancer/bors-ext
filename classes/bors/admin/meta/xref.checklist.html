@@ -1,5 +1,5 @@
 <div class="box shadow">
-<h3>{bors_ucfirst($this->xref_target_foo_object()->class_title_m())}</h3>
+<h3>{bors_ucfirst($this->xref_target_foo_object()->class_title_m())|htmlspecialchars}</h3>
 {form act="save" th="-"}
 {checkbox_list name="xref_ids" list=$targets_list th=$this->xref_target_foo_object()->class_title()}
 {if $additional}

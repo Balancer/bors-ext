@@ -2,7 +2,7 @@
 <html lang="ru">
 <head>
 	<meta charset="utf-8">
-	<title>{$this->browser_title()}</title>
+	<title>{$this->browser_title()|htmlspecialchars}</title>
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<meta name="title" content="{$this->page_title()|htmlspecialchars}" />
 {if $this->description()}
@@ -164,7 +164,7 @@
 {module class="bors_module_breadcrumb_list" template="bootstrap"}
 
 		<div class="page-header well">
-		<h1>{$this->page_title()}
+		<h1>{$this->page_title()|htmlspecialchars}
 			<small>
 			{if $this->description()}<br/>{$this->description()}{/if}
 			{if $this->keywords_linked()}<br />{$this->keywords_linked()}{/if}
