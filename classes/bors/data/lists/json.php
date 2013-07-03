@@ -26,7 +26,7 @@ class bors_data_lists_json extends bors_json
 
 		$find = bors_find($list_class_name);
 
-		if($q = bors()->request()->data('q'))
+		if($q = $r->data('q'))
 		{
 			if($search_properties = $r->data('search'))
 				$find->like_any(explode(',', $search_properties), $q);
@@ -49,6 +49,19 @@ class bors_data_lists_json extends bors_json
 		if($tpl = $r->data('tpl'))
 		{
 			$tpl = json_decode($tpl, true);
+
+			if(!$r->data('skip_null'))
+			{
+				$r2 = array();
+				foreach($tpl as $ret_f => $obj_f)
+					if($obj_f == 'id')
+						$r2[$ret_f] = 'NULL';
+					else
+						$r2[$ret_f] = '';
+
+				$result[] = $r2;
+			}
+
 			foreach($find->all() as $x)
 			{
 				$r2 = array();
