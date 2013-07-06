@@ -25,7 +25,7 @@ class lcml_tag_pair_mp3 extends bors_lcml_tag_pair
 		else
 		{
 			$mp3 = $content;
-			$title = defval($params, 'title', basename($mp3));
+			$title = defval($params, 'title', urldecode(basename($mp3)));
 		}
 
 		// via http://www.labnol.org/internet/design/html-embed-mp3-songs-podcasts-music-in-blogs-websites/2232/
