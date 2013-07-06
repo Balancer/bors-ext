@@ -23,10 +23,14 @@ array
 		{
 			$ext = $match[2];
 			class_include($cn = "lcml_tag_pair_file_{$ext}");
-			if(!class_exists($cn))
-				continue;
-
-			$text = preg_replace('!^\s*('.preg_quote($match[1], '!').')\s*$!ime', "lcml('[file_{$ext}]$1[/file_{$ext}]');", $text);
+			if(class_exists($cn))
+				$text = preg_replace('!^\s*('.preg_quote($match[1], '!').')\s*$!ime', "lcml('[file_{$ext}]$1[/file_{$ext}]');", $text);
+			else
+			{
+				class_include($cn = "lcml_tag_pair_{$ext}");
+				if(class_exists($cn))
+					$text = preg_replace('!^\s*('.preg_quote($match[1], '!').')\s*$!im', "[{$ext}]$1[/{$ext}]", $text);
+			}
 		}
 
 		return $text;
@@ -34,6 +38,6 @@ array
 
 	function text($text)
 	{
-		return $this->html($text);
+		return $text;
 	}
 }

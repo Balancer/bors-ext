@@ -61,7 +61,7 @@ class jquery
 	{
 		$link = '/_bors3rdp/jquery/jquery-'.config('jquery.version').'.min.js';
 
-		return "<!--[[use js=\"$link\"]]-->";
+		return bors_lcml::make_use('js', $link);
 	}
 
 	static function on_ready_html($js_code)
