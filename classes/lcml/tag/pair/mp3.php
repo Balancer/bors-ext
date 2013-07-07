@@ -35,6 +35,9 @@ class lcml_tag_pair_mp3 extends bors_lcml_tag_pair
 
 		$html = jquery_jplayer::html(array('mp3' => $mp3, 'title' => $title));
 
-		return "{$html}<a href=\"$mp3\" class=\"transgray\">Скачать: {$title}</a>";
+		if(empty($params['no_download']))
+			$html .= "<a href=\"$mp3\" class=\"transgray\">Скачать: {$title}</a>";
+
+		return $html;
 	}
 }
