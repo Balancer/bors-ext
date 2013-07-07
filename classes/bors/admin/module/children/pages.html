@@ -3,7 +3,7 @@
 
 {if $append_class}
 <tr><td colspan="2">
-		<form action="{$append_foo->admin()->url('new')}" class="child_page_add" method="post">
+		<form action="{$append_foo->admin()->url_ex('new')}" class="child_page_add" method="post">
 			Название новой дочерней страницы:
 			<input name="title" value="" size="30" maxlength="255" />
 			<input type="submit" value="Создать" />

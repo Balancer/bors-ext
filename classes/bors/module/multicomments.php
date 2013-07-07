@@ -25,7 +25,7 @@ class bors_module_multicomments extends bors_module
 		}
 		else
 		{
-			$data['uid'] = preg_replace('!^(http://[^/]+):\d+!', '$1', bors()->main_object()->url(1));
+			$data['uid'] = preg_replace('!^(http://[^/]+):\d+!', '$1', bors()->main_object()->url());
 			$data['pid'] = md5($data['uid']);
 		}
 

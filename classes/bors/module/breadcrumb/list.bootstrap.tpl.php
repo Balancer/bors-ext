@@ -11,8 +11,8 @@ foreach($links as $linkline)
 		else
 			echo " <span class=\"divider\">/ </span>";
 
-		echo "<a href=\"{$obj->url(1)}\" title=\"".htmlspecialchars($obj->title())."\"";
-		if($nav_obj->url(1) == $obj->url(1))
+		echo "<a href=\"{$obj->url()}\" title=\"".htmlspecialchars($obj->title())."\"";
+		if($nav_obj->url() == $obj->url())
 			echo " class=\"active\"";
 		echo '>'.htmlspecialchars($obj->nav_name()).'</a>';
 	}
