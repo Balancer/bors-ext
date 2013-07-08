@@ -1,0 +1,17 @@
+Роутинг
+=======
+
+Автоматический роутинг
+----------------------
+
+/users/votes/
+	— project_users_votes_main(NULL)
+	— project_users_votes(NULL)
+
+/users/84018/
+	— project_users_view(84018)
+	— project_user(84018)
+
+/users/84018/votes/
+	— project_users_votes_view(84018)
+	— project_users_vote(84018)
