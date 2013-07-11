@@ -8,12 +8,17 @@ if(!defined('BORS_CORE'))
 $latest_classes = NULL;
 $dir = getcwd();
 
+$class_dirs = array();
+
 do
 {
 	$dir = dirname($dir);
 
 	if(is_dir("$dir/classes"))
+	{
+		$class_dirs[] = $dir;
 		$latest_classes = $dir;
+	}
 
 	if(!defined('BORS_CORE'))
 	{
@@ -46,7 +51,8 @@ if(!defined('BORS_CORE'))
 	exit("Can't find bors-core\n");
 
 if($latest_classes && !defined('BORS_APPEND'))
-	define('BORS_APPEND', $latest_classes);
+//	define('BORS_APPEND', $latest_classes);
+	define('BORS_APPEND', join(' ', $class_dirs));
 
 if(!defined('BORS_SITE'))
 	define('BORS_SITE', BORS_APPEND);
