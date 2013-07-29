@@ -40,7 +40,9 @@ class bors_external_youtube extends bors_object
 
 		// <iframe width="560" height="315" src="http://www.youtube.com/embed/ROrpKx3aIjA" frameborder="0" allowfullscreen></iframe>
 		// http://www.balancer.ru/g/p3124994
-		$text = preg_replace('!<iframe width="\d+" height="\d+" src="http://www\.youtube\.com/embed/([^"]+)"[^>]+></iframe>!ie', "bors_external_youtube::id2bb('$1');", $text);
+		// <iframe width="420" height="315" src="//www.youtube.com/embed/NeHgI_GHE1c" frameborder="0" allowfullscreen></iframe>
+		// http://www.balancer.ru/g/p3205356
+		$text = preg_replace('!<iframe width="\d+" height="\d+" src="(http://|//)www\.youtube\.com/embed/([^"]+)"[^>]+></iframe>!ie', "bors_external_youtube::id2bb('$2');", $text);
 
 		$text = preg_replace('!^\s*http://youtu\.be/([\w\-]+)#t=(\w+)\s*$!mie', "bors_external_youtube::id2bb('$1', '$2');", $text);
 		$text = preg_replace('!^\s*http://youtu\.be/([\w\-]+)\?t=(\w+)\s*$!mie', "bors_external_youtube::id2bb('$1', '$2');", $text);
