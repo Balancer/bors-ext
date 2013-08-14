@@ -33,7 +33,7 @@ class web_import_image
 			$path .= "index";
 
 		if(!empty($query))
-			$path .= ','.str_replace('&','/', $data['query']);
+			$path .= ','.str_replace('&','/', $query);
 
 		return join('/', array_filter($host_parts)).$path;
 	}
