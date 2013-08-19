@@ -115,7 +115,8 @@
 					</form>
 {/if}
 
-{if not $me}
+{if not $this->project()->get('skip_login')}
+	{if not $me}
 					{* http://mifsud.me/adding-dropdown-login-form-bootstraps-navbar/ *}
 					<ul class="nav pull-right">
 						<li><a href="{$this->project()->register_url()}">Зарегистрироваться</a></li>
@@ -131,7 +132,7 @@
 							</div>
 						</li>
 					</ul>
-{else}
+	{else}
 					<ul class="nav pull-right">
 						<li class="divider-vertical"></li>
 						<li class="dropdown">
@@ -143,8 +144,8 @@
 							</ul>
 						</li>
 					</ul>
+	{/if}
 {/if}
-
 				</div><!--/.nav-collapse -->
 			</div>
 		</div>

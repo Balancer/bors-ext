@@ -14,8 +14,16 @@ function smarty_function_bootstrap_nav_bar($params, &$smarty)
 		// Если это подменю
 		if(is_array($items))
 		{
+			if(!empty($items['url']))
+			{
+				$url = $items['url'];
+				unset($items['url']);
+			}
+			else
+				$url = '#';
+
 			$html[] = "<li class=\"dropdown\">";
-			$html[] = "<a href=\"#\" class=\"dropdown-toggle\" data-toggle=\"dropdown\">{$title} <b class=\"caret\"></b></a>";
+			$html[] = "<a href=\"{$url}\" class=\"dropdown-toggle\" data-toggle=\"dropdown\">{$title} <b class=\"caret\"></b></a>";
 			$html[] = "<ul class=\"dropdown-menu\">";
 			$html[] = smarty_function_bootstrap_nav_bar_submenu($items);
 			$html[] = "</ul></li>";
