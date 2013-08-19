@@ -20,7 +20,12 @@ class bors_user_hactions_dispatcher extends base_object
 		$haction->set_attr('need_save', false);
 
 		if($method = $haction->actor_method())
+		{
+			if(!preg_match('/^haction_/', $method))
+				$method = 'haction_'.$method;
+
 			$ret = $actor->$method(json_decode($haction->actor_attributes(), true), $haction);
+		}
 		else
 			$ret = $actor->url();
 
