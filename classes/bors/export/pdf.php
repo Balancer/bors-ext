@@ -6,9 +6,8 @@ class bors_export_pdf extends bors_object
 
 	function render()
 	{
-		$body_url = 'http://aviaport.wrk.ru/events/maks2013/program/pdf/helper/?date=2013-08-29';
+		$cover_url = $this->get('cover_url');
 
-		$cover_url = 'http://aviaport.wrk.ru/events/maks2013/program/pdf/helper/cover.html';
 		$file = tempnam('/tmp', 'pdfhelper');
 //		header("X-PDF-INFO: /usr/local/bin/wkhtmltopdf-amd64 --cover $cover_url $helper_url $target_dir/$target_name");
 
