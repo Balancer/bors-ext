@@ -115,6 +115,12 @@
 					</form>
 {/if}
 
+{if $this->get('navbar_right')}
+					<ul class="nav pull-right">
+{bootstrap_nav_bar bar=$this->get('navbar_right')}
+					</ul>
+{/if}
+
 {if not $this->project()->get('skip_login')}
 	{if not $me}
 					{* http://mifsud.me/adding-dropdown-login-form-bootstraps-navbar/ *}
