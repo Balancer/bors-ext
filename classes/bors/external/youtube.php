@@ -145,7 +145,7 @@ class bors_external_youtube extends bors_object
 			if(preg_match('/(\d+)m(\d+)s/', $start, $m))
 				$start = 60*$m[1] + $m[2];
 
-			$flv_url .= '?start='.$start.'#t='.$start;
+			$flv_url .= '?start='.preg_replace('/^(\d+)s$/', '$1', $start).'#t='.$start;
 			$page_url .= '#t='.$start;
 		}
 
