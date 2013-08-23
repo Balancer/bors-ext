@@ -6,8 +6,6 @@ class bors_export_pdf extends bors_object
 
 	function render()
 	{
-		$cover_url = $this->get('cover_url');
-
 		$tmp_files = array();
 
 //		header("X-PDF-INFO: /usr/local/bin/wkhtmltopdf-amd64 --cover $cover_url $helper_url $target_dir/$target_name");
@@ -19,14 +17,31 @@ class bors_export_pdf extends bors_object
 
 		$log_put = config('debug_hidden_log_dir').'/pdf-maker.log';
 
-		if($h = $this->get('header_url'))
-			$header = " --header-html $h";
-		else
-			$header = "";
+		$header = "";
+		if($header_html = $this->get('header_html'))
+		{
+			$header_file = uniqid('/tmp/pdf-header-').'.html';
+			$tmp_files[] = $header_file;
+			file_put_contents($header_file, $header_html);
+			$header = " --header-html $header_file";
+		}
+		elseif($header_url = $this->get('header_url'))
+				$header = " --header-html $header_url";
+
+		$cover = "";
+		if($cover_html = $this->get('cover_html'))
+		{
+			$cover_file = uniqid('/tmp/pdf-cover-').'.html';
+			$tmp_files[] = $cover_file;
+			file_put_contents($cover_file, $cover_html);
+			$cover = " cover $cover_file";
+		}
+		elseif($cover_url = $this->get('cover_url'))
+				$cover = " cover $cover_url";
 
 		if($body_html = $this->get('body_html'))
 		{
-			$body = tempnam('/tmp', 'pdfhelper-body-').'.html';
+			$body = uniqid('/tmp/pdf-body-').'.html';
 			$tmp_files[] = $body;
 			file_put_contents($body, $body_html);
 		}
@@ -38,10 +53,10 @@ class bors_export_pdf extends bors_object
 				$body = " http://bors.balancer.ru/";
 		}
 
-		$file = tempnam('/tmp', 'pdf-result-').'.pdf';
+		$file = uniqid('/tmp/pdf-result-').'.pdf';
 		$tmp_files[] = $file;
 
-		$cmd = "$bin --encoding utf-8 cover $cover_url $header $body $file &> $log_put";
+		$cmd = "$bin --encoding utf-8 $cover $header $body $file &> $log_put";
 		debug_hidden_log('00-pdf', $cmd);
 		system($cmd);
 
