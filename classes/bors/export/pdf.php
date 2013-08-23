@@ -8,7 +8,8 @@ class bors_export_pdf extends bors_object
 	{
 		$cover_url = $this->get('cover_url');
 
-		$file = tempnam('/tmp', 'pdfhelper');
+		$tmp_files = array();
+
 //		header("X-PDF-INFO: /usr/local/bin/wkhtmltopdf-amd64 --cover $cover_url $helper_url $target_dir/$target_name");
 
 		$bin = config('bin.wkhtmltopdf', '/opt/bin/wkhtmltopdf-amd64');
@@ -23,16 +24,32 @@ class bors_export_pdf extends bors_object
 		else
 			$header = "";
 
-		if($b = $this->get('body_url'))
-			$body = " $b";
+		if($body_html = $this->get('body_html'))
+		{
+			$body = tempnam('/tmp', 'pdfhelper-body-').'.html';
+			$tmp_files[] = $body;
+			file_put_contents($body, $body_html);
+		}
 		else
-			$body = " http://www.balancer.ru/";
+		{
+			if($b = $this->get('body_url'))
+				$body = " $b";
+			else
+				$body = " http://bors.balancer.ru/";
+		}
 
-//debug_hidden_log('--pdf', "$bin cover $cover_url $helper_url $target_dir/$target_name");
-		system("$bin cover $cover_url $header $body $file &> $log_put");
+		$file = tempnam('/tmp', 'pdf-result-').'.pdf';
+		$tmp_files[] = $file;
+
+		$cmd = "$bin --encoding utf-8 cover $cover_url $header $body $file &> $log_put";
+		debug_hidden_log('00-pdf', $cmd);
+		system($cmd);
 
 		$pdf = file_get_contents($file);
-		unlink($file);
+
+		foreach($tmp_files as $f)
+			unlink($f);
+
 		return $pdf;
 	}
 
