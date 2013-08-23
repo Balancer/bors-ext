@@ -170,14 +170,14 @@
 
 {module class="bors_module_breadcrumb_list" template="bootstrap"}
 
-		<div class="page-header well">
-		<h1>{$this->page_title()|htmlspecialchars}
-			<small>
-			{if $this->description()}<br/>{$this->description()}{/if}
-			{if $this->keywords_linked()}<br />{$this->keywords_linked()}{/if}
-			</small></h1>
+		<div class="page-header">
+			<h1>{$this->page_title()|htmlspecialchars}
+				<small>
+				{if $this->description()}<br/>{$this->description()}{/if}
+				{if $this->keywords_linked()}<br />{$this->keywords_linked()}{/if}
+				</small>
+			</h1>
 		</div>
-
 
 {if $error_message}<div class="alert alert-error"   >{$error_message}</div>{/if}
 {if $notice_message}<div class="alert">{$notice_message}</div>{/if}
