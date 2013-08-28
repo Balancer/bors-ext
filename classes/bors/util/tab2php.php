@@ -126,6 +126,6 @@ class bors_util_tab2php
 
 		file_put_contents($file, join("\n", $code), FILE_APPEND);
 
-		blib_cli::out("%CClass wrote to $file%C%n");
+		blib_cli::out("%CClass wrote to $file%C%n\n");
 	}
 }
