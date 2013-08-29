@@ -1,5 +1,12 @@
 <?php
 
+/*
+	Изучить:
+		phpoffice/phpexcel
+		PHPExcel - OpenXML - Read, Create and Write Spreadsheet documents in PHP - Spreadsheet engine
+		https://packagist.org/packages/phpoffice/phpexcel
+*/
+
 // http://matf.aviaport.ru/persons/lists/8.xls
 
 class bors_catalogue_xls extends bors_object

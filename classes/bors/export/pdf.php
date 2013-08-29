@@ -1,5 +1,17 @@
 <?php
 
+/*
+	Изучить:
+		knplabs/knp-snappy
+		PHP5 library allowing thumbnail, snapshot or PDF generation from a url or a html page. Wrapper for wkhtmltopdf/wkhtmltoimage.
+		https://packagist.org/packages/knplabs/knp-snappy
+
+		mikehaertl/phpwkhtmltopdf
+		A slim PHP wrapper around wkhtmltopdf with an easy to use and clean OOP interface
+		https://packagist.org/packages/mikehaertl/phpwkhtmltopdf
+		http://mikehaertl.github.io/phpwkhtmltopdf/
+*/
+
 class bors_export_pdf extends bors_object
 {
 	function render_engine() { return $this; }
