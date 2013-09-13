@@ -6,32 +6,42 @@ class bors_ajax_actionmod_actor extends bors_object
 	{
 		$path = explode('/', $this->id());
 		$action = 'action_'.array_pop($path);
-		$class_name = 'ajax_actionmod_'.join('_', $path);
+		$class_name = join('_', $path);
 		$args = bors()->request()->data();
-//		var_dump($class_name, $action, $args);
 
-		$actor = bors_load($class_name, NULL);
+		$actor = bors_load('ajax_actionmod_'.$class_name, NULL);
+		if(!$actor)
+		{
+			$actor = bors_load($class_name, NULL);
+			if($actor && !$actor->get('is_actionmod'))
+				$actor = NULL;
+		}
 
-		if(!method_exists($actor, $action))
+		if(!$actor || !method_exists($actor, $action))
+		{
+			echo "Incorrect actor or method";
 			return true;
+		}
 
-		$result = $actor->call($action, &$args);
+		$result = $actor->call($action, $args);
 		if($result === true)
 			return $result;
 
-		$ref = $args['ref'];
-//		echo "Found: $ref";
-		return go($ref);
+		if($ref = @$args['ref'])
+		{
+	//		echo "Found: $ref";
+			return go($ref);
+		}
 
-		if(is_array($data))
+		if(is_array($result))
 		{
 			header('Content-type: application/json; charset: utf-8');
-			echo json_encode($data);
+			echo json_encode($result);
 		}
 		else
 		{
 			header('Content-Type: text/html; charset: utf-8');
-			echo $data;
+			echo $result;
 		}
 
 		return true;

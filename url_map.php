@@ -11,4 +11,6 @@ bors_url_map(array(
 	'/_bors/callback/(\w+)/? => bors_external_callback(1)',
 	'/_bors/act/(\w+)/(\w+)/? => bors_ext_action(1,target=2)',
 //	'/_bors/act/(\w+)/? => bors_ext_action(1,NULL)',
+
+	'/_cg/f2f/([\w\-]+\.\w+\.\w+)$ => bors_cg_f2f(1)',
 ));
