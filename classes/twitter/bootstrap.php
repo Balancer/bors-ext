@@ -2,9 +2,12 @@
 
 class twitter_bootstrap
 {
-	static function load()
+	static function load($responsive = true)
 	{
-		bors_use('pre:/_bors3rdp/'.config('bootstrap.path').'/css/bootstrap-responsive.min.css');
+		// Пишется раньше, так как следующее добавление будет pre
+		if($responsive)
+			bors_use('pre:/_bors3rdp/'.config('bootstrap.path').'/css/bootstrap-responsive.min.css');
+
 		bors_use('pre:/_bors3rdp/'.config('bootstrap.path').'/css/bootstrap.min.css');
 
 		jquery::load();
