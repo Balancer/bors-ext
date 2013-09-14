@@ -7,9 +7,11 @@ class bors_cg_f2f_css_less extends bors_cg_f2f
 	function content()
 	{
 		$this->uses('composer');
-		require "lessc.inc.php";
-		echo $file = $_SERVER['DOCUMENT_ROOT'].'/_cg/f2f/'.$this->id();
-		
-		var_dump($this->id(), file_get_contents($file));
+		$src = $_SERVER['DOCUMENT_ROOT'].'/_cg/f2f/'.$this->id().'.less';
+		$dst = $_SERVER['DOCUMENT_ROOT'].'/_cg/f2f/'.$this->id().'.less.css';
+		$less = new lessc;
+//		$less->checkedCompile($src, $dst);
+		return $less->compileFile($src);
+//		return file_get_contents($dst);
 	}
 }
