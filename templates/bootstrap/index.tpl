@@ -249,6 +249,13 @@ $(function() {literal}{{/literal}
 	});
 });
 
+$('a.brand-nav-ajax-dropdown').click(function() {
+	var el = $(this)
+	$.get(el.attr("rel"), function(content) {
+		$('a.brand-nav-ajax-dropdown').parent().append(content)
+	})
+})
+
 --></script>
 {/if}
 
