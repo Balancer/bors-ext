@@ -50,15 +50,15 @@ class jquery_fancybox
 	<script type="text/javascript" src="../source/helpers/jquery.fancybox-media.js?v=1.0.5"></script>
 */
 
-		bors_use('/_bors-3rd/bower/components/fancybox/source/jquery.fancybox.css');
-		jquery::plugin('/_bors-3rd/bower/components/fancybox/lib/jquery.mousewheel-3.0.6.pack.js');
-		jquery::plugin('/_bors-3rd/bower/components/fancybox/source/jquery.fancybox.js');
+		bors_use(config('bower.path').'/fancybox/source/jquery.fancybox.css');
+		jquery::plugin(config('bower.path').'/fancybox/lib/jquery.mousewheel-3.0.6.pack.js');
+		jquery::plugin(config('bower.path').'/fancybox/source/jquery.fancybox.js');
 
-//		bors_use('/_bors-3rd/bower/components/fancybox/source/helpers/jquery.fancybox-buttons.css');
-//		jquery::plugin('/_bors-3rd/bower/components/fancybox/source/helpers/jquery.fancybox-buttons.js');
+//		bors_use(config('bower.path').'/fancybox/source/helpers/jquery.fancybox-buttons.css');
+//		jquery::plugin(config('bower.path').'/fancybox/source/helpers/jquery.fancybox-buttons.js');
 
-		bors_use('/_bors-3rd/bower/components/fancybox/source/helpers/jquery.fancybox-thumbs.css');
-		jquery::plugin('/_bors-3rd/bower/components/fancybox/source/helpers/jquery.fancybox-thumbs.js');
+		bors_use(config('bower.path').'/fancybox/source/helpers/jquery.fancybox-thumbs.css');
+		jquery::plugin(config('bower.path').'/fancybox/source/helpers/jquery.fancybox-thumbs.js');
 	}
 
 	static function appear($el, $attrs)

@@ -17,7 +17,7 @@ class jquery
 			if(config('jquery.use_cdn'))
 				$link = 'http://code.jquery.com/jquery-'.config('jquery.version').'.min.js';
 			else
-				$link = 'pre:/_bors-3rd/bower/components/jquery/jquery.min.js';
+				$link = 'pre:'.config('bower.path').'/jquery/jquery.min.js';
 		}
 
 		bors_use($link);
