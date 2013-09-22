@@ -26,7 +26,7 @@
 {/foreach}{/if}
 
 	<!-- The styles -->
-	<link href="/_bors-3rd/bower/components/bootstrap-assets/css/bootstrap.min.css" rel="stylesheet">
+	<link href="/_bors-3rd/bower_components/bootstrap-assets/css/bootstrap.min.css" rel="stylesheet">
 	<link id="bs-css" href="/_bors-3rd/themes/charisma/css/bootstrap-cerulean.css" rel="stylesheet">
 	<style type="text/css">
 	  body {
@@ -36,7 +36,7 @@
 		padding: 9px 0;
 	  }
 	</style>
-	<link href="/_bors-3rd/bower/components/bootstrap-assets/css/bootstrap-responsive.min.css" rel="stylesheet">
+	<link href="/_bors-3rd/bower_components/bootstrap-assets/css/bootstrap-responsive.min.css" rel="stylesheet">
 	<link href="/_bors-3rd/themes/charisma/css/charisma-app.css" rel="stylesheet">
 	<link href="/_bors-3rd/themes/charisma/css/jquery-ui-1.8.21.custom.css" rel="stylesheet">
 	<link href='/_bors-3rd/themes/charisma/css/fullcalendar.css' rel='stylesheet'>
