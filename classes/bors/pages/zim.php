@@ -11,7 +11,7 @@ class bors_pages_zim extends bors_page
 			$path = $m[1].'.txt';
 
 		$file = $this->webroot().$path;
-		if(!file_exists($file))
+		if(!file_exists($file) || !is_file($file))
 			return false;
 
 		$this->parse($file);

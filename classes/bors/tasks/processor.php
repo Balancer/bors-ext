@@ -9,7 +9,7 @@ class bors_tasks_processor extends bors_cli
 		// Проверяем, есть ли, вообще, задачи в очереди. Чтобы не мусорить потом
 		// update, если они не нужны
 		if(!bors_count($this->task_class(), array('runs_count<' => 3)))
-			return;
+			return false;
 
 		$processor_id = md5(microtime().uniqid());
 		$foo = bors_foo($this->task_class());
@@ -57,9 +57,9 @@ class bors_tasks_processor extends bors_cli
 		$task->set_runs_count($task->runs_count() + 1);
 		$task->store();
 
-		$worker = bors_load($task->worker_class_name(), NULL);
+		$worker = bors_load($task->worker_class_name(), $task->worker_id());
 		if(!$worker)
-			return "Can't load worker {$task->worker_class_name()} for task {$task->id()}";
+			return "Can't load worker {$task->worker_class_name()}({$task->worker_id()}) for task {$task->id()}";
 
 		$target = bors_load($task->target_class_name(), $task->target_id());
 
@@ -68,7 +68,10 @@ class bors_tasks_processor extends bors_cli
 		elseif($task->target_class_name())
 			bors_debug::syslog('tasks', "Target {$task->target_class_name()}({$task->target_id()}) load error. Is null.");
 
-		$error = $worker->do_work($target);
+		if($method = $task->worker_method())
+			$error = $worker->call('do_work_'.$method, $target);
+		else
+			$error = $worker->do_work($target);
 
 		if($error)
 		{
@@ -79,6 +82,8 @@ class bors_tasks_processor extends bors_cli
 		}
 		else
 			$task->delete();
+
+		bors()->changed_save();
 
 		return $error;
 	}

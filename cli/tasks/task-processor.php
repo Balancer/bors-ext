@@ -1,5 +1,7 @@
 <?php
 
+// var_dump(BORS_HOST, BORS_SITE);
+
 global $pos;
 $pos = $argv[1];
 
@@ -16,12 +18,21 @@ function do_work()
 //	blib_cli::out("\t%wDo work by ".getmypid()."%n");
 	$processor = bors_foo('bors_tasks_processor');
 
-	$res = $processor->do_work();
-	if($res)
+	try
 	{
-		echo '+';
-		blib_cli::out("%CResult%n");
-		var_dump($res);
+		$res = $processor->do_work();
+		if($res)
+		{
+			echo '+';
+			blib_cli::out("%CResult%n");
+			var_dump($res);
+		}
+	}
+	catch(Exception $e)
+	{
+		blib_cli::out("\r%RException%n\n");
+		blib_cli::out("%K".blib_exception::factory($e)."%n\n");
+		exit();
 	}
 }
 

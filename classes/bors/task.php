@@ -10,6 +10,8 @@ class bors_task extends bors_object_db
 		return array(
 			'id',
 			'worker_class_name',
+			'worker_id',
+			'worker_method',
 			'target_class_name',
 			'target_id',
 			'target_page',
@@ -23,15 +25,45 @@ class bors_task extends bors_object_db
 		);
 	}
 
-	function add($worker, $target = NULL, $priority = 0, $exec_time = NULL)
+	static function add($worker, $target = NULL, $priority = 0, $exec_time = NULL)
 	{
-		bors_new($this->class_name(), array(
-			'worker_class_name' => $worker,
-			'target_class_name' => $target ? $target->class_name() : NULL,
-			'target_id' => $target ? $target->id() : NULL,
-			'target_page' => $target && ($page = $target->page()) && $page != 1 ? $page : NULL,
-			'exec_time' => $exec_time,
-			'priority' => $priority,
+		$worker_class	= NULL;
+		$worker_id		= NULL;
+		$worker_method	= NULL;
+		if(is_array($worker))
+		{
+			@list($worker_class, $worker_id, $worker_method) = $worker;
+		}
+		elseif(is_string($worker))
+			$worker_class = $worker;
+		else
+			bors_debug::syslog('tasks-error', "Unknown worker: ".print_r($worker, true));
+
+		$target_class	= NULL;
+		$target_id		= NULL;
+		$target_page	= NULL;
+
+		if(is_object($target))
+		{
+			$target_class = $target->class_name();
+			$target_id = $target->id();
+			if(($page = $target->page()) && $page != 1)
+				$target_page = $page;
+		}
+		elseif(is_array($target))
+			@list($target_class, $target_id, $target_page) = $target;
+		elseif($target)
+			bors_debug::syslog('tasks-error', "Worker $worker. Unknown target: ".print_r($target, true));
+
+		bors_new(get_called_class(), array(
+			'worker_class_name' => $worker_class,
+			'worker_id'			=> $worker_id,
+			'worker_method'		=> $worker_method,
+			'target_class_name' => $target_class,
+			'target_id'			=> $target_id,
+			'target_page'		=> $target_page,
+			'exec_time'			=> $exec_time,
+			'priority'			=> $priority,
 		));
 	}
 }

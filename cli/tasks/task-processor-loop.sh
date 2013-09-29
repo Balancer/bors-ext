@@ -1,5 +1,7 @@
 #!/bin/bash
 
+DIR=$(dirname $0)
+
 cleanup()
 {
 	echo
@@ -12,6 +14,6 @@ trap cleanup SIGINT SIGTERM
 
 while true; do
 	echo processor start
-	bors run task-processor.php $1 &
+	bors run $DIR/task-processor.php $1 &
 	wait $!
 done
