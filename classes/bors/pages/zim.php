@@ -39,4 +39,30 @@ class bors_pages_zim extends bors_page
 	}
 
 	function source() { return $this->source; }
+
+	function body()
+	{
+		return $this->zim_markup($this->source());
+	}
+
+	function zim_markup($text)
+	{
+		$text = preg_replace("!^(Created.+)\n!", "<i class=\"transgray\"><small>$1</small></i>\n", $text);
+		$text = preg_replace("@(?!:)//(.+?[^:])//@s", "<i>$1</i>\n", $text);
+		$text = preg_replace("!\*\*(.+?)\*\*!s", "<b>$1</b>\n", $text);
+		$text = preg_replace_callback("!(\[(\w+)[^\]]*\].*\[/\\2\])!s", function($code) { return lcml_bb($code[1]); }, $text);
+		$text = preg_replace("!^====== (.+?) ======$!m", "<h1>$1</h1>\n", $text);
+		$text = preg_replace("!^===== (.+?) =====$!m", "<h2>$1</h2>\n", $text);
+		$text = preg_replace("!^==== (.+?) ====$!m", "<h3>$1</h3>\n", $text);
+		$text = preg_replace("!^=== (.+?) ===$!m", "<h4>$1</h4>\n", $text);
+		$text = preg_replace("!^== (.+?) ==$!m", "<h5>$1</h5>\n", $text);
+		$text = preg_replace("!^= (.+?) =$!m", "<h6>$1</h6>\n", $text);
+		$text = preg_replace("!\[\[(.+?)\|(.+?)\]\]!", "<a href=\"$1\">$2</a>", $text);
+
+		$text = preg_replace("!(^\* (.+?)$)+!m", "<li>$2</li>", $text);
+#		$text = preg_replace("!\n(?!<ul)([^\n]+)\n<li>!s", "$1\n<ul>\n<li>", $text);
+
+		$text = preg_replace("/(?:^|\n)([^<].+?[^>])(?:($|\n){2,})/", "<p>$1</p>\n", $text);
+		return $text;
+	}
 }
