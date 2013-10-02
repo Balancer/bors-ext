@@ -1,5 +1,7 @@
 <?php
 
+// Отработка поддержки: http://forums.balancer.ru/rules/
+
 class bors_pages_zim extends bors_page
 {
 	function can_be_empty() { return false; }
@@ -16,9 +18,12 @@ class bors_pages_zim extends bors_page
 
 		$this->parse($file);
 
-		//TODO: Поменять потом на проверку тегов
-		if(preg_match('/@skip/', $this->source))
+		//TODO: Поменять потом на проверку настоящих тегов
+		if(preg_match('/(@skip|@hidden)/', $this->source))
 			return false;
+
+		if(preg_match('/(@under_?construction)/', $this->source))
+			$this->set_attr('is_under_construction', true);
 
 		return true;
 	}
