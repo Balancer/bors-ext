@@ -15,7 +15,7 @@ class bors_util_bench
 			$class_name = $mm[1];
 
 			if(!preg_match('/function __benchmark/', $content))
-				return print "Absent __unit_test function in class $class_name";
+				return print "Absent __benchmark function in class $class_name";
 
 			call_user_func(array($class_name, '__benchmark'));
 
