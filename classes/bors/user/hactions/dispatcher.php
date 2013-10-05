@@ -12,6 +12,9 @@ class bors_user_hactions_dispatcher extends base_object
 		// Криво, но нам нужен оригинальный объект, так что перезагружаем уже с нужным:
 		$haction = bors_find_first($haction->haction_class_name(), array('id' => $this->id()));
 
+		if(!$haction)
+			return bors_message(ec('Извините, выбранное Вами действие невозможно. Это действие устарело.'));
+
 		if($haction->expire_time() < time())
 			return bors_message(ec('Извините, выбранное Вами действие невозможно. Устаревшая ссылка.'));
 
