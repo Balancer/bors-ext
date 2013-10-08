@@ -5,7 +5,6 @@
 //	require_once(config('phpunit_include').'/Framework.php');
 
 // PHPUnit теперь берётся из Composer
-
 require_once('composer/vendor/autoload.php');
 
 class bors_util_test
