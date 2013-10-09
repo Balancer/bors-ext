@@ -1,15 +1,17 @@
 <?php
 
-if($bus = getenv('BORS_UNITTEST_SITE'))
-	define('BORS_SITE', $bus);
+//if($bus = getenv('BORS_UNITTEST_SITE'))
+//	define('BORS_SITE', $bus);
 
 require_once dirname(__FILE__).'/setup.php';
 require_once BORS_CORE.'/init.php';
 
-config_set('phpunit_include', 'PHPUnit');
+//config_set('phpunit_include', 'PHPUnit');
+//if(!@include_once(config('phpunit_include').'/Autoload.php'))
+//	@include_once(config('phpunit_include').'/Framework.php');
 
-if(!@include_once(config('phpunit_include').'/Autoload.php'))
-	@include_once(config('phpunit_include').'/Framework.php');
+// PHPUnit теперь берётся из Composer
+require_once('composer/vendor/autoload.php');
 
 require_once('inc/filesystem.php');
 

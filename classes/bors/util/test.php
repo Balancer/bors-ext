@@ -1,15 +1,21 @@
 <?php
 
-config_set('phpunit_include', 'PHPUnit');
+//config_set('phpunit_include', 'PHPUnit');
+//if(!include_once(config('phpunit_include').'/Autoload.php'))
+//	require_once(config('phpunit_include').'/Framework.php');
 
-if(!include_once(config('phpunit_include').'/Autoload.php'))
-	require_once(config('phpunit_include').'/Framework.php');
+// PHPUnit теперь берётся из Composer
+require_once('composer/vendor/autoload.php');
 
 class bors_util_test
 {
 	static function run($argv)
 	{
 		$test = $argv[0];
+
+		if(preg_match('/^(\w+)\.php$/', $test, $m) && file_exists($test_file = "{$m[1]}.unittest.php"))
+			$test = $test_file;
+
 		if(preg_match('/^(\w+)\.unittest\.php$/', $test, $m))
 		{
 			$content = file_get_contents($test);
@@ -30,14 +36,17 @@ class bors_util_test
 
 		if(preg_match('/^(\w+)\.php$/', $test, $m))
 		{
-			$content = file_get_contents($test);
+			$content = @file_get_contents($test);
+			if(!$content)
+				return blib_cli::out("%rCan't read file $test%n\n");
+
 			if(!preg_match('/class (\w+)/', $content, $mm))
 				return print "Unknown class in $test\n";
 
 			$class_name = $mm[1];
 
 			if(!preg_match('/function __unit_test/', $content))
-				return print "Absent __unit_test function in class $class_name";
+				return blib_cli::out("%rAbsent __unit_test function in class $class_name%n\n");
 
 			self::test_class($class_name);
 			return;

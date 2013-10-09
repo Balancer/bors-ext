@@ -11,7 +11,7 @@ class bors_tests_object_db6_unittest extends PHPUnit_Framework_TestCase
 		$object = bors_load($class, -12345);
         $this->assertNull($object);
 		$object = object_new_instance($class, array(
-			'id' => '123',
+			'id' => '41857',
 			'title' => 'test',
 		));
 		$object->store();
@@ -19,14 +19,14 @@ class bors_tests_object_db6_unittest extends PHPUnit_Framework_TestCase
 
 		$first = bors_find_first($class, array('title' => 'test'));
         $this->assertNotNull($first);
-        $this->assertEquals('123', $first->id());
+        $this->assertEquals('41857', $first->id());
 		$time = '123456789';
         $first->set_create_time($time, true);
         $first->store();
 
 		$object = bors_find_first($class, array('create_time' => $time));
         $this->assertNotNull($object);
-        $this->assertEquals('123', $object->id());
+        $this->assertEquals('41857', $object->id());
 
         $this->assertEquals('real_id_field', $object->id_field());
         $this->assertEquals('real_title_field', $object->title_field());
@@ -34,7 +34,7 @@ class bors_tests_object_db6_unittest extends PHPUnit_Framework_TestCase
 
 		// Тестим юникод
 		$object = bors_new($class, array(
-			'id' => '456',
+			'id' => '53604',
 			'title' => ($pattern = ec('Ещё раз…')),
 		));
 
@@ -44,7 +44,7 @@ class bors_tests_object_db6_unittest extends PHPUnit_Framework_TestCase
 		// Проверим чтение всех объектов. Выше создавалось два
 		$objects = bors_find_all($class, array('order' => '-id'));
         $this->assertEquals(2, count($objects));
-        $this->assertEquals(456, $objects[0]->id());
+        $this->assertEquals(53604, $objects[0]->id());
 
         $this->assertEquals(date('Y'), $objects[0]->ctime2()->date('Y'));
     }
