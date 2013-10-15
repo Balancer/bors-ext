@@ -17,6 +17,8 @@
 		"source": "https://bitbucket.org/Balancer/bors-core"
 	},
 
+	"minimum-stability": "dev",
+
     "require": {
         "balancer/bors-core": "dev-default"
     },
