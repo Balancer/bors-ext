@@ -185,4 +185,9 @@ class bors_external_youtube extends bors_object
 			'target_score' => $self->score(),
 		));
 	}
+
+	function image_url()
+	{
+		return "http://img.youtube.com/vi/{$this->id()}/hqdefault.jpg";
+	}
 }
