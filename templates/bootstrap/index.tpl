@@ -109,7 +109,7 @@
 {if $this->get('search_request_url')}
 					<form class="form-search navbar-search pull-left" action="{$this->get('search_request_url')}" method="get">
 						<div class="input-append">
-							<input type="text" class="search-query" placeholder="Введите слова для поиска" name="q">
+							<input type="text" class="search-query" placeholder="{if $nav_bar_search_title}{$nav_bar_search_title}{else}Введите слова для поиска{/if}" name="q">
 							<button type="submit" class="btn btn-inverse"><i class="icon-search icon-white"></i></button>
 						</div>
 					</form>
