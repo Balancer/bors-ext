@@ -4,7 +4,9 @@ class lcml_tag_pair_file_pdf extends bors_lcml_tag_pair
 {
 	function html($url, &$params = array())
 	{
-		if(config('lcml.postpone_lite', true))
+		//TODO: не забыть убрать после отладки!
+//		if(!config('is_developer'))
+		if(config('lcml.parse_lite', true))
 			return lcml_tag_pair_file_pdf::parse_lite($url, $params);
 
 		if(config('lcml.postpone_full'))
@@ -27,7 +29,7 @@ class lcml_tag_pair_file_pdf extends bors_lcml_tag_pair
 
 	function parse_lite($url, $params)
 	{
-		return "<div class=\"file_pdf\"><a href=\"{$url}\">".basename($url)."</a></div>";
+		return "<div class=\"bors_file_pdf\"><a href=\"{$url}\">".urldecode(basename($url))."</a></div>";
 	}
 
 	function parse_fast($url, $params)

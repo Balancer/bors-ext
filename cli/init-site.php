@@ -20,6 +20,9 @@ do
 		$latest_classes = $dir;
 	}
 
+	if(file_exists($test_dir = "$dir/b2-core"))
+		$class_dirs[] = $test_dir;
+
 	if(!defined('BORS_CORE'))
 	{
 		if(file_exists($core = "$dir/bors-core"))
@@ -27,6 +30,7 @@ do
 			define('BORS_CORE', $core);
 			break;
 		}
+
 	}
 
 } while ($dir > '/');
