@@ -15,7 +15,7 @@ class mybb_forum extends bors_object_db
 			'title' => 'name',
 			'description' => array('type' => 'bbcode'),
 			'linkto',
-			'type',
+			'type', // 'f' = форум, 'c' = категория
 			'parent_forum_id' => 'pid',
 			'parentlist' => array('type' => 'bbcode'),
 			'sort_order' => 'disporder',
@@ -23,8 +23,8 @@ class mybb_forum extends bors_object_db
 			'open',
 			'threads',
 			'posts',
-			'lastpost',
-			'lastposter',
+			'last_post_time' => 'lastpost',
+			'last_poster_title' => 'lastposter',
 			'lastposteruid',
 			'lastposttid',
 			'lastpostsubject',
@@ -54,5 +54,22 @@ class mybb_forum extends bors_object_db
 			'defaultsortby',
 			'defaultsortorder',
 		);
+	}
+
+	function auto_objects()
+	{
+		return array_merge(parent::auto_objects(), array(
+			'parent_forum' => 'mybb_forum(parent_forum_id)',
+		));
+	}
+
+	function update_parent_list()
+	{
+		if(!$this->parent_forum_id())
+			return $this->id();
+
+		$parent_list = $this->parent_forum()->update_parent_list().','.$this->id();
+		$this->set_parentlist($parent_list);
+		return $parent_list;
 	}
 }
