@@ -59,7 +59,7 @@ if($latest_classes && !defined('BORS_APPEND'))
 	define('BORS_APPEND', join(' ', $class_dirs));
 
 if(!defined('BORS_SITE'))
-	define('BORS_SITE', BORS_APPEND);
+	define('BORS_SITE', $latest_classes);
 
 if(!defined('BORS_HOST') && file_exists($bh = dirname(BORS_CORE).'/bors-host'))
 	define('BORS_HOST', $bh);
