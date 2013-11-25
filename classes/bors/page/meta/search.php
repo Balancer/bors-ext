@@ -130,7 +130,7 @@ class bors_page_meta_search extends bors_page_meta_main
 					continue;
 				}
 
-				$field = "`{$x['name']}`";
+				$field = "{$x['name']}";
 			}
 			else
 				$field = $p;
