@@ -34,6 +34,8 @@
 	<!-- Le fav and touch icons -->
 	<link rel="shortcut icon" href="/favicon.ico">
 
+{block name="css_post"}
+{/block}
 
 {if not empty($style)}
 <style type="text/css" media="all"><!--
@@ -125,7 +127,9 @@
 	{if not $me}
 					{* http://mifsud.me/adding-dropdown-login-form-bootstraps-navbar/ *}
 					<ul class="nav pull-right">
+	{if $this->project()->get('register_url')}
 						<li><a href="{$this->project()->register_url()}">Зарегистрироваться</a></li>
+	{/if}
 						<li class="divider-vertical"></li>
 						<li class="dropdown">
 							<a class="dropdown-toggle" href="http://www.balancer.ru/forum/punbb/login.php" data-toggle="dropdown">Войти <strong class="caret"></strong></a>
