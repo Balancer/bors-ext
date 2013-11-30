@@ -12,12 +12,12 @@ $class_dirs = array();
 
 do
 {
-	$dir = dirname($dir);
-
 	if(is_dir("$dir/classes"))
 	{
 		$class_dirs[] = $dir;
 		$latest_classes = $dir;
+		if(!defined('BORS_SITE'))
+			define('BORS_SITE', $dir);
 	}
 
 	if(file_exists($test_dir = "$dir/b2-core"))
@@ -32,6 +32,8 @@ do
 		}
 
 	}
+
+	$dir = dirname($dir);
 
 } while ($dir > '/');
 

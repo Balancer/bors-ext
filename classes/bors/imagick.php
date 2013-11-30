@@ -24,7 +24,7 @@ class bors_imagick extends bors_object
 		$parts = explode(',', $id);
 		$magick->image_id  = array_shift($parts);
 		$magick->file_name = array_pop($parts);
-//		var_dump($magick->image_id, $magick->file_name);
+//		var_dump($magick->image_id, $magick->file_name, $parts);
 		$magick->image = bors_load($magick->image_class(), $magick->image_id);
 		foreach($parts as $action)
 		{
