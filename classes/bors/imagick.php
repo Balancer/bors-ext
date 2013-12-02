@@ -17,8 +17,10 @@ class bors_imagick extends bors_object
 
 		if(is_numeric($id))
 		{
-			$magick->image = bors_load($magick->image_class(), $id);
-			return $magick;
+			if($magick->image = bors_load($magick->image_class(), $id))
+				return $magick;
+
+			return NULL;
 		}
 
 		$parts = explode(',', $id);
@@ -32,7 +34,10 @@ class bors_imagick extends bors_object
 			$magick->add_action($action, $params);
 		}
 
-		return $magick;
+		if($magick->image)
+			return $magick;
+
+		return NULL;
 	}
 
 	function add_action($action, $params)
@@ -269,6 +274,9 @@ class bors_imagick extends bors_object
 
 	function thumbnail($geometry)
 	{
+		if(!$this->image)
+			return NULL;
+
 		if(preg_match('/^(\d+x\d+)\(/', $geometry, $m))
 			$geometry = $m[1];
 		if(preg_match('/^(\d+)x$/', $geometry, $m))
