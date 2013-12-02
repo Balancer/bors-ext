@@ -5,6 +5,8 @@ class bors_util_bench
 	static function run($argv)
 	{
 		$test = $argv[0];
+		if(!($times = @$argv[1]))
+			$times = 1000;
 
 		if(preg_match('/^(\w+)\.php$/', $test, $m))
 		{
@@ -17,7 +19,13 @@ class bors_util_bench
 			if(!preg_match('/function __benchmark/', $content))
 				return print "Absent __benchmark function in class $class_name";
 
-			call_user_func(array($class_name, '__benchmark'));
+			@list($functions, $args, $times2) = call_user_func(array($class_name, '__benchmark'));
+			if($times2)
+				$times = $times2;
+			if(!$args)
+				$args = array();
+
+			blib_benchmark::run($functions, $args, $times);
 
 			return;
 		}

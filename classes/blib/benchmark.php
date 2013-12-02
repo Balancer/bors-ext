@@ -9,7 +9,11 @@ class blib_benchmark
 
 		foreach($functions as $f)
 		{
-			echo "$f ... ";
+			if(is_array($f))
+				$fname = "{$f[0]}::{$f[1]}";
+			else
+				$fname = $f;
+			echo "$fname ... ";
 			$start = microtime(true);
 			for($i=0; $i<$loops; $i++)
 				call_user_func_array($f, $args);
