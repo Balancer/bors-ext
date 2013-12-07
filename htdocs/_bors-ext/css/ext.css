@@ -9,9 +9,6 @@ ul.none li {
 	icon-style: none;
 }
 
-li.type-department{background-image:url(/_bors-ext/i16/department.gif)}
-li.type-settings{background-image:url(/_bors-ext/i16/settings.png)}
-
 .social {
 	padding-left: 20px;
 	line-height: 18px;
@@ -27,6 +24,8 @@ li.type-settings{background-image:url(/_bors-ext/i16/settings.png)}
 .social-vkontakte	{ background-image: url(/_bors-ext/i16/services/vkontakte.png) }
 .social-youtube	{ background-image: url(/_bors-ext/i16/services/youtube.png) }
 
+li.type-department{background-image:url(/_bors-ext/i16/department.gif)}
+li.type-settings{background-image:url(/_bors-ext/i16/settings.png)}
 li.type-banned	{background-image: url(/_bors-ext/i16/object-types/banned.gif)}
 li.type-cabinet	{background-image: url(/_bors-ext/i16/object-types/cabinet.png)}
 li.type-dict	{background-image: url(/_bors-ext/i16/object-types/dictionary.png)}
