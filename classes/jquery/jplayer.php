@@ -2,7 +2,7 @@
 
 class jquery_jplayer
 {
-	function html($attrs)
+	static function html($attrs)
 	{
 		$path = config('jquery.jplayer.path');
 		bors_use($css="$path/skin/blue.monday/jplayer.blue.monday.css");
@@ -14,15 +14,22 @@ class jquery_jplayer
 		$mp3 = @$attrs['mp3'];
 		unset($attrs['mp3']);
 
+		$flv = @$attrs['flv'];
+		unset($attrs['flv']);
+
 		$title = popval($attrs, 'title');
 
 //		var_dump($attrs); exit();
 
 		$id = md5(rand());
 
+		$control_css_class = 'jp-audio';
+		$toggles = array();
+		$video_play_icon = '';
+
 		if(empty($attrs['ready']) && $mp3)
 		{
-//			var_dump($mp3, addslashes($mp3)); exit();
+			var_dump($mp3, addslashes($mp3)); exit();
 			// http://www.balancer.ru/g/p3192588
 			$attrs['ready'] = "function () {
 			\$(this).jPlayer(\"setMedia\", {
@@ -39,23 +46,54 @@ class jquery_jplayer
 			set_def($attrs, 'keyEnabled', 'true');
 //			set_def($attrs, 'width', '640px');
 		}
+		elseif(empty($attrs['ready']) && $flv)
+		{
+			// http://www.balancer.ru/g/p3312145
+			$attrs['ready'] = "function () {
+			\$(this).jPlayer(\"setMedia\", {
+				flv:\"".addslashes($flv)."\"
+			})}\n";
+
+			$attrs['play'] = "function() { \$(this).jPlayer(\"pauseOthers\")}";
+			$attrs['cssSelectorAncestor'] = "#jp_container_$id";
+
+			set_def($attrs, 'swfPath', "/_bors-3rd/bower_components/jplayer/jquery.jplayer");
+			set_def($attrs, 'supplied', "flv");
+			set_def($attrs, 'wmode', "window");
+			set_def($attrs, 'smoothPlayBar', 'true');
+			set_def($attrs, 'keyEnabled', 'true');
+			set_def($attrs, 'size', array('cssClass' => 'jp-video-360p', 'width' => '640px', 'height' => '480px'));
+			$control_css_class = 'jp-video';
+			$toggles[] = '<li><a href="javascript:;" class="jp-full-screen" tabindex="1" title="full screen">full screen</a></li>';
+			$video_play_icon = '<div class="jp-video-play"><a href="javascript:;" class="jp-video-play-icon" tabindex="1">play</a></div>';
+		}
 
 		$js_attrs = blib_json::encode_jsfunc($attrs);
-
+//		if(config('is_developer')) { var_dump($js_attrs); exit(); }
 
 		$ready_code = "$('#$id').jPlayer($js_attrs)";
 		$html .= bors_lcml::make_use('ready', base64_encode($ready_code));
 
-		$html .= "{$html}<div id=\"$id\" class=\"jp-jplayer\"></div>";
-
-
 		if($title)
 			$title = "<div class=\"jp-title\"><ul><li>{$title}</li></ul></div>";
 
+		$toggles = join("\n", $toggles);
+
 $html .= <<< __EOT__
-		<div id="jp_container_$id" class="jp-audio">
-			<div class="jp-type-single">
-				<div class="jp-gui jp-interface">
+<div id="jp_container_$id" class="{$control_css_class}">
+	<div class="jp-type-single">
+		<div id="{$id}" class="jp-jplayer"></div>
+		<div class="jp-gui">
+			{$video_play_icon}
+			<div class="jp-interface">
+				<div class="jp-progress">
+					<div class="jp-seek-bar">
+						<div class="jp-play-bar"></div>
+					</div>
+				</div>
+				<div class="jp-current-time"></div>
+				<div class="jp-duration"></div>
+				<div class="jp-controls-holder">
 					<ul class="jp-controls">
 						<li><a href="#" class="jp-play" tabindex="1">play</a></li>
 						<li><a href="#" class="jp-pause" tabindex="1">pause</a></li>
@@ -64,29 +102,28 @@ $html .= <<< __EOT__
 						<li><a href="#" class="jp-unmute" tabindex="1" title="unmute">unmute</a></li>
 						<li><a href="#" class="jp-volume-max" tabindex="1" title="max volume">max volume</a></li>
 					</ul>
-					<div class="jp-progress">
-						<div class="jp-seek-bar">
-							<div class="jp-play-bar"></div>
-
-						</div>
-					</div>
 					<div class="jp-volume-bar">
 						<div class="jp-volume-bar-value"></div>
 					</div>
-					<div class="jp-current-time"></div>
-					<div class="jp-duration"></div>
 					<ul class="jp-toggles">
+						{$toggles}
 						<li><a href="#" class="jp-repeat" tabindex="1" title="repeat">repeat</a></li>
 						<li><a href="#" class="jp-repeat-off" tabindex="1" title="repeat off">repeat off</a></li>
 					</ul>
 				</div>
-				$title
-				<div class="jp-no-solution">
-					<span>Update Required</span>
-					To play the media you will need to either update your browser to a recent version or update your <a href="http://get.adobe.com/flashplayer/" target="_blank">Flash plugin</a>.
+				<div class="jp-title">
+					<ul>
+						<li>{$title}</li>
+					</ul>
 				</div>
 			</div>
 		</div>
+		<div class="jp-no-solution">
+			<span>Update Required</span>
+			To play the media you will need to either update your browser to a recent version or update your <a href="http://get.adobe.com/flashplayer/" target="_blank">Flash plugin</a>.
+		</div>
+	</div>
+</div>
 
 __EOT__;
 
