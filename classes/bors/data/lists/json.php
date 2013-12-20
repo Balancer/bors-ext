@@ -42,6 +42,13 @@ class bors_data_lists_json extends bors_json
 		else
 			$find->limit(200);
 
+		if($w = $r->data('where'))
+		{
+//			file_put_contents('/tmp/json.log', $w.' == '.print_r(json_decode($w, true), true));
+			foreach(json_decode($w, true) as $key => $value)
+				$find->where($key, $value);
+		}
+
 		$find->order($r->data('order', 'title'));
 
 		$result = array();
