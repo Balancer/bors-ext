@@ -14,8 +14,11 @@ class jquery_jplayer
 		$mp3 = @$attrs['mp3'];
 		unset($attrs['mp3']);
 
-		$flv = @$attrs['flv'];
-		unset($attrs['flv']);
+		$url = @$attrs['url'];
+		unset($attrs['url']);
+
+		$video = @$attrs['video'];
+		unset($attrs['video']);
 
 		$title = popval($attrs, 'title');
 
@@ -29,7 +32,6 @@ class jquery_jplayer
 
 		if(empty($attrs['ready']) && $mp3)
 		{
-			var_dump($mp3, addslashes($mp3)); exit();
 			// http://www.balancer.ru/g/p3192588
 			$attrs['ready'] = "function () {
 			\$(this).jPlayer(\"setMedia\", {
@@ -46,12 +48,12 @@ class jquery_jplayer
 			set_def($attrs, 'keyEnabled', 'true');
 //			set_def($attrs, 'width', '640px');
 		}
-		elseif(empty($attrs['ready']) && $flv)
+		elseif(empty($attrs['ready']) && $video)
 		{
 			// http://www.balancer.ru/g/p3312145
 			$attrs['ready'] = "function () {
 			\$(this).jPlayer(\"setMedia\", {
-				flv:\"".addslashes($flv)."\"
+				{$video}:\"".addslashes($url)."\"
 			})}\n";
 
 			$attrs['play'] = "function() { \$(this).jPlayer(\"pauseOthers\")}";
