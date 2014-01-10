@@ -7,7 +7,7 @@ class jquery_plugin
 		jquery::load();
 
 		if(!$preset_name)
-			$preset_name = 'jquery.'.$plugin_name;
+			$preset_name = 'jquery.'.str_replace('_', '-', $plugin_name);
 
 		if(!$package_name)
 			$package_name = 'balancer/bors-3rd-jquery-'.str_replace('_', '-', $plugin_name);
@@ -21,6 +21,10 @@ class jquery_plugin
 			foreach ($statements as $statement)
 			{
 				$path = str_replace('../www/vendor', '/_bors-assets', $statement->__toString());
+
+				if(!$path)
+					continue;
+
 				switch($type)
 				{
 					case 'css':
