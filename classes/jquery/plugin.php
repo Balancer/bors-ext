@@ -14,7 +14,7 @@ class jquery_plugin
 
 		$loader = \AssetsManager\Loader::getInstance();
 		$package = $loader->getPackage($package_name);
-		$preset = $loader->getPreset("jquery.$plugin_name");
+		$preset = $loader->getPreset($preset_name);
 
 		foreach($preset->getOrganizedStatements() as $type => $statements)
 		{
