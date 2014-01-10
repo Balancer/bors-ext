@@ -79,6 +79,14 @@ class jquery
 		return $html.'<!--new123-->';
 	}
 
+	static function appear($element, $function, $params = array())
+	{
+		if($params)
+			$params = blib_json::encode_jsfunc($params);
+
+		jquery::on_ready("$({$element}).{$function}(".($params?$params:'').")\n");
+	}
+
 	static function chrome_alt_fix()
 	{
 		return;
