@@ -20,4 +20,14 @@ class twitter_bootstrap
 		bors_use('pre:/_bors3rdp/bootstrap-plugins/'.config('bootstrap.jquery_ui').'/css/custom-theme/jquery-ui-1.8.16.custom.css');
 		bors_use('/_bors3rdp/bootstrap-plugins/'.config('bootstrap.jquery_ui').'/js/jquery-ui-1.8.16.custom.min.js');
 	}
+
+	static function raw_message($params = array())
+	{
+		self::load();
+
+		if(!is_array($params))
+			$params['title'] = $params;
+
+		return bors_templates_smarty::fetch('xfile:bootstrap/index.tpl', $params);
+	}
 }
