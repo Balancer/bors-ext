@@ -9,10 +9,15 @@ class bors_pages_zim extends bors_page
 {
 	function _host_def() { return $_SERVER['HTTP_HOST']; }
 
+	function parents() { return array(dirname(dirname(bors()->request()->path()))); }
+
 	function can_be_empty() { return false; }
 
 	function is_loaded()
 	{
+		if($this->__havefc())
+			return $this->__lastc();
+
 		$path = bors()->request()->path();
 		$this->path = $path;
 
@@ -20,27 +25,31 @@ class bors_pages_zim extends bors_page
 			$path = $m[1].'.txt';
 
 		if(!preg_match('/\.txt$/', $path))
-			return false;
+			return $this->__setc(false);
 
 		$file = $this->webroot().$path;
 		if(!file_exists($file) || !is_file($file))
-			return false;
+			return $this->__setc(false);
 
 		$this->parse($file);
 
 		//TODO: Поменять потом на проверку настоящих тегов
 		if(preg_match('/(@skip|@hidden)/', $this->source))
-			return false;
+			return $this->__setc(false);
 
 		if(preg_match('/(@under_?construction)/', $this->source))
 			$this->set_attr('is_under_construction', true);
 
-		return true;
+		return $this->__setc(true);
 	}
 
 	function parse($file)
 	{
-		$text = file_get_contents($file);
+//		echo 'parse '.$file.'<br/>';
+//		echo bors_debug::trace();
+
+
+		$text = str_replace("\r", "", file_get_contents($file));
 		if(preg_match("!^(.+?)\n\n(.+)$!s", $text, $m))
 			list($this->head_raw, $this->body_raw) = array_slice($m, 1, 2);
 		else
@@ -51,13 +60,26 @@ class bors_pages_zim extends bors_page
 			list($this->title, $this->source) = array_slice($m, 1, 2);
 		else
 			bors_throw("Zim file parse error: can't get title for ".$file);
+
+		$this->files = [];
+		$this->images = [];
+		$dir = str_replace('.txt', '', $file);
+		foreach(glob($dir.'/*.*') as $fn)
+		{
+			$rel_fn = str_replace($dir.'/', '', $fn);
+			if(preg_match('/\.(jpe?g|png|gif)$/', $rel_fn))
+				$this->images[] = $rel_fn;
+//			echo $rel_fn."<br/>\n";
+		}
 	}
 
 	function source() { return $this->source; }
 
 	function body()
 	{
-		return $this->zim_markup($this->source());
+		$text = $this->zim_markup($this->source());
+//		print_dd($text);
+		return lcml($text);
 	}
 
 	function zim_markup($text)
@@ -66,7 +88,7 @@ class bors_pages_zim extends bors_page
 		$text = preg_replace("!^(Created.+)\n!", "<i class=\"transgray\"><small>$1</small></i>\n", $text);
 		$text = preg_replace("@(?!:)//(.+?[^:])//@s", "<i>$1</i>", $text);
 		$text = preg_replace("!\*\*(.+?)\*\*!s", "<b>$1</b>", $text);
-		$text = preg_replace_callback("!(\[(\w+)[^\]]*\].*\[/\\2\])!s", function($code) { return lcml_bb($code[1]); }, $text);
+
 		$text = preg_replace("!^====== (.+?) ======$!m", "<h1>$1</h1>\n", $text);
 		$text = preg_replace("!^===== (.+?) =====$!m", "<h2>$1</h2>\n", $text);
 		$text = preg_replace("!^==== (.+?) ====$!m", "<h3>$1</h3>\n", $text);
@@ -90,31 +112,84 @@ class bors_pages_zim extends bors_page
 			return "<a href=\"{$link}\">{$text}</a>";
 		}, $text);
 
+		$used_images = [];
+
 		// {{./Z-19-Light-Attack-Helicopter-With-Mast-Mounted-Chinese-ANAPG-78-Longbow-Fire-Control-Radar.jpg?width=640}}
 		// {{./Harbin-Z-19-airlines.net-2190503.jpg?href=http://www.airliners.net/photo/China---Air/Harbin-Z-19/2190503/L/&width=300}}
-		$text = preg_replace_callback("!\{\{(.+?)\}\}!s", function($match) use($zim_path) {
+		$text = preg_replace_callback("!\{\{(.+?)\}\}!s", function($match) use($zim_path, &$used_images) {
 			$ud = parse_url($match[1]);
 			extract($ud);
-			$qd = parse_str(@$query);
+			$qd = array();
+			parse_str(@$query, $qd);
+//			var_dump($qd);
 
-			if(!($href = $qd['href']))
+			if(!($href = @$qd['href']))
 				$href = $path;
-
+//var_dump($href, $qd);
 			if(preg_match('!^\./(.+)$!', $path, $m))
-				$img = $this->host() . $zim_path . $m[1];
+			{
+				$img	= $this->host() . '/cache-static' .$zim_path . $m[1];
+
+				$used_images[] = $img;
+
+				bors_lib_http::get($img);
+
+				list($iw, $ih) = getimagesize($img);
+				$tw = intval(defval($qd, 'width', 640));
+				$th = intval(round($tw*$ih/$iw));
+
+				$thumb	= $this->host() . '/cache/cache-static' . $zim_path . "{$tw}x{$th}/" . $m[1];
+			}
 			else
 				bors_throw("Unknown zim image format '$path'");
 
-//			var_dump($img);
-
-//			return lcml_bbh("[img=\"$img\" href=\"$href\"]");
-			return lcml_bbh("[url=\"$href\"]{$img}[/url]");
+			return "[img=\"$img\" href=\"$href\" {$tw}x{$th}]";
 		}, $text);
 
-		$text = preg_replace("!(^\* (.+?)$)+!m", "<li>$2</li>", $text);
-#		$text = preg_replace("!\n(?!<ul)([^\n]+)\n<li>!s", "$1\n<ul>\n<li>", $text);
+//		$text = preg_replace("!(^\* (.+?)$)+!m", "<li>$2</li>", $text);
+		$text = preg_replace_callback("!^(\t+)\* !m", function($m) { return str_repeat(' ', strlen($m[1])+1).'* ';}, $text);
+//		$text = preg_replace("!\n(?!<ul)([^\n]+)\n<li>!s", "$1\n<ul>\n<li>", $text);
 
-		$text = preg_replace("/(?:^|\n)([^<].+?[^>])(?:($|\n){2,})/", "<p>$1</p>\n", $text);
+//		$text = preg_replace("/(?:^|\n)([^<].+?[^>])(?:($|\n){2,})/", "<p>$1</p>\n", $text);
+
+//			var_dump($this->images);
+		if(count($this->images) > 3)
+			$size = 300;
+		else
+			$size = 640;
+
+		if($this->images)
+		{
+			$text .= "<h2>Изображения</h2>\n";
+			$bb = "";
+//			$bb = "#gallery\n";
+			foreach($this->images as $i)
+			{
+				$img	= $this->host() . '/cache-static' .$zim_path . $i;
+
+				if(in_array($img, $used_images))
+					continue;
+
+				bors_lib_http::get($img);
+				list($iw, $ih) = getimagesize($img);
+
+//				$thumb	= $this->host() . '/cache/cache-static' . $zim_path . "{$size}/" . $img;
+
+				$tw = $size;
+				$th = intval(round($tw*$ih/$iw));
+
+				$thumb	= $this->host() . '/cache/cache-static' . $zim_path . "{$tw}x{$th}/" . $i;
+
+				$text .= "<a href=\"$img\"><img src=\"$thumb\" width=\"$tw\" height=\"$th\"/></a>";
+//				$bb .= "[img=\"$img\" {$size} flow noborder]";
+//				$bb .= "$img\n";
+			}
+//			$bb .= "#/gallery";
+
+//			$text .= lcml_bb($bb);
+
+		}
+
 		return $text;
 	}
 }

@@ -11,7 +11,7 @@ class bors_files_webroot extends bors_page
 
 	function is_loaded()
 	{
-		$path = bors()->request()->path();
+		$path = str_replace('/cache-static/', '/', bors()->request()->path());
 		$this->path = $path;
 
 		$file = $this->webroot().$path;
@@ -25,6 +25,10 @@ class bors_files_webroot extends bors_page
 
 	function direct_content()
 	{
+		$cached_file = $this->cache_static_dir().$this->path;
+		mkpath(dirname($cached_file));
+		copy($this->file, $cached_file);
+
 		$finfo = new finfo(FILEINFO_MIME);
 		$mime = $finfo->file($this->file);
 
