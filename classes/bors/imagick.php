@@ -250,7 +250,15 @@ class bors_imagick extends bors_object
 	function imagesize($type)
 	{
 		if(!$this->image_size)
-			$this->image_size = getimagesize($this->base_dir().'/'.$this->file_name());
+		{
+			$file = $this->base_dir().'/'.$this->file_name();
+
+			// Если картинки нет на диске, вероятно она генерируемая. Дёргаем оригинальный URL.
+			if(!file_exists($file))
+				blib_http::get_bin($this->url());
+
+			$this->image_size = getimagesize($file);
+		}
 
 		return @$this->image_size[$type];
 	}
