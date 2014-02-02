@@ -67,7 +67,7 @@ class bors_pages_zim extends bors_page
 		foreach(glob($dir.'/*.*') as $fn)
 		{
 			$rel_fn = str_replace($dir.'/', '', $fn);
-			if(preg_match('/\.(jpe?g|png|gif)$/', $rel_fn))
+			if(preg_match('/\.(jpe?g|png|gif)$/i', $rel_fn))
 				$this->images[] = $rel_fn;
 //			echo $rel_fn."<br/>\n";
 		}
@@ -154,7 +154,7 @@ class bors_pages_zim extends bors_page
 
 //			var_dump($this->images);
 		if(count($this->images) > 3)
-			$size = 300;
+			$size = 200;
 		else
 			$size = 640;
 
@@ -171,16 +171,17 @@ class bors_pages_zim extends bors_page
 					continue;
 
 				bors_lib_http::get($img);
-				list($iw, $ih) = getimagesize($img);
+//				list($iw, $ih) = getimagesize($img);
 
 //				$thumb	= $this->host() . '/cache/cache-static' . $zim_path . "{$size}/" . $img;
 
 				$tw = $size;
-				$th = intval(round($tw*$ih/$iw));
+//				$th = intval(round($tw*$ih/$iw));
 
-				$thumb	= $this->host() . '/cache/cache-static' . $zim_path . "{$tw}x{$th}/" . $i;
+//				$thumb	= $this->host() . '/cache/cache-static' . $zim_path . "{$tw}x{$th}/" . $i;
+				$thumb	= $this->host() . '/cache/cache-static' . $zim_path . "{$size}x{$size}(up,crop)/" . $i;
 
-				$text .= "<a href=\"$img\"><img src=\"$thumb\" width=\"$tw\" height=\"$th\"/></a>";
+				$text .= "<a href=\"$img\"><img src=\"$thumb\" width=\"$size\" height=\"$size\"/></a>";
 //				$bb .= "[img=\"$img\" {$size} flow noborder]";
 //				$bb .= "$img\n";
 			}
