@@ -82,22 +82,23 @@
 					<span class="icon-bar"></span>
 					<span class="icon-bar"></span>
 				</a>
-{if $this->get('project')}
-				<a class="brand" href="{$this->project()->url()}"><i class="icon-home icon-white"></i> {$this->project()->nav_name()}</a>
+{assign var="project" value=$this->get('project')}
+{if $project}
+				<a class="brand" href="{$project->url()}"><i class="icon-home icon-white"></i> {$project->nav_name()}</a>
 {/if}
 				<div class="nav-collapse collapse">
 					<ul class="nav">
-{if $this->get('project')}
-	{if $this->project()->get('brand_nav')}
+{if $project}
+	{if $project->get('brand_nav')}
 						<li class="dropdown">
 							<a href="#" class="dropdown-toggle" data-toggle="dropdown">Форумы <b class="caret"></b></a>
-							{$this->project()->get('brand_nav')}
+							{$project->get('brand_nav')}
 						</li>
 
 	{/if}
-	{if $this->project()->get('brand_nav_ajax_url')}
+	{if $project->get('brand_nav_ajax_url')}
 						<li class="dropdown">
-							<a href="#" rel="{$this->project()->get('brand_nav_ajax_url')}" class="dropdown-toggle brand-nav-ajax-dropdown" data-toggle="dropdown">Форумы <b class="caret"></b></a>
+							<a href="#" rel="{$project->get('brand_nav_ajax_url')}" class="dropdown-toggle brand-nav-ajax-dropdown" data-toggle="dropdown">Форумы <b class="caret"></b></a>
 						</li>
 
 	{/if}
@@ -106,7 +107,6 @@
 {bootstrap_nav_bar bar=$this->get('navbar')}
 
 					</ul>
-
 
 {if $this->get('search_request_url')}
 					<form class="form-search navbar-search pull-left" action="{$this->get('search_request_url')}" method="get">
@@ -123,12 +123,12 @@
 					</ul>
 {/if}
 
-{if not $this->project()->get('skip_login')}
+{if $project and not $project->get('skip_login')}
 	{if not $me}
 					{* http://mifsud.me/adding-dropdown-login-form-bootstraps-navbar/ *}
 					<ul class="nav pull-right">
-	{if $this->project()->get('register_url')}
-						<li><a href="{$this->project()->register_url()}">Зарегистрироваться</a></li>
+	{if $project->get('register_url')}
+						<li><a href="{$project->register_url()}">Зарегистрироваться</a></li>
 	{/if}
 						<li class="divider-vertical"></li>
 						<li class="dropdown">
