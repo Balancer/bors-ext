@@ -1,12 +1,5 @@
 <?php
 
-/*
-	Изучить:
-		phpoffice/phpexcel
-		PHPExcel - OpenXML - Read, Create and Write Spreadsheet documents in PHP - Spreadsheet engine
-		https://packagist.org/packages/phpoffice/phpexcel
-*/
-
 // http://matf.aviaport.ru/persons/lists/8.xls
 
 class bors_catalogue_xls extends bors_object
@@ -19,6 +12,9 @@ class bors_catalogue_xls extends bors_object
 
 	function pre_show()
 	{
+		if(!(class_exists('PHPExcel')))
+			bors_throw("Отсутствует класс PHPExcel. Настройте Composer на загрузку пакета phpoffice/phpexcel");
+
 		$ret = parent::pre_show();
 		$fname = bors_ucfirst($this->nav_name());
 		if(!$fname)
@@ -27,73 +23,72 @@ class bors_catalogue_xls extends bors_object
 		if(!$fname)
 			$fname = $this->class_name();
 
-		header("Content-type: application/ms-excel");
+		// Redirect output to a client’s web browser (Excel5)
+		header('Content-Type: application/vnd.ms-excel');
+		header('Cache-Control: max-age=0');
+		// If you're serving to IE 9, then the following may be needed
+		header('Cache-Control: max-age=1');
+
+		// If you're serving to IE over SSL, then the following may be needed
+		header ('Expires: Mon, 26 Jul 1997 05:00:00 GMT'); // Date in the past
+		header ('Last-Modified: '.gmdate('D, d M Y H:i:s').' GMT'); // always modified
+		header ('Cache-Control: cache, must-revalidate'); // HTTP/1.1
+		header ('Pragma: public'); // HTTP/1.0
 		header('Content-Disposition: attachment; filename="'.$fname.'.xls"');
+
 		return $ret;
 	}
 
 	function renderer() { return $this; }
 	function render()
 	{
-		$err_save = ini_get('error_reporting');
-		ini_set('error_reporting', $err_save & ~E_NOTICE);
+		// Create new PHPExcel object
+		$objPHPExcel = new PHPExcel();
 
-		require_once 'Spreadsheet/Excel/Writer.php';
+		// Set document properties
+		$objPHPExcel->getProperties()->setCreator("AviaPort.Ru")
+			 ->setLastModifiedBy("AviaPort.Ru")
+			 ->setTitle($this->title())
+//			 ->setSubject("Office 2007 XLSX Test Document")
+//			 ->setDescription("Test document for Office 2007 XLSX, generated using PHP classes.")
+//			 ->setKeywords("office 2007 openxml php")
+//			 ->setCategory("Test result file")
+		;
 
-		$workbook = new Spreadsheet_Excel_Writer($this->fname);
-		$workbook->setVersion(8);
-//		$workbook->_codepage = 0x04E3; //грязный хак, для писать по русски, http://ru-php.livejournal.com/1219823.html
-
-		$worksheet =& $workbook->addWorksheet(bors_substr(preg_replace('/[^\wа-яА-ЯёЕ \.\,]/us', '-', $this->nav_name()), 0, 30));
-//$worksheet->setInputEncoding('ISO-8859-7');
-
-		if(PEAR::isError($worksheet))
-			bors_throw($worksheet->getMessage());
-
-		$worksheet->setInputEncoding('utf-8');
-//		$worksheet->setHeader('test');
+		$sheet = $objPHPExcel->setActiveSheetIndex(0);
 
 		$fields = $this->export_fields();
 
-		$hf =& $workbook->addFormat(); 
-		// Определение шрифта - Helvetica работает с OpenOffice calc тоже... 
-		//$hf->setFontFamily('Helvetica'); 
-		// Определение жирного текста 
-		$hf->setBold();
-		// Определение размера текста 
-		//$hf->setSize('13'); 
-		// Определение цвета текста 
-		//$hf->setColor('navy'); 
-		// Определения ширину границы основания в "thick" 
-		//$hf->setBottom(2); 
-		// Определение цвета границы основания
-		//$hf->setBottomColor('navy'); 
-		// Определения выравнивания в специальное значение 
-		//$hf->setAlign('merge'); 
-
-//		$hf->setBgColor('Yellow'); 
-
 		$col = 0;
 		foreach(array_values($fields) as $h)
-			$worksheet->write(0, $col++, $h, $hf);
+			$sheet->setCellValueByColumnAndRow($col++, 1, $h);
 
-		$row = 1;
+		// Раскраску см. http://stackoverflow.com/questions/6773272/set-background-cell-color-in-phpexcel
+		$objPHPExcel->getActiveSheet()->getStyle("A1:Z1")->getFont()->setBold(true);
+
+		$row = 2;
 		foreach($this->items() as $x)
 		{
 			$col = 0;
 
 			foreach($fields as $property => $title)
-				$worksheet->write($row, $col++, trim($x->get_ne($property)));
+				$sheet->setCellValueByColumnAndRow($col++, $row, trim($x->get_ne($property)));
 
 			$row++;
 		}
 
-		$workbook->close();
-		ini_set('error_reporting', $err_save);
+		// Rename worksheet
+		$objPHPExcel->getActiveSheet()->setTitle(bors_substr(preg_replace('/[^\wа-яА-ЯёЕ \.\,]/us', '-', $this->nav_name()), 0, 30));
+
+		// Set active sheet index to the first sheet, so Excel opens this as the first sheet
+		$objPHPExcel->setActiveSheetIndex(0);
+
+		$objWriter = PHPExcel_IOFactory::createWriter($objPHPExcel, 'Excel5');
+		$objWriter->save($this->fname);
+
 		$csv = file_get_contents($this->fname);
 		unlink($this->fname);
 		return $csv;
-//		return true;
 	}
 
 	function _order_def() { return 'title'; }
@@ -134,7 +129,6 @@ class bors_catalogue_xls extends bors_object
 			}
 			else
 				$where[] = "{$this->main_class()}.id IN (SELECT $inner_field FROM `$db_name`.`$table_name`)";
-
 		}
 		else
 			$this->set_attr('__no_join', true);
