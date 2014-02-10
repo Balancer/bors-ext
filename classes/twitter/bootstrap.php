@@ -31,4 +31,26 @@ class twitter_bootstrap
 
 		return bors_templates_smarty::fetch('xfile:bootstrap/index.tpl', $params);
 	}
+
+	static function collapsed($title, $html)
+	{
+		$id = md5(uniqid());
+		$html = "
+<div class=\"accordion\" id=\"{$id}_container\">
+	<div class=\"accordion-group\">
+		<div class=\"accordion-heading\">
+			<a class=\"accordion-toggle\" data-toggle=\"collapse\" data-parent=\"#{$id}_container\" href=\"#{$id}_body\">
+				{$title}
+			</a>
+		</div>
+		<div id=\"{$id}_body\" class=\"accordion-body collapse\">
+			<div class=\"accordion-inner\">
+				{$html}
+			</div>
+		</div>
+	</div>
+</div>
+";
+		return $html;
+	}
 }
