@@ -73,7 +73,13 @@ class bors_data_lists_json extends bors_json
 			{
 				$r2 = array();
 				foreach($tpl as $ret_f => $obj_f)
-					$r2[$ret_f] = $x->get($obj_f);
+				{
+					if(preg_match('/^\w+$/', $obj_f))
+						$r2[$ret_f] = $x->get($obj_f);
+					else
+						$r2[$ret_f] = preg_replace_callback('/%(\w+)%/', function($m) use ($x) { return $x->get($m[1]); }, $obj_f);
+				}
+
 				$result[] = $r2;
 			}
 		}
