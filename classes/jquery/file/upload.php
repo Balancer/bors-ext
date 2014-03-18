@@ -6,10 +6,10 @@ class jquery_file_upload extends bors_module
 	{
 		$path = config('jquery.file_upload.path');
 		twitter_bootstrap::load();
-		bors_use("$path/css/jquery.fileupload-ui.css");
-		jquery::plugin("$path/js/vendor/jquery.ui.widget.js");
-		jquery::plugin("$path/js/jquery.iframe-transport.js");
-		jquery::plugin("$path/js/jquery.fileupload.js");
+//		bors_use("$path/css/jquery.fileupload-ui.css");
+//		jquery::plugin("$path/js/vendor/jquery.ui.widget.js");
+//		jquery::plugin("$path/js/jquery.iframe-transport.js");
+//		jquery::plugin("$path/js/jquery.fileupload.js");
 //		jquery::plugin("$path/js/jquery.fileupload-process.js");
 //		jquery::plugin("$path/js/jquery.fileupload-resize.js");
 //		jquery::plugin("$path/js/jquery.fileupload-validate.js");
