@@ -44,14 +44,14 @@ class blib_obscene
 
 	function __dev()
 	{
-		$text = "Эти истребители — такое говно. Застрахуйте от рубля. Хулиганы.\n"
+		$text = "Эти истребители — такое говно. Застрахуйте корабля от рубля. Хулиганы.\n"
 			.base64_decode('0JzQvdC+0LPQviDRgdGC0LDQu9C+INCyINC90LDRiNC4INC00L3QuCDQvdC10L7Qv9C+0LfQvdCw0L3QvdC+0LkgWNCj0JnQndCYLgo=')
 			.base64_decode('0JTQsCDRhdGD0LvQuCDRgtCw0LwsINCh0L/QtdGA0LzQsNC90LTQsNCx0LvRj9C00YHQutCw0Y8g0L/QuNC30LTQvtC/0YDQvtGR0LHQuNC90LAg0LrQsNC60LDRjy3RgtC+Lgo=')
 			.base64_decode('0K8g0YXRg9C10Y4sINC00L7RgNC+0LPQsNGPINGA0LXQtNCw0LrRhtC40Y8uCg==')
 			.base64_decode('0JTQsNC50YLQtSDRgdCy0L7QsdC+0LTRgywg0YHRg9C60LghINCc0YPQtNCw0LrQuCDQnNGD0LDQtCDQlNC40LHQsC4g0JHQtdGA0LzRg9C00YHQutC40Lkg0YLRgNC+0LXQsdCw0LvRjNC90LjQui4K')
 			.base64_decode('0KHQvtCy0YHQtdC8INC+0YXRg9C10LvQuCDQsdC70Y/QtNC4');
 		echo self::mask($text, true), PHP_EOL;
-		require_once('engines/lcml/main.php');
-		echo lcml($text), PHP_EOL;
+//		require_once('engines/lcml/main.php');
+//		echo lcml($text), PHP_EOL;
 	}
 }
