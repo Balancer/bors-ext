@@ -18,7 +18,7 @@ class blib_benchmark
 			for($i=0; $i<$loops; $i++)
 				call_user_func_array($f, $args);
 			$time = microtime(true) - $start;
-			echo sprintf('%.3f', $time), PHP_EOL;
+			echo sprintf('%.3f s', $time) .'; '. bors_debug::memory_usage_ping(), PHP_EOL;
 		}
 	}
 }

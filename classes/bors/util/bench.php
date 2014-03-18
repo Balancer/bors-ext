@@ -8,7 +8,7 @@ class bors_util_bench
 		if(!($times = @$argv[1]))
 			$times = 1000;
 
-		if(preg_match('/^(\w+)\.php$/', $test, $m))
+		if(preg_match('/^([\w\-]+)\.php$/', $test, $m))
 		{
 			$content = file_get_contents($test);
 			if(!preg_match('/class (\w+)/', $content, $mm))
@@ -17,11 +17,17 @@ class bors_util_bench
 			$class_name = $mm[1];
 
 			if(!preg_match('/function __benchmark/', $content))
-				return print "Absent __benchmark function in class $class_name";
+				return print "Absent __benchmark function in class $class_name\n";
 
+			require_once($test);
 			@list($functions, $args, $times2) = call_user_func(array($class_name, '__benchmark'));
+
+			if(!$functions)
+				return print "Empty functions list for class  $class_name\n";
+
 			if($times2)
 				$times = $times2;
+
 			if(!$args)
 				$args = array();
 
