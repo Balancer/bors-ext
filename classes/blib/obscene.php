@@ -19,10 +19,10 @@ class blib_obscene
 		$text = preg_replace("/([^РрPpТтT][^АаAaИи])([XxХх])\.*[YyУу]\.*[йЙяЯюЮеЕeEe]\.*/u","\$1\$2***",$text);
 		$text = preg_replace("/([Пп])[Ии][Зз3][Дд]/u","\$1***",$text);
 		$text = preg_replace("/([Пп])\.*[Ии]\.*[Зз3]\.*[Дд]\.*/u","\$1***",$text);
-		$text = preg_replace("/(?<![рРpP][уУyYaAаА])([Бб6])[Лл][Яя]$/u","\$1**",$text);
+		$text = preg_replace("/(?<![рpо][уyaар])([б6])[л][я]$/ui","\$2**",$text);
 		$text = preg_replace("/([б6])[л][я][д]/ui","\$1***",$text);
 		//$text = preg_replace("/([Бб])[Лл][Яя]([дД]|\s)/u","\$1**\$2",$text);
-		$text = preg_replace_callback("/(?<![рp][уyаaеe])([б])([л][я]\S*)(\b|[д]|\s)/ui", 'blib_obscene::stars', $text);
+		$text = preg_replace_callback("/(?<!(ор|[рp][уyаaеe]))([б])([л][я]\S*)(\b|[д]|\s)/ui", 'blib_obscene::stars', $text);
 //$text = preg_replace("/манд(а[^р]|а[^т]|и|е|у|ой|ы)/u","м***",$text);
 		$text = preg_replace("/^([ЕеEeЁё])[Бб][TТтAaАаиУуYy]/u","\$1***",$text);
 		$text = preg_replace("/([^рРpPлЛдДНнчЧтТTвВ])([ЕеEeЁё])[Бб]([\sTТтAaАаиИУуYy])/u","\$1\$2**\$3",$text);
@@ -45,6 +45,7 @@ class blib_obscene
 	function __dev()
 	{
 		$text = "Эти истребители — такое говно. Застрахуйте корабля от рубля. Хулиганы потребляет потреблять.\n"
+			."Оскорблять оскорбляемых\nДай рубля, прибью а то!\n"
 			.base64_decode('0JzQvdC+0LPQviDRgdGC0LDQu9C+INCyINC90LDRiNC4INC00L3QuCDQvdC10L7Qv9C+0LfQvdCw0L3QvdC+0LkgWNCj0JnQndCYLgo=')
 			.base64_decode('0JTQsCDRhdGD0LvQuCDRgtCw0LwsINCh0L/QtdGA0LzQsNC90LTQsNCx0LvRj9C00YHQutCw0Y8g0L/QuNC30LTQvtC/0YDQvtGR0LHQuNC90LAg0LrQsNC60LDRjy3RgtC+Lgo=')
 			.base64_decode('0K8g0YXRg9C10Y4sINC00L7RgNC+0LPQsNGPINGA0LXQtNCw0LrRhtC40Y8uCg==')
