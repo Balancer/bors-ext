@@ -13,7 +13,8 @@ class blib_obscene
 
 	static function mask($text, $abusive = false)
 	{
-		$text = preg_replace_callback("/(?<!(ра))([xх])([yу][йияюеeё])/ui", 'blib_obscene::stars2', $text);
+		$text = preg_replace_callback("/(?<!(ра))([xх])([yу][йияеeё])/ui", 'blib_obscene::stars2', $text);
+		$text = preg_replace_callback("/(\b)([xх])([yу][юя])/ui", 'blib_obscene::stars2', $text);
 		$text = preg_replace_callback("/([xх])([yу][л][яи])(\b|[^г])/ui", 'blib_obscene::stars', $text);
 		$text = preg_replace_callback("/([^рpт][^аaи][xх])([yу])([йяюеe]|её)/ui", 'blib_obscene::stars', $text);
 		$text = preg_replace("/([^РрPpТтT][^АаAaИи])([XxХх])\.*[YyУу]\.*[йЙяЯюЮеЕeEe]\.*/u","\$1\$2***",$text);
@@ -32,8 +33,8 @@ class blib_obscene
 
 		if($abusive)
 		{
-			$text = preg_replace("/([г])([aаoо])[BВв][HНн]/ui", "\$1***", $text);
-			$text = preg_replace("/([СсCc])[УуYy][КкKk]([аАaAиИеЕуУyY]|ой)/u","\$1**\$2",$text);
+			$text = preg_replace("/\b([г])([aаoо])[BВв][HНн]/ui", "\$1***", $text);
+//			$text = preg_replace("/([СсCc])[УуYy][КкKk]([аАaAиИеЕуУyY]|ой)/u","\$1**\$2",$text);
 			$text = preg_replace("/([MmМм])[УуYy][Дд][AaАаИи]([лЛкКkK][аАaA]?)/u","\$1***\$2",$text);
 		//$text = preg_replace("/([Пп])[Ии][Дд][AaАаOoОо]([PpРр])/u","\$1***\$2",$text);
 		//$text = preg_replace("/жоп(а|и|е|у|ой)/u","ж**",$text);
@@ -44,15 +45,26 @@ class blib_obscene
 
 	function __unit_test($test)
 	{
-		$allowed = 'Усугубляясь истребители застрахуйте рубля Хулиганы потребляет потреблять'
-			.'оскорблять уподобляться Усугубляясь';
+		$allowed = 'Усугубляясь истребители застрахуйте рубля Хулиганы потребляет потреблять тихую '
+			.'оскорблять уподобляться Усугубляясь Олеговна';
 		$test->assertEquals($allowed, self::mask($allowed, true));
-		$obscene = explode(' ', iconv('koi8-r', 'utf-8', '�����'));
+		$obscene = explode(' ', iconv('koi8-r', 'utf-8', '����� ���'));
 		foreach($obscene as $w)
 		{
 			$masked = self::mask($w, true);
 			$test->assertNotEquals($w, $masked);
 			$test->assertEquals(bors_strlen($w), bors_strlen($masked));
+		}
+
+		$obscene = explode(' ', 'говна');
+		foreach($obscene as $w)
+		{
+			$masked = self::mask($w, true);
+			$test->assertNotEquals($w, $masked);
+			$test->assertEquals(bors_strlen($w), bors_strlen($masked));
+
+			$masked = self::mask($w, false);
+			$test->assertEquals($w, $masked);
 		}
 	}
 
