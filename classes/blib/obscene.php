@@ -18,12 +18,18 @@ class blib_obscene
 		$text = preg_replace_callback("/([xх])([yу][л][яи])(\b|[^г])/ui", 'blib_obscene::stars', $text);
 		$text = preg_replace_callback("/([^рpт][^аaи][xх])([yу])([йяеe]|её)/ui", 'blib_obscene::stars', $text);
 		$text = preg_replace("/([^РрPpТтT][^АаAaИи])([XxХх])\.*[YyУу]\.*[йЙяЯеЕeEe]\.*/u","\$1\$2***",$text);
+
 		$text = preg_replace("/([Пп])[Ии][Зз3][Дд]/u","\$1***",$text);
 		$text = preg_replace("/([Пп])\.*[Ии]\.*[Зз3]\.*[Дд]\.*/u","\$1***",$text);
-		$text = preg_replace("/(?<![рpо][уyaар])([б6])[л][я]$/ui","\$2**",$text);
-		$text = preg_replace("/([б6])[л][я][д]/ui","\$1***",$text);
+
+		$text = preg_replace_callback("/(?<![рpо][уyaар])([б6])([л][я])$/ui", 'blib_obscene::stars',$text);
+//		$text = preg_replace_callback("/(?<!(ра|ло|ли|ти|су))([xх])([yу][йияеeёю])/ui", 'blib_obscene::stars2', $text);
+		$text = preg_replace("/([б6])[л][я][д]/ui", "\$1***",$text);
 		//$text = preg_replace("/([Бб])[Лл][Яя]([дД]|\s)/u","\$1**\$2",$text);
-		$text = preg_replace_callback("/(?<!(ор|[рp][уyаaеe]))(б)(ля)(\b|д|\s)/ui", 'blib_obscene::stars', $text);
+//		$text = preg_replace_callback("/(?<!(ор|[рp][уyаaеe]))(б)(ля)(\b|д|\s)/ui", 'blib_obscene::stars', $text);
+		$text = preg_replace_callback("/\b(бл)(я[тд])(ь)\b/ui", 'blib_obscene::stars', $text);
+		$text = preg_replace_callback("/\b(бл)(я[тд])(ст|ск)/ui", 'blib_obscene::stars', $text);
+
 //$text = preg_replace("/манд(а[^р]|а[^т]|и|е|у|ой|ы)/u","м***",$text);
 		$text = preg_replace("/^([ЕеEeЁё])[Бб][TТтAaАаиУуYy]/u","\$1***",$text);
 		$text = preg_replace("/([^рРpPлЛдДНнчЧтТTвВ])([ЕеEeЁё])[Бб]([\sTТтAaАаиИУуYy])/u","\$1\$2**\$3",$text);
@@ -45,15 +51,18 @@ class blib_obscene
 
 	function __unit_test($test)
 	{
-		$allowed = 'Усугубляясь истребители застрахуйте рубля Хулиганы потребляет потреблять тихую '
-			.'оскорблять уподобляться Усугубляясь Олеговна плохую лихую употребляющих сухую';
+		$allowed = 'ансамбля '
+			.'Усугубляясь истребители застрахуйте рубля Хулиганы потребляет потреблять тихую '
+			.'оскорблять уподобляться Усугубляясь Олеговна плохую лихую употребляющих сухую ';
+
 		$test->assertEquals($allowed, self::mask($allowed, true));
-		$obscene = explode(' ', iconv('koi8-r', 'utf-8', '����� ��� �����'));
+
+		$obscene = explode(' ', iconv('koi8-r', 'utf-8', '����� ��� ����� ����� ��� �������� �������� �����'));
 		foreach($obscene as $w)
 		{
 			$masked = self::mask($w, true);
 			$test->assertNotEquals($w, $masked);
-			$test->assertEquals(bors_strlen($w), bors_strlen($masked));
+			$test->assertEquals(bors_strlen($w), bors_strlen($masked), "Tested words: '$w' => '$masked'");
 		}
 
 		$obscene = explode(' ', 'говна');
