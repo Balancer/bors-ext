@@ -1,6 +1,6 @@
 #!/bin/bash
 
-PHPUNIT="$(dirname $(dirname $(pwd)))/bors-third-party/composer/vendor/phpunit/phpunit/phpunit.php"
+PHPUNIT="$(dirname $(dirname $(pwd)))/composer/vendor/phpunit/phpunit/phpunit"
 
 clear
 if [ -e ~/bin/phpunit.phar ]; then
