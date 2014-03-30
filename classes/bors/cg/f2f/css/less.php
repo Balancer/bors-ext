@@ -1,5 +1,7 @@
 <?php
 
+// Используется leafo/lessphp
+
 class bors_cg_f2f_css_less extends bors_cg_f2f
 {
 	var $mime_type = 'text/css';
