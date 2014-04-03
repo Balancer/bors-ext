@@ -13,17 +13,17 @@ class blib_obscene
 
 	static function mask($text, $abusive = false)
 	{
+//		$text = preg_replace_callback("/(?<!(ра|ло|ли|ти|су))([xх])([yу][йияеeёю])/ui", 'blib_obscene::stars2', $text);
 		$text = preg_replace_callback("/(?<!(ра|ло|ли|ти|су))([xх])([yу][йияеeёю])/ui", 'blib_obscene::stars2', $text);
 		$text = preg_replace_callback("/(\b)([xх])([yу][юя])/ui", 'blib_obscene::stars2', $text);
 		$text = preg_replace_callback("/([xх])([yу][л][яи])(\b|[^г])/ui", 'blib_obscene::stars', $text);
 		$text = preg_replace_callback("/([^рpт][^аaи][xх])([yу])([йяеe]|её)/ui", 'blib_obscene::stars', $text);
 		$text = preg_replace("/([^РрPpТтT][^АаAaИи])([XxХх])\.*[YyУу]\.*[йЙяЯеЕeEe]\.*/u","\$1\$2***",$text);
 
-		$text = preg_replace("/([Пп])[Ии][Зз3][Дд]/u","\$1***",$text);
+		$text = preg_replace_callback("/([Пп])([Ии][Зз3])([Ддж])/ui", 'blib_obscene::stars', $text);
 		$text = preg_replace("/([Пп])\.*[Ии]\.*[Зз3]\.*[Дд]\.*/u","\$1***",$text);
 
-		$text = preg_replace_callback("/(?<![рpо][уyaар])([б6])([л][я])$/ui", 'blib_obscene::stars',$text);
-//		$text = preg_replace_callback("/(?<!(ра|ло|ли|ти|су))([xх])([yу][йияеeёю])/ui", 'blib_obscene::stars2', $text);
+		$text = preg_replace_callback("/(?<!(ам|ру|са|р.))([б6])(ля)\b/ui", 'blib_obscene::stars2',$text);
 		$text = preg_replace("/([б6])[л][я][д]/ui", "\$1***",$text);
 		//$text = preg_replace("/([Бб])[Лл][Яя]([дД]|\s)/u","\$1**\$2",$text);
 //		$text = preg_replace_callback("/(?<!(ор|[рp][уyаaеe]))(б)(ля)(\b|д|\s)/ui", 'blib_obscene::stars', $text);
@@ -32,10 +32,11 @@ class blib_obscene
 
 //$text = preg_replace("/манд(а[^р]|а[^т]|и|е|у|ой|ы)/u","м***",$text);
 		$text = preg_replace_callback("/\b([еeё])([б][aаиуy])/ui", 'blib_obscene::stars', $text);
-		$text = preg_replace_callback("/(?<!(ол|ст|.д|уч))([еeё])([б][aаиуy])(ть|л|сь|\b)/ui", 'blib_obscene::stars2', $text);
+		$text = preg_replace_callback("/(?<!(л|н|т|д|ч))([еeё])([б][aаиуy])(ть|л|сь|\b)/ui", 'blib_obscene::stars2', $text);
 		$text = preg_replace_callback("/([еeё])([б][Tт])(?!(ам))/ui", 'blib_obscene::stars', $text);
 		$text = preg_replace("/([^рРpPлЛдДНнчЧтТTвВж])([ЕеEeЁё])[Бб]([\sTТтAaАаиИУуYy])/ui","\$1\$2**\$3",$text);
-		$text = preg_replace("/(?<![СсCc][КкKk][Ии])([Пп])[Ии][Дд][AaАаOoОо]([PpРр])/u","\$1***\$2",$text);
+
+		$text = preg_replace_callback("/(?<!(ки|ла))([п])(ид[ао]р)\b/ui", 'blib_obscene::stars2',$text);
 
 		$text = preg_replace("/(\s|при|за|у|под|на)[еEёЁeE][бБ]/u","\$1e*",$text);
 
@@ -56,13 +57,17 @@ class blib_obscene
 		$allowed = array('ансамбля Джебат дебаты колебания колебать колебаться постебаться дебилов учёба');
 		$allowed[] = 'Усугубляясь истребители застрахуйте рубля Хулиганы потребляет потреблять тихую';
 		$allowed[] = 'оскорблять уподобляться Усугубляясь Олеговна плохую лихую употребляющих сухую';
-		$allowed[] = 'хребтами';
+		$allowed[] = 'хребтами Глеб Глеба небу сабля гребля корабля лапидарий скипидар';
+		$allowed[] = 'абляция'; // В начале строки!
+		$allowed[] = 'небу,'; // В начале строки!
 
 		foreach($allowed as $s)
 			$test->assertEquals($s, self::mask($s, true));
 
-		$obscene = array('����� ��� ����� ����� ��� �������� �������� �����');
-		$obscene[] = '����� ���� ������ �������� ������� ��� ����� ���� ���';
+		$obscene = array('��� ����� ����� ��� �������� �������� ����� ������');
+		$obscene[] = '����� ���� ��������� ���� ������ �������� ������� ��� ����� ���� ���';
+		$obscene[] = '�����';
+		$obscene[] = '���������� ������� �������� ����� ����� �����';
 		foreach($obscene as $words)
 		{
 			foreach(explode(' ', iconv('koi8-r', 'utf-8', $words)) as $w)
