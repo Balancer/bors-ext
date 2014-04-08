@@ -4,6 +4,8 @@ class blib_translate
 {
 	static function translate($text, $to, $from='RU')
 	{
+		bors_debug::syslog('translate', 'translate '.$to.': '.$text);
+
 		$result = array();
 		foreach(explode("\n", $text) as $s)
 		{
