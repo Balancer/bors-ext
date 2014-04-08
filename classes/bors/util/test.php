@@ -1,11 +1,14 @@
 <?php
 
-//config_set('phpunit_include', 'PHPUnit');
-//if(!include_once(config('phpunit_include').'/Autoload.php'))
-//	require_once(config('phpunit_include').'/Framework.php');
-
 // PHPUnit теперь берётся из Composer
 require_once('composer/vendor/autoload.php');
+
+if(!class_exists('PHPUnit_Framework_TestCase'))
+{
+	blib_cli::out("%RCan't load PHPUnit.%n Use:\n\t%Wcomposer require phpunit/phpunit=*%n\n");
+	echo class_include('blib_cli');
+	exit();
+}
 
 class bors_util_test
 {
