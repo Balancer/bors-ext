@@ -38,7 +38,7 @@ class blib_obscene
 
 		$text = preg_replace_callback("/(?<!(п╨п╦|п╩п╟))([п©])(п╦п╢[п╟п╬]я─)\b/ui", 'blib_obscene::stars2',$text);
 
-		$text = preg_replace("/(\s|п©я─п╦|п╥п╟|я┐|п©п╬п╢|п╫п╟)[п╣Eя▒п│eE][п╠п▒]/u","\$1e*",$text);
+		$text = preg_replace_callback("/\b(п©я─п╦|п╥п╟|я┐|п©п╬п╢|п©п╬п╢я▄|п©п╬п╢я┼|п╫п╟)([п╣я▒e])([п╠])/u", 'blib_obscene::stars', $text);
 
 		if($abusive)
 		{
@@ -65,7 +65,7 @@ class blib_obscene
 			$test->assertEquals($s, self::mask($s, true));
 
 		$obscene = array('хую похую похуизм БЛЯТЬ бля блядство блятство блядь блядун');
-		$obscene[] = 'ебать ебал ебануться ебут ебтись заебался заебись еби выеби ёбта ебт';
+		$obscene[] = 'ебать ебал ебануться ебут ебтись заебался заебись еби выеби ёбта ебт подьебщик';
 		$obscene[] = 'фубля';
 		$obscene[] = 'спизженный пиздить спиздить пизда пидор пидар';
 		foreach($obscene as $words)
