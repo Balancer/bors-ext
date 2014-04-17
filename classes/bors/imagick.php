@@ -7,6 +7,7 @@ class bors_imagick extends bors_object
 	var $image			= NULL;
 
 	function can_be_empty() { return false; }
+	function is_loaded() { return (bool)$this->image; }
 
 	// /ci/325/325534.jpg
 	// /ci/325/325534,crop=200x200+100,geometry=64x64.jpg
