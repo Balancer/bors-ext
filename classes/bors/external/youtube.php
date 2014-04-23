@@ -55,13 +55,13 @@ class bors_external_youtube extends bors_object
 		$text = preg_replace('!\s*\[url=(http://(www\.)?youtube\.com/watch\?v=[\w\-]+[^\]]+?)\]\1\[/url\]\s*!', "\n$1\n", $text);
 
 		// http://www.youtube.com/watch?v=zJMVZXLFaRU#t=2085s via http://www.balancer.ru/g/p3030014
-		$text = preg_replace('!^\s*(https?://[^/]*youtube\.\w+/watch\S+)#t=(\w+)\s*$!mie', "bors_external_youtube::url2bb('$1', '$2');", $text);
+		$text = preg_replace('!^\s*(https?://[^/]*youtube\.\w+/watch[^\[\s]+)#t=(\w+)\s*$!mie', "bors_external_youtube::url2bb('$1', '$2');", $text);
 
 		// http://www.youtube.com/watch?v=X76LmiHVFsM&feature=player_embedded
 		// http://www.youtube.com/watch?v=TXxcR3qgyYQ&playnext=1&list=PL21AA194D7FBBA2D9
 		// https://www.youtube.com/watch?v=21El16OPZoc
 		// http://www.youtube.com/watch?feature=player_embedded&v=zZPNaMDD-A8
-		$text = preg_replace('!^\s*(https?://[^/]*youtube\.\w+/watch\S+)\s*$!mie', "bors_external_youtube::url2bb('$1');", $text);
+		$text = preg_replace('!^\s*(https?://[^/]*youtube\.\w+/watch[^\[\s]+)\s*$!mie', "bors_external_youtube::url2bb('$1');", $text);
 //TODO: разобраться с http://balancer.ru/g/p2706190
 //		// http://www.youtube.com/v/C2zdNzmBanQ?version=3&hl=ru_RU
 //		$text = preg_replace('!^\s*(https?://[^/]*youtube\.\w+/v/([^\s&\?]+))\s*$!mi', "[youtube]$2[/youtube]", $text);
