@@ -15,6 +15,7 @@ class bors_objects_changelog extends bors_object_db
 			'target_id',
 			'last_editor_id',
 			'last_editor_ip',
+			'last_editor_ua',
 		);
 	}
 
@@ -22,6 +23,9 @@ class bors_objects_changelog extends bors_object_db
 	{
 		foreach($object->changed_fields as $property_name => $old_value)
 		{
+			if(in_array($property_name, array('last_editor_ua', 'last_editor_ip', 'last_editor_id', 'modify_time', 'object_id', 'form_class_name')))
+				continue;
+
 			bors_new('bors_objects_changelog', array(
 				'property_name' => $property_name,
 				'old_value' => $old_value,
