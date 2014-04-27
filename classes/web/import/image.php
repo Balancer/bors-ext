@@ -38,8 +38,34 @@ class web_import_image
 		return join('/', array_filter($host_parts)).$path;
 	}
 
+	static function find_cached($url)
+	{
+		// Ищем в новом формате.
+		$storage = config('sites_store_path');
+		$new_path = $storage.'/'.self::storage_place_rel($url);
+		if(file_exists($new_path))
+			return $new_path;
+
+		// Если не нашли, роемся в одном из legacy форматов
+		$old_path = static::find_legacy_cached($url);
+		if($old_path && file_exists($old_path))
+			return $old_path;
+
+		return $new_path;
+	}
+
+	// Для общего случая — заглушка.
+	static function find_legacy_cached($url)
+	{
+		return NULL;
+	}
+
 	function __dev()
 	{
-		echo self::storage_place_rel('http://www.palal.net/blogposts/20130601-favelas/dona%20marta/IMG_9636.JPG');
+		echo self::storage_place_rel('http://www.palal.net/blogposts/20130601-favelas/dona%20marta/IMG_9636.JPG'), PHP_EOL;
+		echo self::storage_place_rel('https://pp.vk.me/c540109/c540104/v540104095/d7b2/8zqIgh8Sp3E.jpg'), PHP_EOL;
+
+		echo self::find_cached('http://www.palal.net/blogposts/20130601-favelas/dona%20marta/IMG_9636.JPG'), PHP_EOL;
+		echo self::find_cached('https://pp.vk.me/c540109/c540104/v540104095/d7b2/8zqIgh8Sp3E.jpg'), PHP_EOL;
 	}
 }
