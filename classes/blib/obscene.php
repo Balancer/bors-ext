@@ -38,7 +38,9 @@ class blib_obscene
 
 		$text = preg_replace_callback("/(?<!(п╨п╦|п╩п╟))([п©])(п╦п╢[п╟п╬]я─)\b/ui", 'blib_obscene::stars2',$text);
 
-		$text = preg_replace_callback("/\b(п©я─п╦|п╥п╟|я┐|п©п╬п╢|п©п╬п╢я▄|п©п╬п╢я┼|п╫п╟)([п╣я▒e])([п╠])/u", 'blib_obscene::stars', $text);
+		$text = preg_replace_callback("/\b(п©я─п╦|п╥п╟|я┐|п©п╬п╢|п©п╬п╢я▄|п©п╬п╢я┼|п╫п╟)([п╣я▒e])([п╠])/ui", 'blib_obscene::stars', $text);
+
+		$text = preg_replace_callback("/\b(п╥п╟)(п╩я┐)([п╟-я▐я▒]+)/ui", 'blib_obscene::stars', $text);
 
 		if($abusive)
 		{
@@ -68,6 +70,8 @@ class blib_obscene
 		$obscene[] = 'ебать ебал ебануться ебут ебтись заебался заебись еби выеби ёбта ебт подьебщик';
 		$obscene[] = 'фубля';
 		$obscene[] = 'спизженный пиздить спиздить пизда пидор пидар';
+		$obscene[] = 'залупа ЗаЛуПоЙ Залупе';
+
 		foreach($obscene as $words)
 		{
 			foreach(explode(' ', iconv('koi8-r', 'utf-8', $words)) as $w)
@@ -92,13 +96,7 @@ class blib_obscene
 
 	function __dev()
 	{
-		$text = base64_decode('0JzQvdC+0LPQviDRgdGC0LDQu9C+INCyINC90LDRiNC4INC00L3QuCDQvdC10L7Qv9C+0LfQvdCw0L3QvdC+0LkgWNCj0JnQndCYLgo=')
-			.base64_decode('0JTQsCDRhdGD0LvQuCDRgtCw0LwsINCh0L/QtdGA0LzQsNC90LTQsNCx0LvRj9C00YHQutCw0Y8g0L/QuNC30LTQvtC/0YDQvtGR0LHQuNC90LAg0LrQsNC60LDRjy3RgtC+Lgo=')
-			.base64_decode('0K8g0YXRg9C10Y4sINC00L7RgNC+0LPQsNGPINGA0LXQtNCw0LrRhtC40Y8uCg==')
-			.base64_decode('0JTQsNC50YLQtSDRgdCy0L7QsdC+0LTRgywg0YHRg9C60LghINCc0YPQtNCw0LrQuCDQnNGD0LDQtCDQlNC40LHQsC4g0JHQtdGA0LzRg9C00YHQutC40Lkg0YLRgNC+0LXQsdCw0LvRjNC90LjQui4K')
-			.base64_decode('0KHQvtCy0YHQtdC8INC+0YXRg9C10LvQuCDQsdC70Y/QtNC4');
+		$text = 'пЁп╬п╡п╫п╬';
 		echo self::mask($text, true), PHP_EOL;
-//		require_once('engines/lcml/main.php');
-//		echo lcml($text), PHP_EOL;
 	}
 }
