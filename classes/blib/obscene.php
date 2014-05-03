@@ -14,7 +14,7 @@ class blib_obscene
 	static function mask($text, $abusive = false)
 	{
 //		$text = preg_replace_callback("/(?<!(ра|ло|ли|ти|су))([xх])([yу][йияеeёю])/ui", 'blib_obscene::stars2', $text);
-		$text = preg_replace_callback("/(?<!(ра|ло|ли|ти|су))([xх])([yу][йияеeёю])/ui", 'blib_obscene::stars2', $text);
+		$text = preg_replace_callback("/(?<!(ра|ло|ли|ти|су|си))([xх])([yу][йияеeёю])/ui", 'blib_obscene::stars2', $text);
 		$text = preg_replace_callback("/(\b)([xх])([yу][юя])/ui", 'blib_obscene::stars2', $text);
 		$text = preg_replace_callback("/([xх])([yу][л][яи])(\b|[^г])/ui", 'blib_obscene::stars', $text);
 		$text = preg_replace_callback("/([^рpт][^аaи][xх])([yу])([йяеe]|её)/ui", 'blib_obscene::stars', $text);
@@ -58,7 +58,7 @@ class blib_obscene
 	static function __unit_test($test)
 	{
 		$allowed = array('ансамбля Джебат дебаты колебания колебать колебаться постебаться дебилов учёба');
-		$allowed[] = 'Усугубляясь истребители застрахуйте рубля Хулиганы потребляет потреблять тихую';
+		$allowed[] = 'Усугубляясь истребители застрахуйте рубля Хулиганы потребляет потреблять тихую психуют';
 		$allowed[] = 'оскорблять уподобляться Усугубляясь Олеговна плохую лихую употребляющих сухую';
 		$allowed[] = 'хребтами Глеб Глеба небу сабля гребля корабля лапидарий скипидар туебень';
 		$allowed[] = 'абляция'; // В начале строки!
