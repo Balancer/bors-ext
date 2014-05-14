@@ -42,11 +42,11 @@ class bors_external_youtube extends bors_object
 		// http://www.balancer.ru/g/p3124994
 		// <iframe width="420" height="315" src="//www.youtube.com/embed/NeHgI_GHE1c" frameborder="0" allowfullscreen></iframe>
 		// http://www.balancer.ru/g/p3205356
-		$text = preg_replace('!<iframe[^>]+width="\d+"[^>]height="\d+"[^>]src="(http://|//)www\.youtube\.com/embed/([^"]+)"[^>]+></iframe>!ie', "bors_external_youtube::id2bb('$2');", $text);
+		$text = preg_replace_callback('!<iframe[^>]+width="\d+"[^>]height="\d+"[^>]src="(http://|//)www\.youtube\.com/embed/([^"]+)"[^>]+></iframe>!i', function($m) { return bors_external_youtube::id2bb($m[2]);}, $text);
 
-		$text = preg_replace('!^\s*http://youtu\.be/([\w\-]+)#t=(\w+)\s*$!mie', "bors_external_youtube::id2bb('$1', '$2');", $text);
-		$text = preg_replace('!^\s*http://youtu\.be/([\w\-]+)\?t=(\w+)\s*$!mie', "bors_external_youtube::id2bb('$1', '$2');", $text);
-		$text = preg_replace('!^\s*http://youtu\.be/([\w\-]+)/?\s*$!mie', "bors_external_youtube::id2bb('$1');", $text);
+		$text = preg_replace_callback('!^\s*http://youtu\.be/([\w\-]+)#t=(\w+)\s*$!mi', function($m) { return bors_external_youtube::id2bb($m[1], $m[2]);}, $text);
+		$text = preg_replace_callback('!^\s*http://youtu\.be/([\w\-]+)\?t=(\w+)\s*$!mi', function($m) { return bors_external_youtube::id2bb($m[1], $m[2]);}, $text);
+		$text = preg_replace_callback('!^\s*http://youtu\.be/([\w\-]+)/?\s*$!mi', function($m) { return bors_external_youtube::id2bb($m[1]);}, $text);
 
 		// [url=http://www.youtube.com/watch?v=a8C1iU-xAog]http://www.youtube.com/watch?v=a8C1iU-xAog[/url]
 		// [url=http://www.youtube.com/watch?v=JkpO2BliOVg]http://www.youtube.com/watch?v=JkpO2BliOVg[/url]
@@ -55,13 +55,13 @@ class bors_external_youtube extends bors_object
 		$text = preg_replace('!\s*\[url=(http://(www\.)?youtube\.com/watch\?v=[\w\-]+[^\]]+?)\]\1\[/url\]\s*!', "\n$1\n", $text);
 
 		// http://www.youtube.com/watch?v=zJMVZXLFaRU#t=2085s via http://www.balancer.ru/g/p3030014
-		$text = preg_replace('!^\s*(https?://[^/]*youtube\.\w+/watch[^\[\s]+)#t=(\w+)\s*$!mie', "bors_external_youtube::url2bb('$1', '$2');", $text);
+		$text = preg_replace_callback('!^\s*(https?://[^/]*youtube\.\w+/watch[^\[\s]+)#t=(\w+)\s*$!mi', function($m) { return bors_external_youtube::url2bb($m[1], $m[2]);}, $text);
 
 		// http://www.youtube.com/watch?v=X76LmiHVFsM&feature=player_embedded
 		// http://www.youtube.com/watch?v=TXxcR3qgyYQ&playnext=1&list=PL21AA194D7FBBA2D9
 		// https://www.youtube.com/watch?v=21El16OPZoc
 		// http://www.youtube.com/watch?feature=player_embedded&v=zZPNaMDD-A8
-		$text = preg_replace('!^\s*(https?://[^/]*youtube\.\w+/watch[^\[\s]+)\s*$!mie', "bors_external_youtube::url2bb('$1');", $text);
+		$text = preg_replace_callback('!^\s*(https?://[^/]*youtube\.\w+/watch[^\[\s]+)\s*$!mi', function($m) { return bors_external_youtube::url2bb($m[1]);}, $text);
 //TODO: разобраться с http://balancer.ru/g/p2706190
 //		// http://www.youtube.com/v/C2zdNzmBanQ?version=3&hl=ru_RU
 //		$text = preg_replace('!^\s*(https?://[^/]*youtube\.\w+/v/([^\s&\?]+))\s*$!mi', "[youtube]$2[/youtube]", $text);
@@ -69,10 +69,12 @@ class bors_external_youtube extends bors_object
 
 		// Пример: http://www.balancer.ru/g/p2933240
 		// <object width="420" height="315"><param name="movie" value="http://www.youtube.com/v/hqXeq4olSdg?version=3&amp;hl=en_GB"></param><param name="allowFullScreen" value="true"></param><param name="allowscriptaccess" value="always"></param><embed src="http://www.youtube.com/v/hqXeq4olSdg?version=3&amp;hl=en_GB" type="application/x-shockwave-flash" width="420" height="315" allowscriptaccess="always" allowfullscreen="true"></embed></object>
-		$text = preg_replace('!<object width="\d+" height="\d+"><param name="movie" value="(https?://www.youtube[^"]+)"></param>.+?</embed></object>!se', "bors_external_youtube::url2bb('$1');", $text);
+		$text = preg_replace_callback('!<object width="\d+" height="\d+"><param name="movie" value="(https?://www.youtube[^"]+)"></param>.+?</embed></object>!s',
+			function($m) { return bors_external_youtube::url2bb($m[1]);}, $text);
 
 		// http://www.youtube.com/embed/hNUeSUXOc-w?wmode=opaque — http://www.balancer.ru/g/p3015686
-		$text = preg_replace('!^\s*https?://(www\.)?youtube\.com/embed/([\w\-]+)\?wmode=opaque\s*$!mie', "bors_external_youtube::id2bb('$2');", $text);
+		$text = preg_replace_callback('!^\s*https?://(www\.)?youtube\.com/embed/([\w\-]+)\?wmode=opaque\s*$!mi',
+			function($m) { return bors_external_youtube::id2bb($m[2]);}, $text);
 
 		return $text;
 	}
