@@ -31,7 +31,7 @@ class blib_obscene
 		$text = preg_replace_callback("/\b(п╠п╩)(я▐[я┌п╢])(я│я┌|я│п╨)/ui", 'blib_obscene::stars', $text);
 
 //$text = preg_replace("/п╪п╟п╫п╢(п╟[^я─]|п╟[^я┌]|п╦|п╣|я┐|п╬п╧|я▀)/u","п╪***",$text);
-		$text = preg_replace_callback("/\b([п╣eя▒])([п╠][aп╟п╦я┐y])/ui", 'blib_obscene::stars', $text);
+		$text = preg_replace_callback("/\b([п╣eя▒])([п╠][aп╟п╦я┐yя▒eп╣])/ui", 'blib_obscene::stars', $text);
 		$text = preg_replace_callback("/(п╬п╣)(п╠п╣)(п╫я▄)/ui", 'blib_obscene::stars', $text);
 		$text = preg_replace_callback("/(?<!(п╩|п╫|я┌|п╢|я┤|я─))([п╣eя▒])([п╠][aп╟п╦я┐y])(я┌я▄|п╩|я│я▄|\b)/ui", 'blib_obscene::stars2', $text);
 		$text = preg_replace_callback("/([п╣eя▒])([п╠][Tя┌])(?!(п╟п╪))/ui", 'blib_obscene::stars', $text);
@@ -68,7 +68,8 @@ class blib_obscene
 			$test->assertEquals($s, self::mask($s, true));
 
 		$obscene = array('хую похую похуизм БЛЯТЬ бля блядство блятство блядь блядун');
-		$obscene[] = 'ебать ебал ебануться ебут ебтись заебался заебись еби выеби ёбта ебт подьебщик поебень';
+		$obscene[] = 'ебать ебал ебануться ебут ебтись заебался заебись';
+		$obscene[] = 'еби выеби ёбта ебт подьебщик поебень ебёшься';
 		$obscene[] = 'фубля';
 		$obscene[] = 'спизженный пиздить спиздить пизда пидор пидар';
 		$obscene[] = 'залупа ЗаЛуПоЙ Залупе';
