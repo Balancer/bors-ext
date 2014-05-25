@@ -27,11 +27,15 @@ class lcml_tag_pair_spoiler extends bors_lcml_tag_pair
 
 		$id = time().rand();
 
-		$lcml = $params['lcml'];
-		$saved_level = $lcml->p('level');
-		$lcml->set_p('level', 0);
-		$html = lcml_bb(trim($txt));
-		$lcml->set_p('level', $saved_level);
+		if($lcml = @$params['lcml'])
+		{
+			$saved_level = $lcml->p('level');
+			$lcml->set_p('level', 0);
+			$html = lcml_bb(trim($txt));
+			$lcml->set_p('level', $saved_level);
+		}
+		else
+			$html = $txt;
 
 		$desc = @$params['description'];
 
@@ -47,5 +51,11 @@ class lcml_tag_pair_spoiler extends bors_lcml_tag_pair
 			."return false;\">".$desc."[<span id=\"_$id\">показать</span>]</a>"
 			."<div id=\"$id\" style=\"display: none; border: 1px dotted; margin: 0px 10px 4px 0; padding: 2px;\">"
 			.base64_encode($html)."</div>\n";
+	}
+
+	static function make($text)
+	{
+		$foo = new lcml_tag_pair_spoiler;
+		return $foo->html($text);
 	}
 }
