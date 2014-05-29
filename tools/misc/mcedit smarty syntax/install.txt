@@ -1,0 +1,18 @@
+Smarty PHP template engine syntax for GNU Midnight Commander
+
+Installation (suppose MC has syntax definitions in /usr/share/mc/syntax):
+
+  1. Put the file smarty.syntax into /usr/share/mc/syntax
+
+  2. Edit the file /usr/share/mc/syntax/Syntax
+     Put the following block in front of first existing definition:
+
+     file ..\*\\.(tpl|TPL)$ Smarty\sTemplate\sFile
+     include smarty.syntax
+
+
+Enjoy!
+
+
+Cestmir Hybl <cestmir-at-nustep-dot-net>
+NUSTEP s.r.o., Slovak Republic <http://www.nustep.net/>

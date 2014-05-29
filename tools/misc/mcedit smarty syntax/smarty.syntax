@@ -1,0 +1,44 @@
+# Smarty PHP template engine syntax
+#
+#   Author: Cestmir Hybl <cestmir-at-nustep-dot-net>  
+#           NUSTEP s.r.o., Slovak Republic <http://www.nustep.net/>
+#
+#   Based on HTML syntax definition
+#
+#   2003-01-31
+
+context default
+	keyword &\[abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ\]; brightgreen
+	keyword &#\{xX\}\[0123456789abcdefABCDEF\]; brightgreen
+	keyword &#\[0123456789\]; brightgreen
+	spellcheck
+
+#  Smarty literal mode tags
+        keyword {literal} brightmagenta
+        keyword {/literal} brightmagenta
+
+context <!-- --> brown
+	spellcheck
+
+context <! > brightred/orange
+	spellcheck
+
+context </ > brightcyan
+
+context < > brightcyan
+	keyword "*" green
+	keyword = yellow
+
+#  Smarty comment
+context {\* \*} brown
+	spellcheck
+
+#  Smarty literal mode content
+context exclusive {literal} {/literal} lightgray
+	spellcheck
+
+#  Smarty tag
+context { } brightmagenta
+	keyword "*" green
+	keyword '*' green
+	keyword = yellow
