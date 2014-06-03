@@ -79,7 +79,7 @@ class bors_pages_zim extends bors_page
 	{
 		$text = $this->zim_markup($this->source());
 //		print_dd($text);
-		return lcml($text);
+		return bors_lcml::lcml($text);
 	}
 
 	function zim_markup($text)
@@ -96,18 +96,23 @@ class bors_pages_zim extends bors_page
 		$text = preg_replace("!^== (.+?) ==$!m", "<h5>$1</h5>\n", $text);
 		$text = preg_replace("!^= (.+?) =$!m", "<h6>$1</h6>\n", $text);
 		$text = preg_replace_callback("!\[\[(.+?)\|(.+?)\]\]!", function($match) {
+
 			list($foo, $link, $text) = $match;
 
-			if(preg_match('/^\+(.+)$/', $link, $m))
-				$link = $m[1];
-			else
-				$link = '../'.$link;
+			// [[http://ria.ru/spravka/20120119/543267582.html|Самолет-ретранслятор Ту-214СР: летно-технические характеристики]]
+			if(!preg_match('!^\w+://!', $link))
+			{
+				if(preg_match('/^\+(.+)$/', $link, $m))
+					$link = $m[1];
+				else
+					$link = '../'.$link;
 
-			if(strpos($link, ':') > 0)
-				$link = '/'.str_replace(':', '/', $link);
+				if(strpos($link, ':') > 0)
+					$link = '/'.str_replace(':', '/', $link);
 
-			if(!preg_match('!/$!', $link))
-				$link .= '/';
+				if(!preg_match('!/$!', $link))
+					$link .= '/';
+			}
 
 			return "<a href=\"{$link}\">{$text}</a>";
 		}, $text);
