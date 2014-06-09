@@ -55,7 +55,7 @@ class lcml_tag_pair_spoiler extends bors_lcml_tag_pair
 
 	static function make($text)
 	{
-		$foo = new lcml_tag_pair_spoiler;
+		$foo = new lcml_tag_pair_spoiler(NULL);
 		return $foo->html($text);
 	}
 }

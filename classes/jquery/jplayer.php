@@ -82,6 +82,7 @@ class jquery_jplayer
 		$toggles = join("\n", $toggles);
 
 $html .= <<< __EOT__
+<div class="clear">&nbsp;</div>
 <div id="jp_container_$id" class="{$control_css_class}">
 	<div class="jp-type-single">
 		<div id="{$id}" class="jp-jplayer"></div>
@@ -126,6 +127,7 @@ $html .= <<< __EOT__
 		</div>
 	</div>
 </div>
+<div class="clear">&nbsp;</div>
 
 __EOT__;
 
