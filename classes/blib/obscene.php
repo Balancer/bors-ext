@@ -40,7 +40,6 @@ class blib_obscene
 		$text = preg_replace_callback("/(бо)([ёе]б)/ui", 'blib_obscene::stars', $text);
 		$text = preg_replace_callback("/\b(при|за|у|под|подь|подъ|на)([еёe])([б])/ui", 'blib_obscene::stars', $text);
 
-		$text = preg_replace_callback("/(?<!(ки|ла))([п])(ид[ао]р)\b/ui", 'blib_obscene::stars2',$text);
 
 		$text = preg_replace_callback("/\b(за)(лу)(п[а-яё]+)/ui", 'blib_obscene::stars', $text);
 
@@ -49,6 +48,7 @@ class blib_obscene
 			$text = preg_replace("/\b([г])([aаoо])[BВв][HНн]/ui", "\$1***", $text);
 //			$text = preg_replace("/([СсCc])[УуYy][КкKk]([аАaAиИеЕуУyY]|ой)/u","\$1**\$2",$text);
 			$text = preg_replace("/([MmМм])[УуYy][Дд][AaАаИи]([лЛкКkK][аАaA]?)/u","\$1***\$2",$text);
+			$text = preg_replace_callback("/(?<!(ки|ла))([п])(ид[ао]р)(\b|[ауеы])/ui", 'blib_obscene::stars2',$text);
 		//$text = preg_replace("/([Пп])[Ии][Дд][AaАаOoОо]([PpРр])/u","\$1***\$2",$text);
 		//$text = preg_replace("/жоп(а|и|е|у|ой)/u","ж**",$text);
 		}
@@ -85,7 +85,7 @@ class blib_obscene
 			}
 		}
 
-		$obscene = explode(' ', 'говна');
+		$obscene = explode(' ', 'говна пидоры пидарас');
 		foreach($obscene as $w)
 		{
 			$masked = self::mask($w, true);
