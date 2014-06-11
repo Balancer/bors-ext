@@ -49,8 +49,7 @@ class blib_obscene
 //			$text = preg_replace("/([СсCc])[УуYy][КкKk]([аАaAиИеЕуУyY]|ой)/u","\$1**\$2",$text);
 			$text = preg_replace("/([MmМм])[УуYy][Дд][AaАаИи]([лЛкКkK][аАaA]?)/u","\$1***\$2",$text);
 			$text = preg_replace_callback("/(?<!(ки|ла))([п])(ид[ао]р)(\b|[ауеы])/ui", 'blib_obscene::stars2',$text);
-		//$text = preg_replace("/([Пп])[Ии][Дд][AaАаOoОо]([PpРр])/u","\$1***\$2",$text);
-		//$text = preg_replace("/жоп(а|и|е|у|ой)/u","ж**",$text);
+			//$text = preg_replace("/жоп(а|и|е|у|ой)/u","ж**",$text);
 		}
 
 		return $text;
