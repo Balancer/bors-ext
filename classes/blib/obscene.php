@@ -10,6 +10,7 @@ class blib_obscene
 
 	static function stars($m) { return $m[1] . str_repeat('*', bors_strlen($m[2])) . @$m[3]; }
 	static function stars2($m) { return $m[2] . str_repeat('*', bors_strlen($m[3])) . @$m[4]; }
+	static function stars3($m) { return $m[2] . str_repeat('*', bors_strlen($m[3])) . @$m[4] . @$m[5]; }
 
 	static function mask($text, $abusive = false)
 	{
@@ -45,10 +46,10 @@ class blib_obscene
 
 		if($abusive)
 		{
-			$text = preg_replace("/\b([г])([aаoо])[BВв][HНн]/ui", "\$1***", $text);
+			$text = preg_replace_callback("/\b([г])([aаoо][BВв])([HНн])/ui", 'blib_obscene::stars',$text);
 //			$text = preg_replace("/([СсCc])[УуYy][КкKk]([аАaAиИеЕуУyY]|ой)/u","\$1**\$2",$text);
 			$text = preg_replace("/([MmМм])[УуYy][Дд][AaАаИи]([лЛкКkK][аАaA]?)/u","\$1***\$2",$text);
-			$text = preg_replace_callback("/(?<!(ки|ла))([п])(ид[ао]р)(\b|[ауеы])/ui", 'blib_obscene::stars2',$text);
+			$text = preg_replace_callback("/(?<!(ки|ла))([п])(ид[ао])(р)(\b|[ауеы])/ui", 'blib_obscene::stars3',$text);
 			//$text = preg_replace("/жоп(а|и|е|у|ой)/u","ж**",$text);
 		}
 
@@ -98,7 +99,7 @@ class blib_obscene
 
 	static function __dev()
 	{
-		$text = 'говно';
+		$text = 'говно пидоры';
 		echo self::mask($text, true), PHP_EOL;
 	}
 }
