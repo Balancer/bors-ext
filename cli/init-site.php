@@ -1,5 +1,8 @@
 <?php
 
+if(file_exists($x = __DIR__.'/../../../../vendor/autoload.php'))
+	require $x;
+
 if(!defined('BORS_CORE'))
 	@include_once(dirname(__FILE__).'/setup.php');
 

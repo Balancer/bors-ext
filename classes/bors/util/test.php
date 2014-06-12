@@ -1,7 +1,7 @@
 <?php
 
 // PHPUnit теперь берётся из Composer
-require_once('composer/vendor/autoload.php');
+// require_once('composer/vendor/autoload.php');
 
 if(!class_exists('PHPUnit_Framework_TestCase'))
 {

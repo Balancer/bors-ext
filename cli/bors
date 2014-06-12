@@ -1,4 +1,4 @@
 #!/usr/bin/env php
 <?php
 
-require_once dirname(__FILE__).'/bors.php';
+require_once __DIR__.'/bors.php';

@@ -21,7 +21,7 @@ class bors_util_dev
 			$class_name = $mm[1];
 
 			if(!preg_match('/function __dev/', $content))
-				return print "Absent __dev function in class $class_name";
+				return blib_cli::out("%rAbsent __dev function in class $class_name%n\n");
 
 			call_user_func(array($class_name, '__dev'));
 			return;
