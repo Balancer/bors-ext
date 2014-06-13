@@ -14,7 +14,7 @@
 	"support": {
 		"issues": "https://bitbucket.org/Balancer/bors-core/issues",
 		"forum": "http://www.balancer.ru/support/viewforum.php?id=60",
-		"source": "https://bitbucket.org/Balancer/bors-core"
+		"source": "https://bitbucket.org/Balancer/bors-ext"
 	},
 
     "require": {
