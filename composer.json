@@ -22,6 +22,9 @@
     },
 
     "autoload": {
-		"classmap": ["classes/"]
+		"classmap": ["classes/"],
+		"psr-4": {
+			"Lcml\\Tags\\Pairs\\": ["lib/Lcml/Tags/Pairs/"]
+		}
     }
 }
