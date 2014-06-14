@@ -18,8 +18,12 @@ class bors_util
 				return $this->alter($argv);
 		}
 
-		if(preg_match('/^\w+$/', $action) && class_include($cls = 'bors_util_'.$action))
-			return $cls::run($argv);
+		if(preg_match('/^\w+$/', $action))
+		{
+			if(class_exists($cls = 'bors_util_'.$action)
+					|| class_include($cls = 'bors_util_'.$action))
+				return call_user_func(array($cls, 'run'), $argv);
+		}
 
 		return $this->do_not_found("Not found action $action\n");
 	}
