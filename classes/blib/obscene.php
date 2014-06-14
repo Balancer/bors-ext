@@ -35,7 +35,7 @@ class blib_obscene
 		$text = preg_replace_callback("/\b([еeё])([б][aаиуyёeе])/ui", 'blib_obscene::stars', $text);
 		$text = preg_replace_callback("/(ое)(бе)(нь)/ui", 'blib_obscene::stars', $text);
 		$text = preg_replace_callback("/(?<!(л|н|т|д|ч|р|щ|и))([еeё])([б][aаиуy])(ть|л|сь|\b)/ui", 'blib_obscene::stars2', $text);
-		$text = preg_replace_callback("/(?<!(р))([еeё])([б][л])([яюоуе])/ui", 'blib_obscene::stars2', $text);
+		$text = preg_replace_callback("/(?<!(р|д))([еeё])([б][л])([яюоуе])/ui", 'blib_obscene::stars2', $text);
 		$text = preg_replace_callback("/([еeё])([б][Tт])(?!(ам))/ui", 'blib_obscene::stars', $text);
 		$text = preg_replace("/([^рРpPлЛдДНнчЧтТTвВжщи])([ЕеEeЁё])[Бб]([\sTТтAaАаиИУуYy])/ui","\$1\$2**\$3",$text);
 		$text = preg_replace_callback("/(бо)([ёе]б)/ui", 'blib_obscene::stars', $text);
@@ -63,7 +63,7 @@ class blib_obscene
 		$allowed[] = 'оскорблять уподобляться Усугубляясь Олеговна плохую лихую употребляющих сухую глухую';
 		$allowed[] = 'хребтами Глеб Глеба небу сабля гребля корабля лапидарий скипидар туебень залужью';
 		$allowed[] = 'абляция'; // В начале строки!
-		$allowed[] = 'небу ещёб ещеб нёбу хлебом Пиебалгс';
+		$allowed[] = 'небу ещёб ещеб нёбу хлебом Пиебалгс деблокировать';
 
 		foreach($allowed as $s)
 			$test->assertEquals($s, self::mask($s, true));
