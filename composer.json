@@ -18,7 +18,8 @@
 	},
 
     "require": {
-        "balancer/bors-core": "@dev"
+        "balancer/bors-core": "@dev",
+        "balancer/b2-lcml": "@dev"
     },
 
     "autoload": {
