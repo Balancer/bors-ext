@@ -25,8 +25,6 @@ class bors_util_dev
 			else
 				$ns = '';
 
-var_dump($mm, $ns);
-
 			if(!preg_match('/function __dev/', $content))
 				return blib_cli::out("%rAbsent __dev function in class $class_name%n\n");
 
