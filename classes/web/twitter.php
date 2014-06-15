@@ -56,7 +56,7 @@ class web_twitter
 		$full_name = $xpath->query('//strong[contains(@class, "fullname")]')->item(0)->nodeValue;
 		$text = $xpath->query('//p[contains(@class,"tweet-text")]')->item(0)->nodeValue;
 
-		$bb_code = "[round_box][img={$img_src} 100x100 left flow nohref resize][h][a href=\"{$url}\"]{$full_name} [small]{$twitter_name}[/small][/a][/h]
+		$bb_code = "[round_box][img={$img_src} 100x100 left flow nohref resize][h][a href=\"{$url}\"]{$full_name} ({$twitter_name})[/a][/h]
 [big]{$text}[/big]
 
 [span class=\"transgray\"][reference]".bors_external_feeds_entry::url_host_link($url)."[/reference][/span][/round_box]";
@@ -64,8 +64,16 @@ class web_twitter
 		return $bb_code;
 	}
 
+	static function parse_links($text)
+	{
+		// https://twitter.com/navalny/status/477862956274057216
+		$text = preg_replace_callback('!^\s*(https://twitter.com/\w+/status/\d+)\s*$!im', function($m) { return web_twitter::import_bb($m[1]);}, $text);
+
+		return $text;
+	}
+
 	static function __dev()
 	{
-		echo self::import('https://twitter.com/navalny/status/477862956274057216');
+		echo bors_lcml::lcml('https://twitter.com/navalny/status/477862956274057216');
 	}
 }
