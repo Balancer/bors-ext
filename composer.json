@@ -23,7 +23,8 @@
 	"require": {
 		"balancer/bors-core": "@dev",
 		"balancer/b2-lcml": "@dev",
-		"jlogsdon/cli": "*"
+		"jlogsdon/cli": "*",
+		"phpunit/phpunit": "*"
 	},
 
 	"autoload": {
