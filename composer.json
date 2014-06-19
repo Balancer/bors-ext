@@ -17,6 +17,9 @@
 		"source": "https://bitbucket.org/Balancer/bors-ext"
 	},
 
+	"prefer-stable": true,
+	"minimum-stability": "dev",
+
     "require": {
         "balancer/bors-core": "@dev",
         "balancer/b2-lcml": "@dev"
