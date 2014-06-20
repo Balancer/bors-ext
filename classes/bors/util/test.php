@@ -60,13 +60,13 @@ class bors_util_test
 
 	static function test_class($class_name)
 	{
-		$autotest = "class bors_class_autotest_helper extends PHPUnit_Framework_TestCase\n{\n\tfunction test_all()\n\t{\n";
+		$autotest = "class bors_class_autotest_helper_loc extends PHPUnit_Framework_TestCase\n{\n\tfunction test_all()\n\t{\n";
 		$autotest .= "\t\t{$class_name}::__unit_test(\$this);\n";
 		$autotest .= "\t}\n}\n";
 
 		eval($autotest);
 
-		$suite = new PHPUnit_Framework_TestSuite('bors_class_autotest_helper');
+		$suite = new PHPUnit_Framework_TestSuite('bors_class_autotest_helper_loc');
 		$runner = new PHPUnit_TextUI_TestRunner();
 		$result = $runner->doRun($suite);
 	}

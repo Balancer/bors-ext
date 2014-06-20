@@ -13,6 +13,6 @@ class templaters_unittest extends PHPUnit_Framework_TestCase
     {
 		$x = bors_load('bors_tests_templates_phaml', NULL);
 		$this->assertNotNull($x);
-		$this->assertEquals('<p>test</p><p>more test</p><p>123</p>', $x->body());
+		$this->assertEquals('<p>test</p><p>more test</p><p>123</p>', preg_replace('/>\s+/', '>', trim($x->body())));
 	}
 }

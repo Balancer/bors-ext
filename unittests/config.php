@@ -18,7 +18,8 @@ if(!getenv('BORS_UNITTEST_PROJECT_NAME'))
 
 	config_set('mysql_tables_autocreate', true);
 
-//	require_once(dirname(__FILE__).'/config-host.php');
+	if(file_exists(dirname(__FILE__).'/config-host.php'))
+		require_once(dirname(__FILE__).'/config-host.php');
 }
 
 function bors_unit_test_up()

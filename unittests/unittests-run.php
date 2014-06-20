@@ -46,7 +46,7 @@ class BorsTests
 					$suite->addTestSuite(str_replace('/','_', $m[1]).'_unittest');
 			}
 
-		$autotest = "class bors_class_autotest_helper extends PHPUnit_Framework_TestCase\n{\n\tfunction test_all()\n\t{\n";
+		$autotest = "<?php\nclass bors_class_autotest_helper_glob extends PHPUnit_Framework_TestCase\n{\n\tfunction test_all()\n\t{\n";
 
 		foreach(unittest_dirs() as $dir)
 		{
@@ -63,14 +63,18 @@ class BorsTests
 				$content = file_get_contents($file);
 				if(preg_match('!.*?class (\w+)!', $content, $m))
 					if(preg_match('!function __unit_test\(!', $content))
+					{
+						$autotest .= "\t\tvar_dump('{$m[1]}');\n";
 						$autotest .= "\t\t{$m[1]}::__unit_test(\$this);\n";
+					}
 			}
 		}
 
 		$autotest .= "\t}\n}\n";
 
-		eval($autotest);
-		$suite->addTestSuite('bors_class_autotest_helper');
+		file_put_contents($f=config('cache_dir').'/phpunit-helper-suite.php', $autotest);
+		require($f);
+		$suite->addTestSuite('bors_class_autotest_helper_glob');
 
 		return $suite;
     }

@@ -27,15 +27,14 @@ class bors_tests_storage_mysql_db_unittest extends PHPUnit_Framework_TestCase
         $this->assertNotNull($object);
         $this->assertEquals('123', $object->id());
 
-
-		// Создаём новый объект с автоопределяемым ID. Предыдущий был 123, этот должен стать 124.
+		// Создаём новый объект с автоопределяемым ID. Предыдущий был 123, этот должен стать больше (auto_increment >= 1)
 		$object = object_new_instance('bors_tests_storage_mysql_db', array(
 			'title' => 'test2',
 			'create_time' => -1,
 		));
 		$object->store();
         $this->assertNotNull($object);
-        $this->assertEquals('124', $object->id());
+        $this->assertGreaterThan(123, $object->id());
 
 		// Мы прописали отрицательное время создания. Попробуем найти эту запись.
 		$x = bors_find_first('bors_tests_storage_mysql_db', array('create_time<' => 0));
