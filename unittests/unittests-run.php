@@ -11,7 +11,7 @@ require_once BORS_CORE.'/init.php';
 //	@include_once(config('phpunit_include').'/Framework.php');
 
 // PHPUnit теперь берётся из Composer
-require_once('composer/vendor/autoload.php');
+//require_once('composer/vendor/autoload.php');
 
 require_once('inc/filesystem.php');
 
