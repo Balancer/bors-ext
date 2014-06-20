@@ -18,6 +18,13 @@ class bors_util_tab2php
 
 		$dbh = new driver_mysql($db);
 
+		$dbh->query("ALTER TABLE $table ADD COLUMN `create_ts` TIMESTAMP NULL");
+		$dbh->query("ALTER TABLE $table ADD COLUMN `modify_ts` TIMESTAMP NULL");
+		$dbh->query("ALTER TABLE $table ADD COLUMN `owner_id` INT UNSIGNED NULL");
+		$dbh->query("ALTER TABLE $table ADD COLUMN `last_editor_id` INT UNSIGNED NULL");
+		$dbh->query("ALTER TABLE $table ADD COLUMN `last_editor_ip` VARCHAR(16) NULL");
+		$dbh->query("ALTER TABLE $table ADD COLUMN `last_editor_ua` VARCHAR(255) NULL");
+
 		$x = $dbh->get("SHOW CREATE TABLE $table");
 
 		$class_name = blib_grammar::singular($table);
