@@ -24,7 +24,6 @@
 		"balancer/bors-core": "@dev",
 		"balancer/b2-lcml": "@dev",
 		"jlogsdon/cli": "*",
-		"phpunit/phpunit": "*",
 		"mthaml/mthaml": "@dev"
 	},
 
