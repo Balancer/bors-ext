@@ -9,10 +9,7 @@ class twitter_bootstrap
 		if($responsive)
 			bors_use('pre:'.$path.'/css/bootstrap-responsive.min.css');
 
-		bors_use('pre:'.$path.'/css/bootstrap.min.css');
-
 		jquery::load();
-		bors_use(''.$path.'/js/bootstrap.min.js');
 		config_set('css_bootstrap_is_loaded', true);
 	}
 
