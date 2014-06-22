@@ -13,7 +13,7 @@ class bors_objects_changelog extends bors_object_db
 			'old_value',
 			'target_class_name',
 			'target_id',
-			'comment' => array('edit_type' => 'bbcode'),
+			'change_comment' => array('name' => 'comment', 'edit_type' => 'bbcode'),
 			'last_editor_id',
 			'last_editor_ip',
 			'last_editor_ua',
@@ -26,15 +26,13 @@ class bors_objects_changelog extends bors_object_db
 		{
 			if(in_array($property_name, array('last_editor_ua', 'last_editor_ip', 'last_editor_id', 'modify_time', 'object_id', 'form_class_name')))
 				continue;
-
-var_dump($object->data); exit();
-
+//echo '<xmp>'; var_dump($property_name, $object->data, $object->get('bors_changes_comment')); exit();
 			bors_new('bors_objects_changelog', array(
 				'property_name' => $property_name,
 				'old_value' => $old_value,
 				'target_class_name' => $object->class_name(),
 				'target_id' => $object->id(),
-				'comment' => $object->get('bors_changes_comment'),
+				'change_comment' => $object->get('bors_changes_comment'),
 			));
 		}
 	}
