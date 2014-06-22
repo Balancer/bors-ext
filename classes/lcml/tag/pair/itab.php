@@ -6,7 +6,7 @@
 
 class lcml_tag_pair_itab extends bors_lcml_tag_pair
 {
-	function html($text, $params)
+	function html($text, &$params)
 	{
 		$text = str_replace("	", "    ", $text);
 //		print_r($text); echo "\n";
@@ -83,22 +83,20 @@ class lcml_tag_pair_itab extends bors_lcml_tag_pair
 
 	static function __unit_test($suite)
 	{
-		$bbtext = "!Самолёт
+		$bbcode = "
+[itab]
+!Самолёт
 	!Нормальная взлётная масса, кг
 Су-27
 	22500
 МиГ-29
 	[red]15180[/red]
-";
+[/itab]";
 
+		$html = bors_lcml::lcml($bbcode);
 
-		$bbcode = "[itab]{$bbtext}[/itab]";
-
-		$x = new lcml_tag_pair_itab(NULL);
-		$direct_html = $x->html($bbtext, array());
-
-		$suite->assertRegExp('!<table.*<tr>.*<th>Самолёт</th>.*<th>Нормальная взлётная масса, кг</th>.*</tr>.*<tr>.*<td>Су-27</td>.*</table!s', $direct_html);
-		$suite->assertRegExp('!<tr>.*<td>Су-27</td>.*<td>22500</td>.*</tr>.*<tr>.*<td>МиГ-29</td>!s', $direct_html);
-		$suite->assertRegExp('!<td>.+red.+15180.*</td>!', $direct_html);
+		$suite->assertRegExp('!<table.*<tr>.*<th>Самолёт</th>.*<th>Нормальная взлётная масса, кг</th>.*</tr>.*<tr>.*<td>Су-27</td>.*</table!s', $html);
+		$suite->assertRegExp('!<tr>.*<td>Су-27</td>.*<td>22500</td>.*</tr>.*<tr>.*<td>МиГ-29</td>!s', $html);
+		$suite->assertRegExp('!<td>.+red.+15180.*</td>!', $html);
 	}
 }
