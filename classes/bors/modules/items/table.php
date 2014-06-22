@@ -30,6 +30,9 @@ class bors_modules_items_table extends bors_module
 		if(!$fields)
 			$fields = $foo->item_list_admin_fields();
 
+		if($append_fields = $this->args('item_fields_append'))
+			$fields = array_merge($fields, $append_fields);
+
 		$parsed_fields = array();
 		$sortable = array();
 		foreach($fields as $p => $t)
