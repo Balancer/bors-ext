@@ -190,6 +190,7 @@
 {if $error_message}<div class="alert alert-error"   >{$error_message}</div>{/if}
 {if $notice_message}<div class="alert">{$notice_message}</div>{/if}
 {if $success_message}<div class="alert alert-success" >{$success_message}</div>{/if}
+{if $system_message}<div class="alert">{$system_message}</div>{/if}
 
 {if $this->get('page_tabs')}
 <ul class="nav nav-tabs">
