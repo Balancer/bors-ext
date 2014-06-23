@@ -23,7 +23,7 @@
 	"require": {
 		"balancer/bors-core": "@dev",
 		"balancer/b2-lcml": "@dev",
-		"jlogsdon/cli": "*",
+		"wp-cli/wp-cli": "*",
 		"mthaml/mthaml": "@dev"
 	},
 
