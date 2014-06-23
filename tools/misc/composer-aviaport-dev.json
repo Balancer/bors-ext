@@ -1,0 +1,69 @@
+{
+	"name": "balancer/aviaport",
+	"description": "AviaPort.Ru sources",
+	"license": "GPL3",
+	"authors": [
+		{
+			"name": "Balancer",
+			"email": "balancer@balancer.ru"
+		}
+	],
+
+	"repositories": [
+		{ "type": "vcs", "url": "/var/www/repos/bors-core" },
+		{ "type": "vcs", "url": "/var/www/repos/b2-core" },
+		{ "type": "vcs", "url": "/var/www/repos/b2-framework" },
+		{ "type": "vcs", "url": "/var/www/repos/bors-ext" },
+		{ "type": "vcs", "url": "/var/www/repos/blib-morfology-ru" },
+		{ "type": "vcs", "url": "/var/www/repos/bors-3rd-bootstrap3" }
+	],
+
+
+	"prefer-stable": true,
+	"minimum-stability": "dev",
+
+	"require": {
+		"balancer/blib-morfology-ru": "@dev",
+		"balancer/bors-core": "@dev",
+		"balancer/b2-core": "@dev",
+		"balancer/b2-framework": "*",
+		"balancer/b2-lcml": "@dev",
+		"balancer/bors-3rd-jquery-ui": "@dev",
+		"balancer/bors-3rd-bootstrap3": "*",
+
+		"phpoffice/phpexcel": "1.*",
+		"rediska/rediska": "*",
+		"smarty/smarty": "!=3.1.17",
+		"easybook/geshi": "*",
+		"intervention/image": "<2",
+		"leafo/lessphp": "*",
+		"michelf/php-markdown": "*",
+		"phpunit/phpunit": "*",
+		"jlogsdon/cli": "*",
+		"anahkiasen/html-object": "*",
+		"php-console/php-console": "*",
+		"tracy/tracy": "*",
+		"maximebf/debugbar": "*",
+		"beelab/bowerphp": "@dev",
+		"pimple/pimple": "*",
+		"balancer/bors-ext": "@dev",
+
+        "tyrola/xmpphp": "@dev",
+        "bandroidx/xmpphp": "@dev",
+        "smarty/smarty": "!=3.1.17",
+        "jlogsdon/cli": "*",
+        "phpunit/phpunit": "*",
+        "libra/jquery-ui-assets": "@dev",
+        "balancer/bors-3rd-jquery": "*",
+        "balancer/bors-3rd-jquery-ui": "*",
+		"twig/twig": "*",
+		"monolog/monolog": "*",
+		"predis/predis": "*",
+		"kriswallsmith/assetic": "*",
+		"facebook/xhprof": "*",
+		"ivaynberg/select2": "*",
+		"aronduby/dump": "*",
+		"patchwork/dumper": "*",
+		"digitalnature/php-ref": "*"
+	}
+}
