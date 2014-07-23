@@ -67,7 +67,8 @@ class web_twitter
 	static function parse_links($text)
 	{
 		// https://twitter.com/navalny/status/477862956274057216
-		$text = preg_replace_callback('!^\s*(https://twitter.com/\w+/status/\d+)\s*$!im', function($m) { return web_twitter::import_bb($m[1]);}, $text);
+		$text = preg_replace_callback('!^\s*(https://twitter.com/\w+/status/\d+)/?\s*$!im', function($m) { return web_twitter::import_bb($m[1]);}, $text);
+		$text = preg_replace_callback('!^\s*(https://twitter.com/\w+/status/\d+)/photo/\d+\s*$!im', function($m) { return web_twitter::import_bb($m[1]);}, $text);
 
 		return $text;
 	}
