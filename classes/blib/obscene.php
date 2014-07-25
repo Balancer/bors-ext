@@ -37,7 +37,7 @@ class blib_obscene
 		$text = preg_replace_callback("/(?<!(л|н|т|д|ч|р|щ|и))([еeё])([б][aаиуy])(ть|л|сь|\b)/ui", 'blib_obscene::stars2', $text);
 		$text = preg_replace_callback("/(?<!(р|д))([еeё])([б][л])([яюоуе])/ui", 'blib_obscene::stars2', $text);
 		$text = preg_replace_callback("/([еeё])([б][Tт])(?!(ам|о.|у\b))/ui", 'blib_obscene::stars', $text);
-		$text = preg_replace_callback("/(?<!(л|д))([еeё])(бн)(у)/ui", 'blib_obscene::stars2', $text);
+		$text = preg_replace_callback("/(?<!(л|д|ч))([еeё])(бн)(у)/ui", 'blib_obscene::stars2', $text);
 		$text = preg_replace("/([^рРpPлЛдДНнчЧтТTвВжщиц])([ЕеEeЁё])[Бб]([\sTТтAaАаиИУуYy])/ui","\$1\$2**\$3",$text);
 		$text = preg_replace_callback("/(бо)([ёе]б)/ui", 'blib_obscene::stars', $text);
 		$text = preg_replace_callback("/\b(при|за|у|под|подь|подъ|на)([еёe])([б])/ui", 'blib_obscene::stars', $text);
@@ -103,7 +103,7 @@ class blib_obscene
 
 	static function __dev()
 	{
-		$text = 'говно пидоры хлебнуло хребтом сердцебиение';
+		$text = 'говно пидоры хлебнуло хребтом сердцебиение учебную';
 		echo self::mask($text, true), PHP_EOL;
 	}
 }
