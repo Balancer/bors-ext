@@ -4,6 +4,8 @@
 	Оформление разного рода ссылок на файлы по их расширению
 */
 
+// Для проверки: http://www.balancer.ru/g/p3541670
+
 class lcml_parser_filetypes extends bors_lcml_parser
 {
 	function html($text)
@@ -24,8 +26,10 @@ array
 			$ext = $match[2];
 			class_include($cn = "lcml_tag_pair_file_{$ext}");
 			if(class_exists($cn))
+			{
 				$text = preg_replace_callback('!^\s*('.preg_quote($match[1], '!').')\s*$!im', function($m) use($ext) {
 					return $this->lcml("[file_{$ext}]{$m[1]}[/file_{$ext}]");}, $text);
+			}
 			else
 			{
 				class_include($cn = "lcml_tag_pair_{$ext}");
