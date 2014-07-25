@@ -21,10 +21,10 @@
 	"minimum-stability": "dev",
 
 	"require": {
-		"balancer/bors-core": "@dev",
-		"balancer/b2-lcml": "@dev",
+		"balancer/bors-core": "*",
+		"balancer/b2-lcml": "*",
 		"wp-cli/wp-cli": "*",
-		"mthaml/mthaml": "@dev"
+		"mthaml/mthaml": "*"
 	},
 
 	"autoload": {
