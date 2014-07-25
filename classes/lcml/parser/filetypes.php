@@ -24,7 +24,8 @@ array
 			$ext = $match[2];
 			class_include($cn = "lcml_tag_pair_file_{$ext}");
 			if(class_exists($cn))
-				$text = preg_replace('!^\s*('.preg_quote($match[1], '!').')\s*$!ime', "lcml('[file_{$ext}]$1[/file_{$ext}]');", $text);
+				$text = preg_replace_callback('!^\s*('.preg_quote($match[1], '!').')\s*$!im', function($m) use($ext) {
+					return $this->lcml("[file_{$ext}]{$m[1]}[/file_{$ext}]");}, $text);
 			else
 			{
 				class_include($cn = "lcml_tag_pair_{$ext}");
