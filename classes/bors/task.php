@@ -5,6 +5,8 @@ class bors_task extends bors_object_db
 	function db_name() { return config('bors_core_db'); }
 	function table_name() { return 'bors_tasks'; }
 
+	function ignore_on_new_instance() { return true; }
+
 	function table_fields()
 	{
 		return array(
@@ -54,6 +56,15 @@ class bors_task extends bors_object_db
 			@list($target_class, $target_id, $target_page) = $target;
 		elseif($target)
 			bors_debug::syslog('tasks-error', "Worker $worker. Unknown target: ".print_r($target, true));
+
+		if(!$target_class)
+			$target_class = '';
+
+		if(!$target_id)
+			$target_id = 0;
+
+		if(!$target_page)
+			$target_page = 0;
 
 		bors_new(get_called_class(), array(
 			'worker_class_name' => $worker_class,
