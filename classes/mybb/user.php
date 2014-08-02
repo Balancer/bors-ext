@@ -6,6 +6,8 @@ class mybb_user extends bors_object_db
 	function db_name() { return config('mybb.db'); }
 	function table_name() { return 'mybb_users'; }
 
+	function ignore_on_new_instance() { return true; }
+
 	function class_title() { return ec('Пользователь'); }
 
 	function table_fields()
