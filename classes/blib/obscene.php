@@ -49,8 +49,8 @@ class blib_obscene
 		{
 			$text = preg_replace_callback("/\b([г])([aаoо][BВв])([HНн])/ui", 'blib_obscene::stars',$text);
 //			$text = preg_replace("/([СсCc])[УуYy][КкKk]([аАaAиИеЕуУyY]|ой)/u","\$1**\$2",$text);
-			$text = preg_replace("/([MmМм])[УуYy][Дд][AaАаИи]([лЛкКkK][аАaA]?)/u","\$1***\$2",$text);
 			$text = preg_replace_callback("/(?<!(ки|ла))([п])(ид[ао])(р)(\b|[ауеы])/ui", 'blib_obscene::stars3',$text);
+			$text = preg_replace_callback("/(му)(да|ди)(к|ч|л)/ui", 'blib_obscene::stars', $text);
 			//$text = preg_replace("/жоп(а|и|е|у|ой)/u","ж**",$text);
 		}
 
@@ -89,7 +89,7 @@ class blib_obscene
 			}
 		}
 
-		$obscene = explode(' ', 'говна пидоры пидарас');
+		$obscene = explode(' ', 'говна пидоры пидарас мудачьё мудак мудила мудилка мудаки');
 		foreach($obscene as $w)
 		{
 			$masked = self::mask($w, true);
