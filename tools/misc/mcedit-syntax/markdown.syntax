@@ -1,0 +1,33 @@
+# Markdown file
+
+context default silver
+    keyword = brightred
+
+context [ ] red
+
+context ( ) cyan
+
+context #### \n green
+    spellcheck
+
+context ### \n brightgreen
+    spellcheck
+
+context ## \n white
+    spellcheck
+
+context # \n yellow
+    spellcheck
+
+context ; \n brown
+    spellcheck
+
+context linestart \* \n brightblue
+    spellcheck
+
+context linestart http \n cyan
+    spellcheck
+
+# context \n ==== brightcyan
+
+
