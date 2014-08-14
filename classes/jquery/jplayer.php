@@ -41,7 +41,7 @@ class jquery_jplayer
 			$attrs['play'] = "function() { \$(this).jPlayer(\"pauseOthers\")}";
 			$attrs['cssSelectorAncestor'] = "#jp_container_$id";
 
-			set_def($attrs, 'swfPath', "js");
+			set_def($attrs, 'swfPath', "/_bors-3rd/opt/jQuery.jPlayer.2.4.0/js");
 			set_def($attrs, 'supplied', "mp3");
 			set_def($attrs, 'wmode', "window");
 			set_def($attrs, 'smoothPlayBar', 'true');
