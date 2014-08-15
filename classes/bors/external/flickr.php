@@ -11,7 +11,8 @@ class bors_external_flickr extends bors_external_meta
 
 		// http://www.flickr.com/photos/ju_cooper/6701868497/
 		// http://www.flickr.com/photos/sjc1969/8784722102/ — http://www.balancer.ru/g/p3155955
-		$text = preg_replace('!^\s*https?://[^/]*flickr\.com/(#/)?photos/\w+/(\d+)/?\s*$!mi', '[flickr]$2[/flickr]', $text);
+		// https://www.flickr.com/photos/jeroenakkermans/14563130649/
+		$text = preg_replace('!^\s*https?://[^/]*flickr\.com/(#/)?photos/(\w+)/(\d+)/?\s*$!mi', '[flickr user="$2"]$3[/flickr]', $text);
 		return $text;
 	}
 }

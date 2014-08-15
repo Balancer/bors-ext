@@ -2,18 +2,20 @@
 
 class bors_external_flickr_photo
 {
-	static function factory($photo_id)
+	static function factory($photo_id, $params = array())
 	{
-		return new bors_external_flickr_photo($photo_id);
+		return new bors_external_flickr_photo($photo_id, $params);
 	}
 
 	var $photo_id;
+	var $params;
 	var $flickr;
 	var $photo;
 	var $info;
-	function __construct($photo_id)
+	function __construct($photo_id, $params = array())
 	{
 		$this->photo_id = $photo_id;
+		$this->params = $params;
 		require_once(config('phpFlickr.path')."/phpFlickr.php");
 		$this->flickr = new phpFlickr(config('phpFlickr.api_key'));
 		$cache_dir = config('cache_dir').'/phpFlickr';
@@ -33,8 +35,13 @@ class bors_external_flickr_photo
 
 	function html()
 	{
+		if($u = @$this->params['user'])
+			$url = "https://www.flickr.com/photos/{$u}/{$this->photo_id}/";
+		else
+			$url = '';
+
 		if(!$this->info)
-			return ec("<div class=\"red_box\">Данное фото на Flickr фото не найдено или доступ к нему запрещён</div>");
+			return ec("<div class=\"red_box\">Данное фото на Flickr не найдено или доступ к нему запрещён<br/>").lcml_urls($url).'</div>';
 
 		$s640	= $this->find_size(640);
 		$s1024	= $this->find_size(1024);
