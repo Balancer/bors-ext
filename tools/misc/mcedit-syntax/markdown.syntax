@@ -28,4 +28,5 @@ context linestart \* \n brightblue
 context linestart http \n cyan
     spellcheck
 
-context \n\[T\] ===+\n yellow
+context \n==+ ==+\n yellow
+context \n--+ --+\n white
