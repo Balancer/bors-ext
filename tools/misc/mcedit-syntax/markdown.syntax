@@ -1,7 +1,7 @@
 # Markdown file
 
 context default silver
-    keyword = brightred
+    keyword _ brightred
 
 context [ ] red
 
@@ -28,6 +28,4 @@ context linestart \* \n brightblue
 context linestart http \n cyan
     spellcheck
 
-# context \n ==== brightcyan
-
-
+context \n\[T\] ===+\n yellow
