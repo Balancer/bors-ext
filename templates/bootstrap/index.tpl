@@ -165,11 +165,15 @@
 		</div>
 	</div>
 
-{if $use_system_menu}
+{if $use_system_menu or $default_right_menu}
 	<div class="container-fluid">
 		<div class="row-fluid">
 			<div class="span2">
-	{block name="system_menu"}{/block}
+	{if $default_right_menu}
+		{include file=$default_right_menu}
+	{else}
+		{block name="system_menu"}{/block}
+	{/if}
 			</div>
 			<div class="span10">
 {else}
@@ -217,7 +221,7 @@
 
 {block name="copyright"}{/block}
 
-{if $use_system_menu}
+{if $use_system_menu or $default_right_menu}
 			</div>
 		</div>
 {/if}
