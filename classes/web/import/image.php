@@ -25,7 +25,8 @@ class web_import_image
 
 		extract(parse_url(self::normalize_url($url)));
 		if(empty($host))
-			bors_throw("Can't get host for url ".$url);
+//			bors_throw("Can't get host for url ".$url);
+			return NULL;
 
 		$host = preg_replace('/^(ftp|www)\./', '', $host);
 		$host = preg_replace('/:\d+$/', '', $host);
