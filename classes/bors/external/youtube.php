@@ -123,7 +123,9 @@ class bors_external_youtube extends bors_object
 		{
 			$doc = new DOMDocument;
 //			echo "\n=================\n$html\n=================\n";
-			@$doc->loadHTML($html);
+			try {
+				$doc->loadHTML($html);
+			} catch(Exception $e) { }
 			$el = $doc->getElementsByTagName("title")->item(0);
 			$title = $el ? $el->nodeValue : $this->id();
 		}
@@ -135,8 +137,8 @@ class bors_external_youtube extends bors_object
 
 	function html(&$params=array())
 	{
-		$width  = @$params['width']  ? $params['width']  : '640';
-		$height = @$params['height'] ? $params['height'] : '390';
+		$width  = empty($params['width']) ? 640 : $params['width'];
+		$height = empty($params['height'])? 390 : $params['height'];
 
 		$this->register($params);
 

@@ -8,8 +8,8 @@ class blib_obscene
 		'0' => 'o',
 	);
 
-	static function stars($m) { return $m[1] . str_repeat('*', bors_strlen($m[2])) . @$m[3]; }
-	static function stars2($m) { return $m[2] . str_repeat('*', bors_strlen($m[3])) . @$m[4]; }
+	static function stars($m) { return $m[1] . str_repeat('*', bors_strlen($m[2])) . (empty($m[3])?'':$m[3]); }
+	static function stars2($m) { return $m[2] . str_repeat('*', bors_strlen($m[3])) . (empty($m[4])?'':$m[4]); }
 	static function stars3($m) { return $m[2] . str_repeat('*', bors_strlen($m[3])) . @$m[4] . @$m[5]; }
 
 	static function mask($text, $abusive = false)
