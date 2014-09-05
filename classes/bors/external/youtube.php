@@ -124,7 +124,7 @@ class bors_external_youtube extends bors_object
 			$doc = new DOMDocument;
 //			echo "\n=================\n$html\n=================\n";
 			try {
-				$doc->loadHTML($html);
+				@$doc->loadHTML($html);
 			} catch(Exception $e) { }
 			$el = $doc->getElementsByTagName("title")->item(0);
 			$title = $el ? $el->nodeValue : $this->id();
