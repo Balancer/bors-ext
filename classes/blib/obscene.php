@@ -24,7 +24,7 @@ class blib_obscene
 		$text = preg_replace_callback("/([Пп])([Ии][Зз3])([Ддж])/ui", 'blib_obscene::stars', $text);
 		$text = preg_replace("/([Пп])\.*[Ии]\.*[Зз3]\.*[Дд]\.*/u","\$1***",$text);
 
-		$text = preg_replace_callback("/(?<!(ам|ру|са|жа|р.))([б6])(ля)\b/ui", 'blib_obscene::stars2',$text);
+		$text = preg_replace_callback("/(?<!(ам|са|жа|р.|ду))([б6])(ля)\b/ui", 'blib_obscene::stars2',$text);
 		$text = preg_replace("/([б6])[л][я][д]/ui", "\$1***",$text);
 		//$text = preg_replace("/([Бб])[Лл][Яя]([дД]|\s)/u","\$1**\$2",$text);
 //		$text = preg_replace_callback("/(?<!(ор|[рp][уyаaеe]))(б)(ля)(\b|д|\s)/ui", 'blib_obscene::stars', $text);
@@ -40,7 +40,6 @@ class blib_obscene
 		$text = preg_replace_callback("/(?<!(л|д|ч))([еeё])(бн)(у)/ui", 'blib_obscene::stars2', $text);
 		$text = preg_replace_callback("/(бо)([ёе]б)/ui", 'blib_obscene::stars', $text);
 		$text = preg_replace_callback("/\b(при|за|у|под|подь|подъ|на)([еёe])([б])/ui", 'blib_obscene::stars', $text);
-
 
 		$text = preg_replace_callback("/\b(за)(лу)(п[а-яё]+)/ui", 'blib_obscene::stars', $text);
 
@@ -66,7 +65,7 @@ class blib_obscene
 		$allowed[] = 'абляция'; // В начале строки!
 		$allowed[] = 'небу ещёб ещеб нёбу хлебом Пиебалгс деблокировать хлебнуло хулит';
 		$allowed[] = 'хребтом хребтами хребту сердцебиение досудебную колеблется беби мразеблоггерша';
-		$allowed[] = 'дирижабля';
+		$allowed[] = 'дирижабля дубля';
 
 		foreach($allowed as $s)
 			$test->assertEquals($s, self::mask($s, true));
