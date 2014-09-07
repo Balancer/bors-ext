@@ -77,6 +77,7 @@ class blib_obscene
 		$obscene[] = 'фубля';
 		$obscene[] = 'спизженный пиздить спиздить пизда пидор пидар';
 		$obscene[] = 'залупа ЗаЛуПоЙ Залупе';
+		$obscene[] = 'хуй нахуй похуй';
 
 		foreach($obscene as $words)
 		{
