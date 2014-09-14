@@ -8,8 +8,8 @@ class blib_obscene
 		'0' => 'o',
 	);
 
-	static function stars($m) { return $m[1] . str_repeat('*', bors_strlen($m[2])) . @$m[3]; }
-	static function stars2($m) { return $m[2] . str_repeat('*', bors_strlen($m[3])) . @$m[4]; }
+	static function stars($m) { return $m[1] . str_repeat('*', bors_strlen($m[2])) . (empty($m[3])?'':$m[3]); }
+	static function stars2($m) { return $m[2] . str_repeat('*', bors_strlen($m[3])) . (empty($m[4])?'':$m[4]); }
 	static function stars3($m) { return $m[2] . str_repeat('*', bors_strlen($m[3])) . @$m[4] . @$m[5]; }
 
 	static function mask($text, $abusive = false)
@@ -17,14 +17,14 @@ class blib_obscene
 //		$text = preg_replace_callback("/(?<!(ра|ло|ли|ти|су))([xх])([yу][йияеeёю])/ui", 'blib_obscene::stars2', $text);
 		$text = preg_replace_callback("/(?<!(ра|л.|ти|су|си))([xх])([yу][йияеeёю])/ui", 'blib_obscene::stars2', $text);
 		$text = preg_replace_callback("/(\b)([xх])([yу][юя])/ui", 'blib_obscene::stars2', $text);
-		$text = preg_replace_callback("/([xх])([yу][л][яи])(\b|[^г])/ui", 'blib_obscene::stars', $text);
+		$text = preg_replace_callback("/([xх])([yу][л][яи])(\b|[^гт])/ui", 'blib_obscene::stars', $text);
 		$text = preg_replace_callback("/([^рpт][^аaи][xх])([yу])([йяеe]|её)/ui", 'blib_obscene::stars', $text);
 		$text = preg_replace("/([^РрPpТтT][^АаAaИи])([XxХх])\.*[YyУу]\.*[йЙяЯеЕeEe]\.*/u","\$1\$2***",$text);
 
 		$text = preg_replace_callback("/([Пп])([Ии][Зз3])([Ддж])/ui", 'blib_obscene::stars', $text);
 		$text = preg_replace("/([Пп])\.*[Ии]\.*[Зз3]\.*[Дд]\.*/u","\$1***",$text);
 
-		$text = preg_replace_callback("/(?<!(ам|ру|са|р.))([б6])(ля)\b/ui", 'blib_obscene::stars2',$text);
+		$text = preg_replace_callback("/(?<!(ам|са|жа|р.|ду))([б6])(ля)\b/ui", 'blib_obscene::stars2',$text);
 		$text = preg_replace("/([б6])[л][я][д]/ui", "\$1***",$text);
 		//$text = preg_replace("/([Бб])[Лл][Яя]([дД]|\s)/u","\$1**\$2",$text);
 //		$text = preg_replace_callback("/(?<!(ор|[рp][уyаaеe]))(б)(ля)(\b|д|\s)/ui", 'blib_obscene::stars', $text);
@@ -34,14 +34,12 @@ class blib_obscene
 //$text = preg_replace("/манд(а[^р]|а[^т]|и|е|у|ой|ы)/u","м***",$text);
 		$text = preg_replace_callback("/\b([еeё])([б][aаиуyёeе])/ui", 'blib_obscene::stars', $text);
 		$text = preg_replace_callback("/(ое)(бе)(нь)/ui", 'blib_obscene::stars', $text);
-		$text = preg_replace_callback("/(?<!(л|н|т|д|ч|р|щ|и))([еeё])([б][aаиуy])(ть|л|сь|\b)/ui", 'blib_obscene::stars2', $text);
-		$text = preg_replace_callback("/(?<!(р|д))([еeё])([б][л])([яюоуе])/ui", 'blib_obscene::stars2', $text);
-		$text = preg_replace_callback("/([еeё])([б][Tт])(?!(ам))/ui", 'blib_obscene::stars', $text);
-		$text = preg_replace_callback("/([еeё])(бн)(у)/ui", 'blib_obscene::stars', $text);
-		$text = preg_replace("/([^рРpPлЛдДНнчЧтТTвВжщи])([ЕеEeЁё])[Бб]([\sTТтAaАаиИУуYy])/ui","\$1\$2**\$3",$text);
+		$text = preg_replace_callback("/(?<!(л|н|т|д|ч|р|щ|и|б))([еeё])([б][aаиуy])(ть|л|сь|\b)/ui", 'blib_obscene::stars2', $text);
+		$text = preg_replace_callback("/(?<!(р|д|л|з))([еeё])([б][л])([яюоуе])/ui", 'blib_obscene::stars2', $text);
+		$text = preg_replace_callback("/([еeё])([б][Tт])(?!(ам|о.|у\b))/ui", 'blib_obscene::stars', $text);
+		$text = preg_replace_callback("/(?<!(л|д|ч|ш))([еeё])(бн)(у)/ui", 'blib_obscene::stars2', $text);
 		$text = preg_replace_callback("/(бо)([ёе]б)/ui", 'blib_obscene::stars', $text);
 		$text = preg_replace_callback("/\b(при|за|у|под|подь|подъ|на)([еёe])([б])/ui", 'blib_obscene::stars', $text);
-
 
 		$text = preg_replace_callback("/\b(за)(лу)(п[а-яё]+)/ui", 'blib_obscene::stars', $text);
 
@@ -49,8 +47,8 @@ class blib_obscene
 		{
 			$text = preg_replace_callback("/\b([г])([aаoо][BВв])([HНн])/ui", 'blib_obscene::stars',$text);
 //			$text = preg_replace("/([СсCc])[УуYy][КкKk]([аАaAиИеЕуУyY]|ой)/u","\$1**\$2",$text);
-			$text = preg_replace("/([MmМм])[УуYy][Дд][AaАаИи]([лЛкКkK][аАaA]?)/u","\$1***\$2",$text);
 			$text = preg_replace_callback("/(?<!(ки|ла))([п])(ид[ао])(р)(\b|[ауеы])/ui", 'blib_obscene::stars3',$text);
+			$text = preg_replace_callback("/(му)(да|ди)(к|ч|л)/ui", 'blib_obscene::stars', $text);
 			//$text = preg_replace("/жоп(а|и|е|у|ой)/u","ж**",$text);
 		}
 
@@ -59,22 +57,27 @@ class blib_obscene
 
 	static function __unit_test($test)
 	{
+		// Список нормальных слов с выглядещами обсценно подстроками.
 		$allowed = array('ансамбля Джебат дебаты колебания колебать колебаться постебаться дебилов учёба');
 		$allowed[] = 'Усугубляясь истребители застрахуйте рубля Хулиганы потребляет потреблять тихую психуют психующим';
 		$allowed[] = 'оскорблять уподобляться Усугубляясь Олеговна плохую лихую употребляющих сухую глухую';
 		$allowed[] = 'хребтами Глеб Глеба небу сабля гребля корабля лапидарий скипидар туебень залужью';
 		$allowed[] = 'абляция'; // В начале строки!
-		$allowed[] = 'небу ещёб ещеб нёбу хлебом Пиебалгс деблокировать';
+		$allowed[] = 'небу ещёб ещеб нёбу хлебом Пиебалгс деблокировать хлебнуло хулит';
+		$allowed[] = 'хребтом хребтами хребту сердцебиение досудебную колеблется беби мразеблоггерша';
+		$allowed[] = 'дирижабля дубля волшебную';
 
 		foreach($allowed as $s)
 			$test->assertEquals($s, self::mask($s, true));
 
+		// Обсценные слова
 		$obscene = array('��� ����� ������� ����� ��� �������� �������� ����� ������');
-		$obscene[] = '����� ���� ��������� ���� ������ �������� ������� ��������';
+		$obscene[] = '����� ���� ��������� ���� ���� ������ �������� ������� �������� ���� ����';
 		$obscene[] = '��� ����� ���� ��� ��������� ������� �£���� ��������� ����ϣ� ����ϣ�� ���� �����';
 		$obscene[] = '�����';
 		$obscene[] = '���������� ������� �������� ����� ����� �����';
 		$obscene[] = '������ ������� ������';
+		$obscene[] = '��� ����� �����';
 
 		foreach($obscene as $words)
 		{
@@ -86,7 +89,7 @@ class blib_obscene
 			}
 		}
 
-		$obscene = explode(' ', 'говна пидоры пидарас');
+		$obscene = explode(' ', 'говна пидоры пидарас мудачьё мудак мудила мудилка мудаки');
 		foreach($obscene as $w)
 		{
 			$masked = self::mask($w, true);
@@ -100,7 +103,7 @@ class blib_obscene
 
 	static function __dev()
 	{
-		$text = 'говно пидоры';
+		$text = 'говно пидоры хлебнуло хребтом сердцебиение учебную';
 		echo self::mask($text, true), PHP_EOL;
 	}
 }

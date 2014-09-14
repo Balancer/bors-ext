@@ -8,5 +8,8 @@ function lcml_external_code_ext($text)
 	if(stripos($text, 'vimeo') !== false)
 		$text = bors_external_vimeo::parse_links($text);
 
+	if(stripos($text, '/twitter.com/') !== false)
+		$text = web_twitter::parse_links($text);
+
 	return $text;
 }

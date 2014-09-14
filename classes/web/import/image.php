@@ -19,7 +19,15 @@ class web_import_image
 
 	static function storage_place_rel($url)
 	{
+		//TODO: Хардкод
+		if(preg_match('!^/(uploads|sites)/!', $url))
+			$url = 'http://www.balancer.ru'.$url;
+
 		extract(parse_url(self::normalize_url($url)));
+		if(empty($host))
+//			bors_throw("Can't get host for url ".$url);
+			return NULL;
+
 		$host = preg_replace('/^(ftp|www)\./', '', $host);
 		$host = preg_replace('/:\d+$/', '', $host);
 

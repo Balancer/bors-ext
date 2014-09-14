@@ -6,7 +6,7 @@
 
 class lcml_tag_pair_itab extends bors_lcml_tag_pair
 {
-	function html($text, &$params = array())
+	function html($text, &$params)
 	{
 		$text = str_replace("	", "    ", $text);
 //		print_r($text); echo "\n";
@@ -18,8 +18,14 @@ class lcml_tag_pair_itab extends bors_lcml_tag_pair
 		$cols = 0;
 		$col = -1;
 
-		require_once 'HTML/Table.php';
-		$table = new HTML_Table();
+		$bcs_args = array();
+
+		if($container = @$params['container'])
+			if($layout = $container->get('layout'))
+				$bcs_args['layout'] = $layout;
+
+		require_once('engines/lcml/bcsTable.php');
+		$table = new bcsTable($bcs_args);;
 
 		foreach(explode("\n", $text) as $s)
 		{
@@ -50,9 +56,7 @@ class lcml_tag_pair_itab extends bors_lcml_tag_pair
 		if($cell_text)
 			self::add_cell($table, $cell_text, $row, $col);
 
-		$html = $table->toHTML();
-//		echo $html;
-		return $html;
+		return (string)$table->get_html();
 	}
 
 	static function add_cell($table, $text, $row, $col)
@@ -68,33 +72,31 @@ class lcml_tag_pair_itab extends bors_lcml_tag_pair
 			$mod = false;
 
 		if(preg_match('/[^\wа-яА-ЯёЁ]/u', $text))
-			$text = lcml($text);
+			$text = bors_lcml::lcml($text);
 
 //		echo "{$row},{$col}: [$text]\n";
 		if($mod == '!')
-			$table->setHeaderContents($row, $col, $text);
-		else
-			$table->setCellContents($row, $col, $text);
+			$table->setHead(true, $row, $col);
+
+		$table->setData($text, $row, $col);
 	}
 
 	static function __unit_test($suite)
 	{
-		$bbtext = "!Самолёт
+		$bbcode = "
+[itab]
+!Самолёт
 	!Нормальная взлётная масса, кг
 Су-27
 	22500
 МиГ-29
 	[red]15180[/red]
-";
+[/itab]";
 
+		$html = bors_lcml::lcml($bbcode);
 
-		$bbcode = "[itab]{$bbtext}[/itab]";
-
-		$x = new lcml_tag_pair_itab(NULL);
-		$direct_html = $x->html($bbtext);
-
-		$suite->assertRegExp('!<tr>.*<th>Самолёт</th>.*<th>Нормальная взлётная масса, кг</th>.*</tr>.*<tr>.*<td>Су-27</td>!s', $direct_html);
-		$suite->assertRegExp('!<tr>.*<td>Су-27</td>.*<td>22500</td>.*</tr>.*<tr>.*<td>МиГ-29</td>!s', $direct_html);
-		$suite->assertRegExp('!<td>.+red.+15180.*</td>!', $direct_html);
+		$suite->assertRegExp('!<table.*<tr>.*<th>Самолёт</th>.*<th>Нормальная взлётная масса, кг</th>.*</tr>.*<tr>.*<td>Су-27</td>.*</table!s', $html);
+		$suite->assertRegExp('!<tr>.*<td>Су-27</td>.*<td>22500</td>.*</tr>.*<tr>.*<td>МиГ-29</td>!s', $html);
+		$suite->assertRegExp('!<td>.+red.+15180.*</td>!', $html);
 	}
 }

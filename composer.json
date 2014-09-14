@@ -1,9 +1,9 @@
 {
 	"name": "balancer/bors-ext",
 	"description": "BORS© PHP Framework extensions",
-    "type": "library",
+	"type": "library",
 	"homepage": "http://bors.balancer.ru/",
-    "license": "GPL-3.0",
+	"license": "GPL-3.0",
 	"authors": [
 		{
 			"name": "Roman =Balancer= Karshiev",
@@ -17,12 +17,22 @@
 		"source": "https://bitbucket.org/Balancer/bors-ext"
 	},
 
-    "require": {
-        "balancer/bors-core": "@dev",
-        "balancer/b2-lcml": "@dev"
-    },
+	"prefer-stable": true,
+	"minimum-stability": "dev",
 
-    "autoload": {
+	"require": {
+		"balancer/bors-core": "*",
+		"balancer/b2-lcml": "*",
+		"wp-cli/wp-cli": "*",
+		"mthaml/mthaml": "*"
+	},
+
+	"autoload": {
 		"classmap": ["classes/"]
+	},
+
+    "extra": {
+        "bors-classes": "classes",
+        "bors-templates": "templates"
     }
 }

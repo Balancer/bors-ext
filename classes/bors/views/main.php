@@ -9,7 +9,7 @@ class bors_views_main extends bors_paginated
 	{
 		$class_name = str_replace('_views_main', '', $this->class_name());
 		$class_name = str_replace('_main', '', $class_name);
-		return join('_', array_map('bors_unplural', explode('_', $class_name)));
+		return join('_', array_map(array('blib_grammar', 'singular'), explode('_', $class_name)));
 	}
 
 	function _project_name_def() { return bors_core_object_defaults::project_name($this); }

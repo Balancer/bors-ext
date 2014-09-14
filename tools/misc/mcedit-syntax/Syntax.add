@@ -1,0 +1,5 @@
+file ..\*\\.(tpl|TPL)$ Smarty\sTemplate\sFile
+include smarty.syntax
+
+file ..\*\\.(md|MD)$ Markdown
+include markdown.syntax

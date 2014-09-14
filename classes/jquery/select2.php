@@ -6,9 +6,10 @@ class jquery_select2
 {
 	static function appear($el, $attrs)
 	{
-		$base = config('jquery.select2.base');
+		$base = config('jquery.select2.base', '/_composer-components/select2');
 		bors_use("$base/select2.css");
-		jquery::plugin("$base/select2.min.js");
+//		jquery::plugin("$base/select2.min.js");
+		jquery::plugin("$base/select2.js");
 		jquery::plugin("$base/select2_locale_ru.js");
 
 //		var_dump($attrs);
@@ -22,9 +23,24 @@ class jquery_select2
 		$title_field = popval($params, 'title_field', 'title');
 		$order = popval($params, 'order', 'title');
 		$search = popval($params, 'search_fields', 'title');
+		$width = popval($params, 'width', '');
 		popval($params, 'name');
 		popval($params, 'value');
 		popval($params, 'json');
+
+		if(popval($params, 'dropdownAutoWidth'))
+			$autowidth = ", dropdownAutoWidth: true";
+		else
+			$autowidth = "";
+
+		if($width)
+			$width = ", width: \"".htmlspecialchars($width)."\"";
+		else
+			$width = "";
+
+		if(preg_match('/^\w+$/', $class_name))
+			$class_name = "'$class_name'";
+
 //	http://admin2.aviaport.wrk.ru/newses/257920/form2/
 		$params = array_merge($params, array(
 			'ajax' => array(
@@ -32,13 +48,15 @@ class jquery_select2
 //				'placeholder' => "Search for a movie",
 				'url' => '/_bors/data/lists/',
 				'data' => "function (text, page) { return {
-						class: '$class_name',
+						class: $class_name,
 						q: text,
 						s: 10,
 						tpl: '{\"id\":\"id\",\"text\":\"".$title_field."\"}',
 						order: \"".$order."\",
 						search: \"".$search."\",
 						results: \"results\"
+						$autowidth
+						$width
 					} }",
 				'results' => 'function (data, page) { return data }',
 			),

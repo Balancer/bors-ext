@@ -14,7 +14,7 @@ function do_work()
 {
 	global $pos;
 //	echo "\r$pos";
-	blib_cli::out("\r%K$pos%n");
+	blib_cli::out("\r%K$pos %n");
 //	blib_cli::out("\t%wDo work by ".getmypid()."%n");
 	$processor = bors_foo('bors_tasks_processor');
 
@@ -24,7 +24,7 @@ function do_work()
 		if($res)
 		{
 			echo '+';
-			blib_cli::out("%CResult%n");
+			blib_cli::out(" %CResult %n");
 			var_dump($res);
 		}
 	}

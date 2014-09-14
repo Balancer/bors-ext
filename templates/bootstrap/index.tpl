@@ -16,7 +16,7 @@
 	<meta name="{$key}" content="{$value|htmlspecialchars}" />
 {/foreach}{/if}
 
-	<link href="//netdna.bootstrapcdn.com/twitter-bootstrap/2.3.2/css/bootstrap-combined.min.css" rel="stylesheet">
+	<link rel="stylesheet" type="text/css" href="//netdna.bootstrapcdn.com/twitter-bootstrap/2.3.2/css/bootstrap-combined.min.css" />
 {foreach item=css from=$css_list}
 	<link rel="stylesheet" type="text/css" href="{$css}" />
 {/foreach}
@@ -51,6 +51,9 @@
 {foreach from=$js_include item="s"}
 	<script type="text/javascript" src="{$s}"></script>
 {/foreach}
+
+<script type="text/javascript" src="//netdna.bootstrapcdn.com/twitter-bootstrap/2.3.2/js/bootstrap.min.js"></script>
+
 {if not empty($javascript)}
 	<script type="text/javascript"><!--
 {foreach from=$javascript item="s"}
@@ -163,11 +166,15 @@
 		</div>
 	</div>
 
-{if $use_system_menu}
+{if $use_system_menu or $default_right_menu}
 	<div class="container-fluid">
 		<div class="row-fluid">
 			<div class="span2">
-	{block name="system_menu"}{/block}
+	{if $default_right_menu}
+		{include file=$default_right_menu}
+	{else}
+		{block name="system_menu"}{/block}
+	{/if}
 			</div>
 			<div class="span10">
 {else}
@@ -188,6 +195,7 @@
 {if $error_message}<div class="alert alert-error"   >{$error_message}</div>{/if}
 {if $notice_message}<div class="alert">{$notice_message}</div>{/if}
 {if $success_message}<div class="alert alert-success" >{$success_message}</div>{/if}
+{if $system_message}<div class="alert">{$system_message}</div>{/if}
 
 {if $this->get('page_tabs')}
 <ul class="nav nav-tabs">
@@ -214,7 +222,7 @@
 
 {block name="copyright"}{/block}
 
-{if $use_system_menu}
+{if $use_system_menu or $default_right_menu}
 			</div>
 		</div>
 {/if}

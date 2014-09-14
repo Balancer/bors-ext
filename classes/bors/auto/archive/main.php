@@ -14,7 +14,7 @@ class bors_auto_archive_main extends bors_page
 	function _item_type_def()
 	{
 		if($class = $this->args('class'))
-			return bors_unplural($class);
+			return blib_grammar::singular($class);
 
 		bors_throw(ec("Не задан тип искомых объектов и его не удаётся вычислить"));
 	}

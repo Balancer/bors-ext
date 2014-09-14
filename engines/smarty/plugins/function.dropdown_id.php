@@ -8,11 +8,11 @@ function smarty_function_dropdown_id($params, &$smarty)
 
 	$params['name'] = '_'.$name;
 
-	$form = $smarty->getTemplateVars('form');
-	bors_form::append_attr('override_fields', $name);
+	$form = bors_form::current_form();
+	$form->append_attr('override_fields', $name);
 
 	$html = "<table class=\"null\"><tr><td>ID:</td><td>";
-	$html .= bors_forms_input::html($params);
+	$html .= $form->element_html('input', $params);
 	$html .= "</td><td>";
 
 	template_jquery();
@@ -25,7 +25,7 @@ function smarty_function_dropdown_id($params, &$smarty)
 	unset($params['maxlength'], $params['size']);
 
 	$params['name'] = $name;
-	$html .= bors_forms_dropdown::html($params);
+	$html .= $form->element_html('dropdown', $params);
 	$html .= "</td></tr></table>";
 
 	echo $html;
