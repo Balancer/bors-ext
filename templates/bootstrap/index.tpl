@@ -16,6 +16,7 @@
 	<meta name="{$key}" content="{$value|htmlspecialchars}" />
 {/foreach}{/if}
 
+	<link href="//netdna.bootstrapcdn.com/twitter-bootstrap/2.3.2/css/bootstrap-combined.min.css" rel="stylesheet">
 {foreach item=css from=$css_list}
 	<link rel="stylesheet" type="text/css" href="{$css}" />
 {/foreach}
@@ -45,7 +46,8 @@
 --></style>
 {/if}
 
-
+	<script type="text/javascript" src="http://code.jquery.com/jquery-2.1.1.min.js"></script>
+	<script type="text/javascript" src="//netdna.bootstrapcdn.com/twitter-bootstrap/2.3.2/js/bootstrap.min.js"></script>
 {foreach from=$js_include item="s"}
 	<script type="text/javascript" src="{$s}"></script>
 {/foreach}

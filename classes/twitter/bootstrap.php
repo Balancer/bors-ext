@@ -6,13 +6,15 @@ class twitter_bootstrap
 	{
 		$path = config('bootstrap.path');
 		// Пишется раньше, так как следующее добавление будет pre
-		if($responsive)
-			bors_use('pre:'.$path.'/css/bootstrap-responsive.min.css');
+//		if($responsive)
+//			bors_use('pre:'.$path.'/css/bootstrap-responsive.min.css');
 
-		bors_use('pre:'.$path.'/css/bootstrap.min.css');
+//		bors_use('pre:'.$path.'/css/bootstrap.min.css');
+		jquery::set_loaded();
+//		bors_use('pre:'.'//netdna.bootstrapcdn.com/twitter-bootstrap/2.3.2/js/bootstrap.min.js');
 
-		jquery::load();
-		bors_use(''.$path.'/js/bootstrap.min.js');
+//		bors_use(''.$path.'/js/bootstrap.min.js');
+//		bors_use('//netdna.bootstrapcdn.com/twitter-bootstrap/2.3.2/js/bootstrap.min.js');
 		config_set('css_bootstrap_is_loaded', true);
 	}
 
