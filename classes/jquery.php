@@ -6,10 +6,11 @@
 
 class jquery
 {
+	static $is_loaded = false;
+
 	static function load($link = NULL)
 	{
-		static $is_loaded = false;
-		if($is_loaded)
+		if(self::$is_loaded)
 			return;
 
 		if(!$link)
@@ -21,7 +22,12 @@ class jquery
 		}
 
 		bors_use($link);
-		$is_loaded = true;
+		self::$is_loaded = true;
+	}
+
+	static function set_loaded()
+	{
+		self::$is_loaded = true;
 	}
 
 	static function plugin($name)

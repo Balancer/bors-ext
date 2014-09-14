@@ -5,11 +5,9 @@ class twitter_bootstrap
 	static function load($responsive = true)
 	{
 		$path = config('bootstrap.path');
-		// Пишется раньше, так как следующее добавление будет pre
 //		if($responsive)
 //			bors_use('pre:'.$path.'/css/bootstrap-responsive.min.css');
-
-		jquery::load();
+		jquery::set_loaded();
 		config_set('css_bootstrap_is_loaded', true);
 	}
 
