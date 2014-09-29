@@ -17,6 +17,8 @@ class jquery
 		{
 			if(config('jquery.use_cdn'))
 				$link = 'http://code.jquery.com/jquery-'.config('jquery.version').'.min.js';
+			elseif(config('jquery.url'))
+				$link = config('jquery.url');
 			else
 				$link = 'pre:'.config('bower.path').'/jquery/jquery.min.js';
 		}
