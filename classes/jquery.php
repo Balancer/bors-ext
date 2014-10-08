@@ -104,7 +104,7 @@ class jquery
 
 //		self::on_ready('addShowAlt("img");');
 
-		template_js_include("http://www.balancer.ru/_bors-ext/js/detect-image-enabled.js");
+		template_js_include("/_bors-ext/js/detect-image-enabled.js");
 
 		self::on_ready('if(1) {
 //		$.getScript("http://www.balancer.ru/_bors-ext/js/detect-image-enabled.js");

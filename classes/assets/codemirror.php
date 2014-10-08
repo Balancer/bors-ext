@@ -21,6 +21,7 @@ class assets_codemirror extends bors_asset
 				CodeMirror.fromTextArea(document.getElementById('codemirror-' + idx), {
 					mode: 'text/html',
 					lineNumbers: true,
+//					lineWrapping: true,
 //					theme: 'monokai',
 				})
 			})
