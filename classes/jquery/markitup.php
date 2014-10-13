@@ -9,10 +9,12 @@ class jquery_markitup
 		self::load();
 
 		jquery::on_ready("
-jQuery('$id').markItUp($settings).css('height', function() {
+m=jQuery('$id').markItUp($settings).css('height', function() {
 	var h = jQuery(this).css('line-height').match(/(\d+)(.*)/)
 	return (h[1]*jQuery(this).attr('rows'))+h[2]
-}).css('width', '100%');");
+})
+p=m.parents('td')
+m.css('width', p.width())");
 
 //	jQuery('#bbcode').height(300);
 	}

@@ -62,7 +62,8 @@ class jquery
 		if(preg_match('!^[\w\-\./]+\.js$!', $js_code))
 			$js_code = file_get_contents($js_code);
 
-		template_jquery_document_ready($js_code);
+		jquery::load();
+		bors_page::add_template_data_array('jquery_document_ready', trim($js_code));
 	}
 
 	static function use_html()
