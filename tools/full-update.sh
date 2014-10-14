@@ -13,7 +13,7 @@ for REPO in *; do
 	fi
 	if [[ -e $REPO/.git/config ]]; then
 		echo -e "\e[1;37m=== $REPO ===\e[0m"
-		echo -ne "\033]0;git push $REPO \007"
+		echo -ne "\033]0;git pull $REPO \007"
 		cd $REPO
 		git pull
 		cd ..
@@ -22,7 +22,7 @@ done
 
 for REPO in *.git; do
 	echo -e "\e[1;37m=== $REPO ===\e[0m"
-	echo -ne "\033]0;git push $REPO \007"
+	echo -ne "\033]0;git fetch $REPO \007"
 	cd $REPO
 	git fetch
 	cd ..
