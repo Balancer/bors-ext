@@ -66,6 +66,5 @@ function template_jquery_js_post($jquery_code)
 
 function template_jquery_document_ready($js_code)
 {
-	template_jquery();
-	bors_page::add_template_data_array('jquery_document_ready', trim($js_code));
+	jquery::on_ready($js_code);
 }
