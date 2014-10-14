@@ -8,6 +8,9 @@ elseif(file_exists(($dir = __DIR__.'/../../../..').'/vendor/autoload.php'))
 require COMPOSER_ROOT.'/vendor/autoload.php';
 define('COMPOSER_INCLUDED', true);
 
+if(!defined('BORS_CORE') && getenv('BORS_CORE'))
+	define('BORS_CORE', getenv('BORS_CORE'));
+
 if(!defined('BORS_CORE'))
 	@include_once(dirname(__FILE__).'/setup.php');
 
@@ -17,6 +20,12 @@ $latest_classes = NULL;
 $dir = getcwd();
 
 $class_dirs = array();
+
+if(!defined('BORS_SITE') && getenv('BORS_SITE'))
+	define('BORS_SITE', getenv('BORS_SITE'));
+
+if(!defined('BORS_HOST') && getenv('BORS_HOST'))
+	define('BORS_HOST', getenv('BORS_HOST'));
 
 do
 {
