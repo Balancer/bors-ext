@@ -1,0 +1,110 @@
+context default
+# keywords
+	keyword whole break brightmagenta
+	keyword whole case brightmagenta
+	keyword whole chan brightmagenta
+	keyword whole const brightmagenta
+	keyword whole continue brightmagenta
+	keyword whole default brightmagenta
+	keyword whole defer brightmagenta
+	keyword whole else brightmagenta
+	keyword whole fallthrough brightmagenta
+	keyword whole for brightmagenta
+	keyword whole func brightmagenta
+	keyword whole go brightmagenta
+	keyword whole goto brightmagenta
+	keyword whole if brightmagenta
+	keyword whole import brightmagenta
+	keyword whole interface brightmagenta
+	keyword whole map brightmagenta
+	keyword whole package brightmagenta
+	keyword whole range brightmagenta
+	keyword whole return brightmagenta
+	keyword whole select brightmagenta
+	keyword whole struct brightmagenta
+	keyword whole switch brightmagenta
+	keyword whole type brightmagenta
+	keyword whole var brightmagenta
+# builtin types
+	keyword whole uint8 yellow
+	keyword whole uint16 yellow
+	keyword whole uint32 yellow
+	keyword whole uint64 yellow
+	keyword whole int8 yellow
+	keyword whole int16 yellow
+	keyword whole int32 yellow
+	keyword whole int64 yellow
+	keyword whole float32 yellow
+	keyword whole float64 yellow
+	keyword whole byte yellow
+	keyword whole uint yellow
+	keyword whole int yellow
+	keyword whole float yellow
+	keyword whole uintptr yellow
+	keyword whole string yellow
+	keyword whole bool yellow
+# builtin functions
+	keyword whole nil brightmagenta
+	keyword whole true brightmagenta
+	keyword whole false brightmagenta
+	keyword whole iota brightmagenta
+	keyword whole cap brightmagenta
+	keyword whole close brightmagenta
+	keyword whole closed brightmagenta
+	keyword whole len brightmagenta
+	keyword whole make brightmagenta
+	keyword whole new white
+	keyword whole panic white
+	keyword whole panicln brightmagenta
+	keyword whole print brightmagenta
+	keyword whole println brightmagenta
+# special functions
+	keyword whole init yellow
+	keyword whole main yellow
+# comment chars
+	keyword /\* brown
+	keyword \*/ brown
+	keyword // brown
+# punctuation, operator chars
+	keyword <- brightmagenta
+	keyword \+ brightcyan
+	keyword & brightcyan
+	keyword ( brightcyan
+	keyword ) brightcyan
+	keyword - brightcyan
+	keyword | brightcyan
+	keyword < brightcyan
+	keyword [ brightcyan
+	keyword ] brightcyan
+	keyword \* brightcyan
+	keyword ^ brightcyan
+	keyword > brightcyan
+	keyword { brightcyan
+	keyword } brightcyan
+	keyword / brightcyan
+	keyword = brightcyan
+	keyword , brightcyan
+	keyword ; brightcyan
+	keyword % brightcyan
+	keyword ! brightcyan
+	keyword . brightcyan
+	keyword : brightcyan
+
+# comment
+context exclusive /\* \*/ brown
+context exclusive // \n brown
+
+# char, raw string, string
+context ' ' gray
+	keyword \\\{abfnrtv\\'"\} green
+	keyword \\\{0123\}\{01234567\}\{01234567\} green
+	keyword \\x\{0123456789abcdefABCDEF\}\{0123456789abcdefABCDEF\} green
+	keyword \\u\{0123456789abcdefABCDEF\}\{0123456789abcdefABCDEF\}\{0123456789abcdefABCDEF\}\{0123456789abcdefABCDEF\} green
+	keyword \\U\{0123456789abcdefABCDEF\}\{0123456789abcdefABCDEF\}\{0123456789abcdefABCDEF\}\{0123456789abcdefABCDEF\}\{0123456789abcdefABCDEF\}\{0123456789abcdefABCDEF\}\{0123456789abcdefABCDEF\}\{0123456789abcdefABCDEF\} green
+context ` ` green
+context " " brightgreen
+	keyword \\\{abfnrtv\\'"\} green
+	keyword \\\{0123\}\{01234567\}\{01234567\} green
+	keyword \\x\{0123456789abcdefABCDEF\}\{0123456789abcdefABCDEF\} green
+	keyword \\u\{0123456789abcdefABCDEF\}\{0123456789abcdefABCDEF\}\{0123456789abcdefABCDEF\}\{0123456789abcdefABCDEF\} green
+	keyword \\U\{0123456789abcdefABCDEF\}\{0123456789abcdefABCDEF\}\{0123456789abcdefABCDEF\}\{0123456789abcdefABCDEF\}\{0123456789abcdefABCDEF\}\{0123456789abcdefABCDEF\}\{0123456789abcdefABCDEF\}\{0123456789abcdefABCDEF\} green
