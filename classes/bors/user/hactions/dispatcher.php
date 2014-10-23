@@ -1,6 +1,6 @@
 <?php
 
-class bors_user_hactions_dispatcher extends base_object
+class bors_user_hactions_dispatcher extends bors_object
 {
 	function pre_parse()
 	{
