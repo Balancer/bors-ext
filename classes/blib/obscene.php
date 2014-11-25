@@ -15,7 +15,7 @@ class blib_obscene
 	static function mask($text, $abusive = false)
 	{
 //		$text = preg_replace_callback("/(?<!(ра|ло|ли|ти|су))([xх])([yу][йияеeёю])/ui", 'blib_obscene::stars2', $text);
-		$text = preg_replace_callback("/(?<!(ра|л.|ти|су|си))([xх])([yу][йияеeёю])/ui", 'blib_obscene::stars2', $text);
+		$text = preg_replace_callback("/(?<!(ра|л.|ри|ти|су|си))([xх])([yу][йияеeёю])/ui", 'blib_obscene::stars2', $text);
 		$text = preg_replace_callback("/(\b)([xх])([yу][юя])/ui", 'blib_obscene::stars2', $text);
 		$text = preg_replace_callback("/([xх])([yу][л][яи])(\b|[^гт])/ui", 'blib_obscene::stars', $text);
 		$text = preg_replace_callback("/([^рpт][^аaи][xх])([yу])([йяеe]|её)/ui", 'blib_obscene::stars', $text);
@@ -66,6 +66,7 @@ class blib_obscene
 		$allowed[] = 'небу ещёб ещеб нёбу хлебом Пиебалгс деблокировать хлебнуло хулит';
 		$allowed[] = 'хребтом хребтами хребту сердцебиение досудебную колеблется беби мразеблоггерша';
 		$allowed[] = 'дирижабля дубля волшебную внеблоковый пищеблоку хребта ассеблеров';
+		$allowed[] = 'заштрихуйте';
 
 		foreach($allowed as $s)
 			$test->assertEquals($s, self::mask($s, true));
