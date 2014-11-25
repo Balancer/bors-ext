@@ -5,7 +5,7 @@ if(preg_match('!^(.+composer)/vendor/.+!', getcwd(), $m))
 elseif(file_exists(($dir = __DIR__.'/../../../..').'/vendor/autoload.php'))
 	define('COMPOSER_ROOT', $dir);
 
-require COMPOSER_ROOT.'/vendor/autoload.php';
+$GLOBALS['bors.composer.class_loader'] = require COMPOSER_ROOT.'/vendor/autoload.php';
 define('COMPOSER_INCLUDED', true);
 
 if(!defined('BORS_CORE') && getenv('BORS_CORE'))
