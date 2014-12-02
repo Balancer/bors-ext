@@ -16,7 +16,7 @@ class bors_data_lists_json extends bors_json
 
 	function data()
 	{
-//		file_put_contents('/tmp/json.log', print_r($_SERVER, true), FILE_APPEND);
+		file_put_contents('/tmp/00json.log', print_r($_SERVER, true), FILE_APPEND);
 
 		$list_class_name = $this->list_class_name();
 
@@ -29,9 +29,9 @@ class bors_data_lists_json extends bors_json
 		if($q = $r->data('q'))
 		{
 			if($search_properties = $r->data('search'))
-				$find->like_any(explode(',', $search_properties), $q);
+				$find->like_any_id(explode(',', $search_properties), $q);
 			else
-				$find->like('title', $q);
+				$find->like_id('title', $q);
 		}
 //			file_put_contents('/tmp/json.log', $q, FILE_APPEND);
 
