@@ -1,7 +1,7 @@
 #!/bin/bash
 
 if [[ "$3" == "" ]]; then
-	echo Run $0 repo1 repo2 file-to-move
+	echo Run $0 repo-from repo-to file-to-move
 	exit
 fi
 
@@ -18,6 +18,7 @@ rm $TEMP -rf &>/dev/null 2>&1
 mkdir $TEMP
 hg init $TEMP
 
+echo hg convert $FROM $TEMP --filemap $FILEMAP
 hg convert $FROM $TEMP --filemap $FILEMAP
 
 cd $TO
