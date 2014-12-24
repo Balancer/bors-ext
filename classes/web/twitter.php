@@ -31,7 +31,7 @@ class web_twitter
 	{
 		$html = blib_http::get($url);
 
-		file_put_contents('test.html', $html);
+//		file_put_contents('test.html', $html);
 
 		$dom= new DOMDocument('1.0', 'UTF-8');
 		@$dom->loadHTML($html);

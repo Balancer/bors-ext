@@ -3,3 +3,6 @@ include smarty.syntax
 
 file ..\*\\.(md|MD)$ Markdown
 include markdown.syntax
+
+file \.go$ GoLang
+include go.syntax

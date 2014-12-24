@@ -5,6 +5,6 @@ class bors_templates_lcmltpl extends bors_templates_smarty3
 	static function fetch($template, $data)
 	{
 		$hts = parent::fetch($template, $data);
-		return lcml($hts);
+		return bors_lcml::lcml($hts, array('container' => $data['self']));
 	}
 }

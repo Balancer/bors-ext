@@ -29,9 +29,28 @@ class jquery_select2
 		popval($params, 'json');
 
 		if(popval($params, 'dropdownAutoWidth'))
-			$autowidth = "dropdownAutoWidth: true,\n";
+			$autowidth = ",\n\t\tdropdownAutoWidth: true";
 		else
 			$autowidth = "";
+
+		if($width)
+			$width = ",\n\t\twidth:\"".htmlspecialchars($width)."\"";
+		else
+			$width = "";
+
+		if(preg_match('/^\w+$/', $class_name))
+			$class_name = "'$class_name'";
+
+		if(preg_match('/^[\w\-,`]+$/', $order))
+			$order = "'$order'";
+
+		if(preg_match('/^[\w\-,`]+$/', $search))
+			$search = "'$search'";
+
+		if($w = popval($params, 'where'))
+			$where = ",\n\t\twhere: ".json_encode($w);
+		else
+			$where = "";
 
 //	http://admin2.aviaport.wrk.ru/newses/257920/form2/
 		$params = array_merge($params, array(
@@ -40,16 +59,15 @@ class jquery_select2
 //				'placeholder' => "Search for a movie",
 				'url' => '/_bors/data/lists/',
 				'data' => "function (text, page) { return {
-						class: '$class_name',
-						q: text,
-						s: 10,
-						tpl: '{\"id\":\"id\",\"text\":\"".$title_field."\"}',
-						order: \"".$order."\",
-						search: \"".$search."\",
-						results: \"results\",
-						$autowidth
-						width: \"".htmlspecialchars($width)."\"
-					} }",
+		class: $class_name,
+		q: text,
+		s: 10,
+		tpl: '{\"id\":\"id\",\"text\":\"".$title_field."\"}',
+		order: ".$order.",
+		search: ".$search.",
+		results: \"results\"{$autowidth}{$width}{$where}
+	}
+}",
 				'results' => 'function (data, page) { return data }',
 			),
 		));

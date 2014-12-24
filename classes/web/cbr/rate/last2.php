@@ -73,14 +73,23 @@ class web_cbr_rate_last2 extends bors_object
 			return false;
 		}
 
-		$rates1 = array('dmy' => date('d.m.Y', $last1), 'time' => $last1);
-		$rates2 = array('dmy' => date('d.m.Y', $last2), 'time' => $last2);
+		$rates1 = array(
+			'dmy' => date('d.m.Y', $last1),
+			'dm' => date('d.m', $last1),
+			'time' => $last1,
+		);
+
+		$rates2 = array(
+			'dmy' => date('d.m.Y', $last2),
+			'dm' => date('d.m', $last2),
+			'time' => $last2,
+		);
 
 		foreach($valutes as $valute)
-			$rates1[$valute['CharCode']] = floatVal(str_replace(',', '.', $valute['Value']));
+			$rates1[$valute['CharCode']] = str_replace(',', '.', $valute['Value']);
 
 		foreach($valutes2 as $valute)
-			$rates2[$valute['CharCode']] = floatVal(str_replace(',', '.', $valute['Value']));
+			$rates2[$valute['CharCode']] = str_replace(',', '.', $valute['Value']);
 
 		$this->set_attr('last_day_rate', $rates1);
 		$this->set_attr('prev_day_rate', $rates2);

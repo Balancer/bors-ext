@@ -45,14 +45,14 @@
 {/foreach}
 --></style>
 {/if}
-
+<!--
 	<script type="text/javascript" src="http://code.jquery.com/jquery-2.1.1.min.js"></script>
 	<script type="text/javascript" src="//netdna.bootstrapcdn.com/twitter-bootstrap/2.3.2/js/bootstrap.min.js"></script>
+-->
 {foreach from=$js_include item="s"}
 	<script type="text/javascript" src="{$s}"></script>
 {/foreach}
-
-<script type="text/javascript" src="//netdna.bootstrapcdn.com/twitter-bootstrap/2.3.2/js/bootstrap.min.js"></script>
+	<script type="text/javascript" src="//netdna.bootstrapcdn.com/twitter-bootstrap/2.3.2/js/bootstrap.min.js"></script>
 
 {if not empty($javascript)}
 	<script type="text/javascript"><!--
@@ -169,13 +169,6 @@
 {if $use_system_menu or $default_right_menu}
 	<div class="container-fluid">
 		<div class="row-fluid">
-			<div class="span2">
-	{if $default_right_menu}
-		{include file=$default_right_menu}
-	{else}
-		{block name="system_menu"}{/block}
-	{/if}
-			</div>
 			<div class="span10">
 {else}
 	<div class="container">
@@ -222,12 +215,22 @@
 
 {block name="copyright"}{/block}
 
+
 {if $use_system_menu or $default_right_menu}
+			</div> <!-- /container -->
+			<div class="span2">
+	{if $default_right_menu}
+		{include file=$default_right_menu}
+	{else}
+		{block name="system_menu"}{/block}
+	{/if}
 			</div>
 		</div>
+	</div>
+{else}
+	</div> <!-- /container -->
 {/if}
 
-	</div> <!-- /container -->
 
 <script type="text/javascript"><!--
 {if $this && ($this->class_name() == 'balancer_board_topic' || $this->class_name() == 'balancer_board_topics_view')}

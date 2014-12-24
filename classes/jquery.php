@@ -6,22 +6,30 @@
 
 class jquery
 {
+	static $is_loaded = false;
+
 	static function load($link = NULL)
 	{
-		static $is_loaded = false;
-		if($is_loaded)
+		if(self::$is_loaded)
 			return;
 
 		if(!$link)
 		{
 			if(config('jquery.use_cdn'))
 				$link = 'http://code.jquery.com/jquery-'.config('jquery.version').'.min.js';
+			elseif(config('jquery.url'))
+				$link = config('jquery.url');
 			else
 				$link = 'pre:'.config('bower.path').'/jquery/jquery.min.js';
 		}
 
 		bors_use($link);
-		$is_loaded = true;
+		self::$is_loaded = true;
+	}
+
+	static function set_loaded()
+	{
+		self::$is_loaded = true;
 	}
 
 	static function plugin($name)
@@ -54,7 +62,8 @@ class jquery
 		if(preg_match('!^[\w\-\./]+\.js$!', $js_code))
 			$js_code = file_get_contents($js_code);
 
-		template_jquery_document_ready($js_code);
+		jquery::load();
+		bors_page::add_template_data_array('jquery_document_ready', trim($js_code));
 	}
 
 	static function use_html()
@@ -96,7 +105,7 @@ class jquery
 
 //		self::on_ready('addShowAlt("img");');
 
-		template_js_include("http://www.balancer.ru/_bors-ext/js/detect-image-enabled.js");
+		template_js_include("/_bors-ext/js/detect-image-enabled.js");
 
 		self::on_ready('if(1) {
 //		$.getScript("http://www.balancer.ru/_bors-ext/js/detect-image-enabled.js");

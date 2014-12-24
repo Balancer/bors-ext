@@ -82,7 +82,7 @@ class exsiblo_main extends bors_paginated
 {/foreach}
 
 {* Вывод кнопочек с номерами страниц для перехода к ним *}
-{$this->pages_links_nul()}
+{$this->layout()->mod('pagination')}
 [/code]
 
 Собственно, этого уже должно быть достаточно для вывода нашего списка. Количество элементов на страницу
