@@ -28,7 +28,11 @@ function template_jquery_plugin_css($css)
 	if(bors_page::template_data('jquery_plugin_'.$css.'_css_has_added'))
 		return;
 
-	bors_page::merge_template_data_array('css_list', array("/_bors3rdp/jquery/plugins/$css"));
+	if(preg_match('!^/!', $css))
+		bors_page::merge_template_data_array('css_list', array($css));
+	else
+		bors_page::merge_template_data_array('css_list', array("/_bors3rdp/jquery/plugins/$css"));
+
 	bors_page::add_template_data('jquery_plugin_'.$css.'_css_has_added', true);
 }
 
