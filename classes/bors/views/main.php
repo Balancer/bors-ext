@@ -18,10 +18,15 @@ class bors_views_main extends bors_paginated
 
 	function search_form()
 	{
-		$search = bors_load_ex('bors_auto_search', NULL, array(
-			'class' => $this->section_name(),
-		));
+		$search_class = blib_grammar::plural($this->main_class()).'_search';
+		$search = bors_load($search_class, NULL);
 
-		return $search->body().'<br/>';
+		if($search)
+		{
+//			$search->set_admin_search_url($this->get('admin_search_url'));
+			return $search->body().'<br/>';
+		}
+
+		return NULL;
 	}
 }
