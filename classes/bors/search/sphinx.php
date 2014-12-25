@@ -1,5 +1,8 @@
 <?php
 
+if(!class_exists('SphinxClient'))
+	bors_throw("composer require neutron/sphinxsearch-api");
+
 class bors_search_sphinx
 {
 	static function search($query, $params=array())
