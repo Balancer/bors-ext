@@ -139,6 +139,7 @@ class bors_pages_zim extends bors_page
 
 				bors_lib_http::get($img);
 
+				bors_debug::syslog('000-image-debug', "Get image size for ".$img);
 				list($iw, $ih) = getimagesize($img);
 				$tw = intval(defval($qd, 'width', 640));
 				$th = intval(round($tw*$ih/$iw));
@@ -184,6 +185,7 @@ class bors_pages_zim extends bors_page
 				bors_lib_http::get($img);
 				if(!$h)
 				{
+					bors_debug::syslog('000-image-debug', "Get image size for ".$img);
 					list($iw, $ih) = getimagesize($img);
 					$h = intval(round($w*$ih/$iw));
 					$thumb	= $this->host() . '/cache/cache-static' . $zim_path . "{$w}x{$h}/" . $i;

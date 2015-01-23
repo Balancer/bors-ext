@@ -262,6 +262,7 @@ class bors_imagick extends bors_object
 			if(!file_exists($file))
 				blib_http::get_bin($this->url());
 
+			bors_debug::syslog('000-image-debug', "Get image size for ".$file);
 			$this->image_size = getimagesize($file);
 		}
 
