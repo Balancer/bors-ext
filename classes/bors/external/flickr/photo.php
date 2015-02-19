@@ -12,6 +12,7 @@ class bors_external_flickr_photo
 	var $flickr;
 	var $photo;
 	var $info;
+
 	function __construct($photo_id, $params = array())
 	{
 		$this->photo_id = $photo_id;
@@ -47,9 +48,11 @@ class bors_external_flickr_photo
 		$s1024	= $this->find_size(1024);
 		$s0	= $this->find_size(0);
 
+		$title = $this->flickr_title();
+
 		return "<div class=\"round_box shadow8\" style=\"margin: 8px 0 8px 0; width: {$s640['width']}px; height: {$s640['height']};\">
  <a href=\"{$s1024['source']}\" class=\"cloud-zoom thumbnailed-image-link\" rel=\"gallery\"><img src=\"{$this->medium_url()}\" /></a><br/>
- <small><a href=\"{$this->flickr_url()}\" target=\"_blank\">{$this->flickr_title()}</a> @ <a href=\"{$this->owner_url()}\" target=\"_blank\">{$this->owner_title()}</a>; [<a href=\"{$s0['url']}\" target=\"_blank\">полный размер: {$s0['width']}x{$s0['height']}</a>]</small>
+ <small><a href=\"{$this->flickr_url()}\" target=\"_blank\">{$title['_content']}</a> @ <a href=\"{$this->owner_url()}\" target=\"_blank\">{$this->owner_title()}</a>; [<a href=\"{$s0['url']}\" target=\"_blank\">полный размер: {$s0['width']}x{$s0['height']}</a>]</small>
 </div>";
 	}
 
