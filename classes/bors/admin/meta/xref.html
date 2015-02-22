@@ -13,7 +13,8 @@
 <h3>Добавить {bors_lower($this->xref_target_foo_object()->class_title_vp())|htmlspecialchars}</h3>
 {form act="add" th="-"}
 {* dropdown name="xref_id" list=$targets_list value='' th=$this->xref_target_foo_object()->class_title() *}
-{combobox name="xref_id" json=$json value='' th=$this->xref_target_foo_object()->class_title() width="500" per_page="20"}
+{* combobox name="xref_id" json=$json value='' th=$this->xref_target_foo_object()->class_title() width="500" per_page="20" *}
+{select2 name="xref_id" main_class=$this->xref_target_foo_object()->class_name() value='' th=$this->xref_target_foo_object()->class_title() width="500px"}
 {if $additional}
 {foreach $additional as $x}
 {if $x.type == 'bool'}
