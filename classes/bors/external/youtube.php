@@ -48,6 +48,10 @@ class bors_external_youtube extends bors_object
 		$text = preg_replace_callback('!^\s*http://youtu\.be/([\w\-]+)\?t=(\w+)\s*$!mi', function($m) { return bors_external_youtube::id2bb($m[1], $m[2]);}, $text);
 		$text = preg_replace_callback('!^\s*http://youtu\.be/([\w\-]+)/?\s*$!mi', function($m) { return bors_external_youtube::id2bb($m[1]);}, $text);
 
+		// <iframe width="480" height="360" src="https://www.youtube.com/embed/uVEWtpyrpDM?rel=0&controls=0" frameborder="0" allowfullscreen></iframe>
+		// http://www.balancer.ru/g/p3733064
+		$text = preg_replace_callback('!<iframe [^>]+src="https://www.youtube.com/embed/([\w\-]+).+?</iframe>!i', function($m) { return bors_external_youtube::id2bb($m[1]);}, $text);
+
 		// [url=http://www.youtube.com/watch?v=a8C1iU-xAog]http://www.youtube.com/watch?v=a8C1iU-xAog[/url]
 		// [url=http://www.youtube.com/watch?v=JkpO2BliOVg]http://www.youtube.com/watch?v=JkpO2BliOVg[/url]
 		$text = preg_replace('!\s*\[url=(http://(www\.)?youtube\.com/watch\?v=[\w\-]+?)\]\1\[/url\]\s*!', "\n$1\n", $text);
