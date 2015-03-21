@@ -43,6 +43,7 @@ class lcml_tag_pair_spoiler extends bors_lcml_tag_pair
 			$desc .= '&nbsp;';
 
 		return $result . "<a href=\"#\" class=\"spoiler\" onClick=\""
+			."if(!me_id) { alert('Только для зарегистрированных пользователей!'); return false; }"
 			."var d=(el=(document.getElementById('$id'))).style;"
 			."if(d.display==''){d.display='none';el.innerHTML=Base64.encode(el.innerHTML);"
 				."(document.getElementById('_$id')).innerHTML='показать'}"
