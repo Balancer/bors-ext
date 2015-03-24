@@ -12,6 +12,7 @@ FILEMAP=/tmp/moved-files.map
 
 ## via http://stackoverflow.com/questions/3643313/mercurial-copying-one-file-and-its-history-to-another-repository
 
+echo move $3 from $FROM to $TO
 echo include $3 > $FILEMAP
 
 rm $TEMP -rf &>/dev/null 2>&1
