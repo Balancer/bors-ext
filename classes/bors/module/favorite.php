@@ -5,8 +5,11 @@ class bors_module_favorite extends bors_module
 	function form_html()
 	{
 		$target = $this->args('target');
+		if(!$target)
+			return NULL;
+
 		$me = bors()->user();
-		$exists = bors_user_favorite::find($me, $target);
+		$exists = bors_user_favorite::check($me, $target);
 
 		return "<a href=\"/_bors/tools/act/pub/bors_module_favorite/".($exists?'remove':'add')."/?target={$target->internal_uri_ascii()}\">".ec($exists ? 'Удалить из избранного' : 'Добавить в избранное')."</a>";
 	}
