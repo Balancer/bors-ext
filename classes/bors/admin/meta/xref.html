@@ -3,7 +3,8 @@
 <h3>Установленные {$this->xref_target_foo_object()->class_title_m()|htmlspecialchars}</h3>
 <ul>
 {foreach $xref_list as $xref}
-<li><a href="{$xref->edit_url()}">{$xref->target()->title()}</a>{block name="after_name_in_list"}{/block}&nbsp;{icon image="edit" link=$xref->target()->admin_url() title="Перейти к {$xref->target()->class_title_dp()}"}&nbsp;{icon image="unlink" action="unlink" target=$xref ref=$this->url() title="Удалить связь"}{block name="additional_in_list"}{/block}</li>
+{* Ссылка убрана из-за мусора http://admin.aviaport.ru/directory/aviafirms/371/socials/ после перехода по ссылке *}
+<li><ax href="{$xref->edit_url()}">{$xref->target()->title()}</ax>{block name="after_name_in_list"}{/block}&nbsp;{* icon image="edit" link=$xref->target()->admin_url() title="Перейти к {$xref->target()->class_title_dp()}" *}&nbsp;{icon image="unlink" action="unlink" target=$xref ref=$this->url() title="Удалить связь"}{block name="additional_in_list"}{/block}</li>
 {/foreach}
 </ul>
 </div>
