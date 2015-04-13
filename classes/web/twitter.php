@@ -31,14 +31,16 @@ class web_twitter
 	{
 		$html = blib_http::get($url);
 
-//		file_put_contents('test.html', $html);
+		if(preg_match('!<link rel="canonical" href="https://twitter.com/account/suspended">!', $html))
+			return	"[round_box][big]Аккаунт заблокирован[/big] [span class=\"transgray\"][reference]"
+				.bors_external_feeds_entry::url_host_link($url)."[/reference][/span][/round_box]";
+
+//		file_put_contents('/tmp/test.html', $html);
 
 		$dom= new DOMDocument('1.0', 'UTF-8');
 		@$dom->loadHTML($html);
 		$dom->encoding="UTF-8";
 		$xpath = new DOMXPath($dom);
-
-
 
 		$result = array();
 
@@ -51,7 +53,8 @@ class web_twitter
 				$node->parentNode->removeChild($node);
 
 		$ava = $xpath->query('//a[contains(@class,"js-user-profile-link")]')->item(0);
-		$img_src = $xpath->query('//img[@class="avatar js-action-profile-avatar"]')->item(0)->getAttribute('src');
+		$img_item = $xpath->query('//img[@class="avatar js-action-profile-avatar"]')->item(0);
+		$img_src = $img_item ? $img_item->getAttribute('src') : NULL;
 		$twitter_name = $xpath->query('//span[@class="username js-action-profile-name"]')->item(0)->nodeValue;
 		$full_name = $xpath->query('//strong[contains(@class, "fullname")]')->item(0)->nodeValue;
 		$text = $xpath->query('//p[contains(@class,"tweet-text")]')->item(0)->nodeValue;
