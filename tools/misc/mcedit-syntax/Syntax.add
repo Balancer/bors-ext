@@ -1,7 +1,7 @@
 file ..\*\\.(tpl|TPL)$ Smarty\sTemplate\sFile
 include smarty.syntax
 
-file ..\*\\.(md|MD)$ Markdown
+file ..\*\\.(md|MD|markdown)$ Markdown
 include markdown.syntax
 
 file \.go$ GoLang
