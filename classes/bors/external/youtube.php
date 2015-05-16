@@ -121,22 +121,38 @@ class bors_external_youtube extends bors_object
 		if($this->__havefc())
 			return $this->__lastc();
 
-		$gdata_url = "http://gdata.youtube.com/feeds/api/videos/".$this->id();
-		$html = bors_lib_http::get_cached($gdata_url, 86400*7);
-		if(class_exists('DOMDocument'))
-		{
-			$doc = new DOMDocument;
-//			echo "\n=================\n$html\n=================\n";
-			try {
-				@$doc->loadHTML($html);
-			} catch(Exception $e) { }
-			$el = $doc->getElementsByTagName("title")->item(0);
-			$title = $el ? $el->nodeValue : $this->id();
-		}
-		else
+		$info = $this->info();
+		$title = @$info['items'][0]['snippet']['title'];
+
+		if(!$title)
 			$title = $this->id();
 
 		return $this->__setc($title);
+	}
+
+	function description()
+	{
+		if($this->__havefc())
+			return $this->__lastc();
+
+		$info = $this->info();
+		$desc  = str_replace("\n", " ", @$info['items'][0]['snippet']['description']);
+
+		return $this->__setc($desc);
+	}
+
+	function info()
+	{
+		if($this->__havefc())
+			return $this->__lastc();
+
+		$gdata_url = 'https://www.googleapis.com/youtube/v3/videos?id='.$this->id()
+			.'&key='.config('google.youtube_api3_key')
+			.'&part=snippet,contentDetails,statistics';
+
+		$info = json_decode(bors_lib_http::get_cached($gdata_url, 86400*7), true);
+
+		return $this->__setc($info);
 	}
 
 	function html(&$params=array())
@@ -162,7 +178,9 @@ class bors_external_youtube extends bors_object
 		return "<div class=\"rs_box\" style=\"width: {$width}px;\">"
 			."<iframe width=\"{$width}\" height=\"{$height}\" src=\"{$flv_url}\""
 			." frameborder=\"0\" allowfullscreen></iframe><br/>"
-			."<small class=\"inbox\"><a href=\"{$page_url}\">{$this->title()}</a></small></div>";
+			."<small class=\"inbox\"><b><a href=\"{$page_url}\">{$this->title()}</a></b>"
+			.(($d = $this->description()) ? "<br/>$d" : "")
+			."</small></div>";
 	}
 
 	function text(&$params=array())

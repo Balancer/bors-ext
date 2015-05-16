@@ -7,7 +7,20 @@ class bors_pages_markdown extends bors_page
 {
 	function _host_def() { return $_SERVER['HTTP_HOST']; }
 
-	function parents() { return array(dirname(dirname(bors()->request()->path()))); }
+	function parents()
+	{
+		$path = bors()->request()->path();
+
+		if(preg_match('!^(.+)/$!', $path))
+			$p = dirname(bors()->request()->path());
+		else
+			$p = dirname(dirname(bors()->request()->path()));
+
+		if($p != '/')
+			$p .= '/';
+
+		return array($p);
+	}
 
 	function can_be_empty() { return false; }
 
@@ -95,6 +108,8 @@ class bors_pages_markdown extends bors_page
 
 		$this->author_title = defval($metadata, 'Author');
 //		~r($metadata, $title, $text);
+
+		$this->data = array_merge($this->data, $metadata);
 	}
 
 	function source() { return $this->source; }

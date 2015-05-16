@@ -23,6 +23,6 @@ class blib_translate
 
 	function __dev()
 	{
-		echo self::translate('Это просто тест', 'UK');
+		echo "res=" . self::translate('Это просто тест', 'UK');
 	}
 }
