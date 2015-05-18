@@ -58,12 +58,22 @@ class jquery
 
 	static function on_ready($js_code)
 	{
+		static $loaded = array();
+
 		// Если это имя файла, то грузим его контент
 		if(preg_match('!^[\w\-\./]+\.js$!', $js_code))
 			$js_code = file_get_contents($js_code);
 
+		// Грузим только один раз
+		$hash = md5($js_code = trim($js_code));
+
+		if(!empty($loaded[$hash]))
+			return '';
+
 		jquery::load();
-		bors_page::add_template_data_array('jquery_document_ready', trim($js_code));
+		bors_page::add_template_data_array('jquery_document_ready', $js_code);
+
+		$loaded[$hash] = true;
 	}
 
 	static function use_html()
