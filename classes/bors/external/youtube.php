@@ -136,7 +136,7 @@ class bors_external_youtube extends bors_object
 			return $this->__lastc();
 
 		$info = $this->info();
-		$desc  = str_replace("\n", " ", @$info['items'][0]['snippet']['description']);
+		$desc  = clause_truncate_ceil(str_replace("\n", " ", @$info['items'][0]['snippet']['description']), 300);
 
 		return $this->__setc($desc);
 	}
