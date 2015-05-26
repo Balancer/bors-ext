@@ -31,7 +31,7 @@ class lcml_tag_pair_spoiler extends bors_lcml_tag_pair
 		{
 			$saved_level = $lcml->p('level');
 			$lcml->set_p('level', 0);
-			$html = lcml_bb(trim($txt));
+			$html = $lcml->parse(trim($txt));
 			$lcml->set_p('level', $saved_level);
 		}
 		else
