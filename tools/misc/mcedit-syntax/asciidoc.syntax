@@ -1,0 +1,59 @@
+# AsciiDoc file
+
+context default silver
+    keyword \s\+ brightred black
+
+context [ ] brown
+
+context linestart \*\s \n brightblue
+    spellcheck
+context linestart \*\*\s \n brightblue
+    spellcheck
+context linestart \*\*\*+\s \n brightblue
+    spellcheck
+
+context __ __ yellow
+context _ _ yellow
+context \*\*  \*\* white
+context \* \* white
+
+context `` `` brightcyan black
+context ` ` brightcyan black
+
+context linestart NOTE: \n\n yellow
+context linestart TIP: \n\n green
+context linestart IMPORTANT: \n\n white
+context linestart WARNING: \n\n red
+context linestart CAUTION: \n\n red
+
+context linestart \s+ \n brightcyan black
+context linestart \t+ \n brightcyan black
+
+context ## ## yellow
+    spellcheck
+
+context # # yellow
+    spellcheck
+
+context ^ ^ green
+    spellcheck
+
+context ~ ~ green
+    spellcheck
+
+context linestart = \n\n white
+    spellcheck
+
+context linestart : : black
+
+context linestart -\s \n brightblue
+    spellcheck
+
+context linestart .\s \n brightblue
+    spellcheck
+context linestart ..+\s \n brightblue
+    spellcheck
+
+context http \s cyan
+    spellcheck
+

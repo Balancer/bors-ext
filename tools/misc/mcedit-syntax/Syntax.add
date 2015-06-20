@@ -6,3 +6,6 @@ include markdown.syntax
 
 file \.go$ GoLang
 include go.syntax
+
+file \.adoc$ AsciiDoc
+include asciidoc.syntax

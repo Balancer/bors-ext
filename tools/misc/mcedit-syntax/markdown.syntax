@@ -4,8 +4,12 @@ context default silver
     keyword _ brightred
 
 context [ ] red
+    spellcheck
 
 context ( ) cyan
+
+context \*\* \*\* white
+    spellcheck
 
 context #### \n green
     spellcheck
@@ -25,11 +29,21 @@ context ; \n brown
 context linestart \* \n brightblue
     spellcheck
 
+context linestart \s*\* \n brightblue
+    spellcheck
+
+context \* \* yellow
+    spellcheck
+
 context linestart http \n cyan
     spellcheck
 
-context \n==+ ==+\n yellow
-context \n--+ --+\n white
+context linestart = ==+\n yellow black
+context linestart - --+\n white black
 
-context linestart \s\s\s\s \n brightcyan
-context linestart \t \n brightcyan
+context linestart \s\s\s\s \n brightcyan black
+context linestart \t \n brightcyan black
+context exclusive linestart ``` ```\n brightcyan black
+
+context linestart > \n white cyan
+
