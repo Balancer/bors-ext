@@ -1,4 +1,5 @@
 # AsciiDoc file
+# http://asciidoctor.org/docs/asciidoc-syntax-quick-reference/
 
 context default silver
     keyword \s\+ brightred black
