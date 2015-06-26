@@ -55,8 +55,10 @@ class bors_task extends bors_object_db
 		elseif(is_array($target))
 			@list($target_class, $target_id, $target_page) = $target;
 		elseif($target)
-			bors_debug::syslog('tasks-error', "Worker $worker. Unknown target: ".print_r($target, true));
+			$target_class = $target;
+//			bors_debug::syslog('tasks-error', "Worker $worker. Unknown target: ".print_r($target, true));
 
+		// Чтобы работало UNIQUE?
 		if(!$target_class)
 			$target_class = '';
 
