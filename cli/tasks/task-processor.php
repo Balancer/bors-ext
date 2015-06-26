@@ -16,7 +16,12 @@ function do_work()
 //	echo "\r$pos";
 	blib_cli::out("\r%K$pos %n");
 //	blib_cli::out("\t%wDo work by ".getmypid()."%n");
-	$processor = bors_foo('bors_tasks_processor');
+
+	$processor_class = getenv('PROCESSOR_CLASS');
+	if(!$processor_class)
+		$processor_class = 'bors_tasks_processor';
+
+	$processor = bors_foo($processor_class);
 
 	try
 	{

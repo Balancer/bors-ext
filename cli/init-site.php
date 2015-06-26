@@ -1,16 +1,30 @@
 <?php
 
-if(preg_match('!^(.+composer)/vendor/.+!', getcwd(), $m))
-	define('COMPOSER_ROOT', $m[1]);
-elseif(file_exists(($dir = __DIR__.'/../../../..').'/vendor/autoload.php'))
-	define('COMPOSER_ROOT', $dir);
-elseif(file_exists(($dir = '/var/www/bors/composer').'/vendor/autoload.php'))
-	define('COMPOSER_ROOT', $dir);
-elseif(file_exists(($dir = '/var/www/composer').'/vendor/autoload.php'))
-	define('COMPOSER_ROOT', $dir);
+if($cr = getenv('COMPOSER_ROOT'))
+{
+	define('COMPOSER_ROOT', $cr);
+	$GLOBALS['bors.composer.class_loader'] = require COMPOSER_ROOT.'/vendor/autoload.php';
+	define('COMPOSER_INCLUDED', true);
+}
 
-$GLOBALS['bors.composer.class_loader'] = require COMPOSER_ROOT.'/vendor/autoload.php';
-define('COMPOSER_INCLUDED', true);
+if(defined('COMPOSER_ROOT') && ($init_class = getenv('INIT_CLASS')))
+	$init_class::instance()->init();
+
+if(!defined('COMPOSER_ROOT'))
+{
+	if(preg_match('!^(.+composer)/vendor/.+!', getcwd(), $m))
+		define('COMPOSER_ROOT', $m[1]);
+	elseif(file_exists(($dir = __DIR__.'/../../../..').'/vendor/autoload.php'))
+		define('COMPOSER_ROOT', $dir);
+	elseif(file_exists(($dir = '/var/www/bors/composer').'/vendor/autoload.php'))
+		define('COMPOSER_ROOT', $dir);
+	elseif(file_exists(($dir = '/var/www/composer').'/vendor/autoload.php'))
+		define('COMPOSER_ROOT', $dir);
+
+	$GLOBALS['bors.composer.class_loader'] = require COMPOSER_ROOT.'/vendor/autoload.php';
+	define('COMPOSER_INCLUDED', true);
+}
+
 
 if(!defined('BORS_CORE') && getenv('BORS_CORE'))
 	define('BORS_CORE', getenv('BORS_CORE'));
