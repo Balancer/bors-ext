@@ -27,11 +27,15 @@ class bors_user_hactions_dispatcher extends bors_object
 			if(!preg_match('/^haction_/', $method))
 				$method = 'haction_'.$method;
 
+			if(!$actor)
+				bors_throw("Incorrect h-action class '{$haction->actor_class_name()}({$haction->actor_target_id()})'");
+
 			$ret = $actor->$method(json_decode($haction->actor_attributes(), true), $haction);
 		}
 		else
 			$ret = $actor->url();
 
+		// Выше ставили атрибут. Если не переустанавливался, то зачищаем.
 		if(!$haction->attr('need_save'))
 			$haction->clean();
 
