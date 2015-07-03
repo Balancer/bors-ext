@@ -21,8 +21,8 @@
 	"minimum-stability": "dev",
 
 	"require": {
-		"balancer/bors-core": "*",
-		"balancer/b2-lcml": "*",
+		"balancer/bors-core": "@dev",
+		"balancer/b2-lcml": "@dev",
 		"wp-cli/wp-cli": "*",
 		"mthaml/mthaml": "*"
 	},
