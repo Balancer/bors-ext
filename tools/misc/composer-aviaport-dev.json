@@ -45,7 +45,6 @@
 		"tracy/tracy": "*",
 		"maximebf/debugbar": "*",
 		"beelab/bowerphp": "@dev",
-		"pimple/pimple": "*",
 		"balancer/bors-ext": "@dev",
 
         "tyrola/xmpphp": "@dev",
