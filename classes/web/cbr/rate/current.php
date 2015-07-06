@@ -80,7 +80,7 @@ class web_cbr_rate_current extends bors_object
 		$next_rates = array(
 			'dmy' => date('d.m.Y', $next_date),
 			'dm' => date('d.m', $next_date),
-			'time' => $next_date,
+			'ts' => $next_date,
 		);
 
 		foreach($valutes as $valute)
