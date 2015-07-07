@@ -19,7 +19,28 @@ class web_cbr_rate_current extends bors_object
 	function data_load()
 	{
 		$ch = new bors_cache();
-		$url = 'http://www.cbr.ru/scripts/XML_daily.asp?date_req='.date('d.m.Y');
+		$url2 = 'http://www.cbr.ru/scripts/XML_daily.asp?date_req='.strftime('%d.%m.%Y', strtotime(date('Y-m-d')." +1 day"));
+		$dom2 = $ch->get('cbr_rate_xml_parsed', $url2);
+		if(!$dom2)
+		{
+			$xml = new Xml;
+			$content = blib_http::get_cached($url2, 3600, true);
+			$xml->parse($content);
+			$dom2 = $xml->dom;
+			$ch->set($dom2, 3600);
+		}
+
+		$next_date = strtotime(@$dom2['ValCurs'][0]['Date']);
+
+		$next_valutes = @$dom2['ValCurs'][0]['Valute'];
+
+		if(!$next_valutes)
+		{
+			bors_debug::sys_log('cbr-date-error', "Can't get next CBR valutes for {$next_date}:".print_r($content, true));
+			return false;
+		}
+
+		$url = 'http://www.cbr.ru/scripts/XML_daily.asp?date_req='.date('d.m.Y', $next_date-86400);
 		$dom = $ch->get('cbr_rate_xml_parsed', $url);
 
 		if(!$dom)
@@ -45,31 +66,6 @@ class web_cbr_rate_current extends bors_object
 			return false;
 		}
 
-		for($days=1; $days<7; $days++)
-		{
-			$url2 = 'http://www.cbr.ru/scripts/XML_daily.asp?date_req='.strftime('%d.%m.%Y', strtotime(date('Y-m-d', $cur_date)." +$days day"));
-			$dom2 = $ch->get('cbr_rate_xml_parsed', $url2);
-			if(!$dom2)
-			{
-				$xml = new Xml;
-				$content = blib_http::get_cached($url2, 3600, true);
-				$xml->parse($content);
-				$dom2 = $xml->dom;
-				$ch->set($dom2, 3600);
-			}
-
-			$next_date = strtotime(@$dom2['ValCurs'][0]['Date']);
-			if($next_date && $cur_date != $next_date)
-				break;
-		}
-
-		$next_valutes = @$dom2['ValCurs'][0]['Valute'];
-
-		if(!$next_valutes)
-		{
-			bors_debug::sys_log('cbr-date-error', "Can't get next CBR valutes for {$next_date}:".print_r($content, true));
-			return false;
-		}
 
 		$cur_rates = array(
 			'dmy' => date('d.m.Y', $cur_date),
