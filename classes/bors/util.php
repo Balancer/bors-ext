@@ -86,7 +86,7 @@ class bors_util
 
 		mkpath(dirname($file), 0750);
 
-		$content = file_get_contents(dirname(__FILE__).'/bors-templates/'.$template.'.php.tpl');
+		$content = file_get_contents(__DIR__.'/bors-templates/'.$template.'.php.tpl');
 		$this->set_var('class_name', $class_name);
 		$this->set_var('extends', $extends);
 		$this->set_var('table_name', bors_plural(self::object_name($this->tpl_var('from_class_name'))).'_x_any');

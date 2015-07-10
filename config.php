@@ -1,6 +1,6 @@
 <?php
 
-$d = dirname(__FILE__);
+$d = __DIR__;
 if(file_exists($d.'/config-3rd.ini'))
 	bors_config_ini($d.'/config-3rd.ini');
 

@@ -48,6 +48,9 @@ class bors_util_test
 
 			$class_name = $mm[1];
 
+			if(preg_match('/^\s*namespace\s+([\w\\\\]+);/m', $content, $mm))
+				$class_name = $mm[1]."\\".$class_name;
+
 			if(!preg_match('/function __unit_test/', $content))
 				return blib_cli::out("%rAbsent __unit_test function in class $class_name%n\n");
 
