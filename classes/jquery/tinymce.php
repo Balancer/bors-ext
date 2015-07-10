@@ -2,12 +2,12 @@
 
 class jquery_tinymce
 {
-	function load()
+	static function load()
 	{
 		jquery::plugin(config('tinymce.path').'/jquery.tinymce.js');
 	}
 
-	function appear($elem, $mode)
+	static function appear($elem, $mode)
 	{
 		self::load();
 		jquery::on_ready("$({$elem}).tinymce({ script_url : \""

@@ -1,4 +1,4 @@
 #!/bin/bash
 
-./full-update.sh
-./full-push.sh
+./repos-update.sh
+./repos-push.sh
