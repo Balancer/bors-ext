@@ -1,0 +1,13 @@
+#/bin/bash
+
+git rev-parse --show-toplevel &>/dev/null
+IS_NOT_GIT=$?
+
+if [[ $IS_NOT_GIT ]]; then
+	hg pull
+	hg up
+	hg heads
+else
+	git pull
+	git heads
+fi
