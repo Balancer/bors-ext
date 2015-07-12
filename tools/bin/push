@@ -1,16 +1,15 @@
 #/bin/bash
 
 git rev-parse --show-toplevel &>/dev/null
-IS_NOT_GIT=$?
 
-if [[ $IS_NOT_GIT ]]; then
+if [ $? -eq 0 ]; then
+	git commit -a
+	git push
+else
 	if [[ $(hg stat) ]]; then
 		hg cdiff | less -R
 	fi
 	hg ci
 	hg push
 	hg heads
-else
-	git commit -a
-	git push
 fi

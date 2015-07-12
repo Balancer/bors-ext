@@ -3,10 +3,7 @@
 git rev-parse --show-toplevel &>/dev/null
 
 if [ $? -eq 0 ]; then
-	git pull
-	git heads
+	git log --graph --all
 else
-	hg pull
-	hg up
-	hg heads
+	hg glog --color=always | less -R
 fi
