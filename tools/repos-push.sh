@@ -3,6 +3,10 @@
 clear
 
 for REPO in *; do
+	if [ -L $REPO ]; then
+		continue
+	fi
+
 	if [[ -e $REPO/.hg/hgrc ]]; then
 		echo -e "\e[1;30m=== $REPO ===\e[0m"
 		echo -ne "\033]0;hg push $REPO \007"
