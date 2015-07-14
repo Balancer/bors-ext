@@ -2,7 +2,12 @@
 
 clear
 
-for REPO in *; do
+echo Check git and hg
+for REPO in 1*; do
+	if [ -L $REPO ]; then
+		continue
+	fi
+
 	if [[ -e $REPO/.hg/hgrc ]]; then
 		echo -e "\e[1;30m=== $REPO [hg]  ===\e[0m"
 		# echo -ne "\033]0;hg push $REPO \007"
@@ -20,10 +25,14 @@ for REPO in *; do
 	fi
 done
 
+echo
+echo Check git bare
 for REPO in *.git; do
-	echo -e "\e[1;30m=== $REPO [git bare] ===\e[0m"
-	# echo -ne "\033]0;git fetch $REPO \007"
-	cd $REPO
-	git fetch -q 2>&1 | prerror.sh Ошибка $REPO git fetch
-	cd ..
+	if [ -e $REPO ]; then
+		echo -e "\e[1;30m=== $REPO [git bare] ===\e[0m"
+		# echo -ne "\033]0;git fetch $REPO \007"
+		cd $REPO
+		git fetch -q 2>&1 | prerror.sh Ошибка $REPO git fetch
+		cd ..
+	fi
 done
