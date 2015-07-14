@@ -1,15 +1,15 @@
 #!/bin/bash
 
-clear
-
+echo
 echo Check git and hg
+
 for REPO in *; do
 	if [ -L $REPO ]; then
 		continue
 	fi
 
 	if [[ -e $REPO/.hg/hgrc ]]; then
-		echo -e "\e[1;30m=== $REPO [hg]  ===\e[0m"
+		echo -e "\e[1;30m=== pull $REPO [hg]  ===\e[0m"
 		# echo -ne "\033]0;hg push $REPO \007"
 		cd $REPO
 		hg -q pull | prerror.sh Ошибка $REPO hg pull
@@ -17,7 +17,7 @@ for REPO in *; do
 		cd ..
 	fi
 	if [[ -e $REPO/.git/config ]]; then
-		echo -e "\e[1;30m=== $REPO [git] ===\e[0m"
+		echo -e "\e[1;30m=== pull $REPO [git] ===\e[0m"
 		# echo -ne "\033]0;git pull $REPO \007"
 		cd $REPO
 		git pull -q 2>&1 | prerror.sh Ошибка $REPO git pull
@@ -29,7 +29,7 @@ echo
 echo Check git bare
 for REPO in *.git; do
 	if [ -e $REPO ]; then
-		echo -e "\e[1;30m=== $REPO [git bare] ===\e[0m"
+		echo -e "\e[1;30m=== pull $REPO [git bare] ===\e[0m"
 		# echo -ne "\033]0;git fetch $REPO \007"
 		cd $REPO
 		git fetch -q 2>&1 | prerror.sh Ошибка $REPO git fetch

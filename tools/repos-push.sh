@@ -1,6 +1,7 @@
 #!/bin/bash
 
-clear
+echo
+echo Push repos
 
 for REPO in *; do
 	if [ -L $REPO ]; then
@@ -8,7 +9,7 @@ for REPO in *; do
 	fi
 
 	if [[ -e $REPO/.hg/hgrc ]]; then
-		echo -e "\e[1;30m=== $REPO ===\e[0m"
+		echo -e "\e[1;30m=== push: $REPO [hg] ===\e[0m"
 		echo -ne "\033]0;hg push $REPO \007"
 		cd $REPO
 		hg -q ci | prerror.sh Ошибка $REPO hg ci
@@ -17,7 +18,7 @@ for REPO in *; do
 	fi
 
 	if [[ -e $REPO/.git/config ]]; then
-		echo -e "\e[1;30m=== $REPO ===\e[0m"
+		echo -e "\e[1;30m=== push: $REPO [git] ===\e[0m"
 		echo -ne "\033]0;git push $REPO \007"
 		cd $REPO
 		git push -q 2>&1 | prerror.sh Ошибка $REPO git push
@@ -29,7 +30,7 @@ echo
 echo Push to git bare
 for REPO in *.git; do
 	if [ -e $REPO ]; then
-		echo -e "\e[1;30m=== $REPO ===\e[0m"
+		echo -e "\e[1;30m=== push: $REPO [git bare] ===\e[0m"
 		echo -ne "\033]0;git push $REPO \007"
 		cd $REPO
 		git push -q 2>&1 | prerror.sh Ошибка $REPO git push
