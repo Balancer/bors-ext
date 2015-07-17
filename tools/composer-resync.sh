@@ -8,11 +8,11 @@ for REPO in *; do
 		echo -e "\e[1;30m=== sync $REPO [hg] ===\e[0m"
 		cd $REPO
 		hg pull \
-			| grep -Pv '(pulling from|searching for changes|no changes found)' \
-			| prerror.sh Ошибка $REPO hg pull
+			| grep -Pv '(pulling from|searching for changes|no changes found|adding changesets|adding manifests|adding file changes|to get a working copy)' \
+			| prerror.sh $REPO hg pull
 		hg up \
 			| grep -v '0 files updated, 0 files merged, 0 files removed, 0 files unresolved' \
-			| prerror.sh Ошибка $REPO hg up
+			| prerror.sh $REPO hg up
 		if [[ $(hg stat) ]]; then
 			hg cdiff | less -R
 			hg ci
