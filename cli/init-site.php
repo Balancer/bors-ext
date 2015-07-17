@@ -29,7 +29,7 @@ if(!defined('BORS_CORE') && getenv('BORS_CORE'))
 	define('BORS_CORE', getenv('BORS_CORE'));
 
 if(!defined('BORS_CORE') && file_exists($f = __DIR__.'/setup.php'))
-	include_once($f);
+	require_once($f);
 
 //	Сперва ищем bors-core в дереве текущего каталога
 //	На всякий случай запомним последнее нахождение подкаталога classes
@@ -105,3 +105,6 @@ config_set('system.use_sessions', false);
 
 if(file_exists($f = __DIR__.'/config.php'))
 	include_once($f);
+
+if(file_exists($f = COMPOSER_ROOT.'/config-host.php'))
+	require_once($f);
