@@ -8,7 +8,7 @@ for REPO in *; do
 		echo -e "\e[1;30m=== sync $REPO [hg] ===\e[0m"
 		cd $REPO
 		hg pull \
-			| grep -Pv '(pulling from|searching for changes|no changes found|adding changesets|adding manifests|adding file changes|to get a working copy)' \
+			| grep -Pv '(pulling from|searching for changes|no changes found|to get a working copy)' \
 			| prerror.sh $REPO hg pull
 		hg up \
 			| grep -v '0 files updated, 0 files merged, 0 files removed, 0 files unresolved' \
@@ -18,7 +18,7 @@ for REPO in *; do
 			hg ci
 		fi
 		hg push \
-			| grep -Pv '(pushing to |searching for changes|no changes found)' \
+			| grep -Pv '(pushing to |searching for changes|no changes found|adding changesets|adding manifests|adding file changes)' \
 			| prerror.sh $REPO hg push
 		cd ..
 	fi
