@@ -1,5 +1,8 @@
 #!/bin/bash
 
+LANG=en_US
+LANGUAGE=en_US
+
 echo
 echo Push repos
 
@@ -12,8 +15,13 @@ for REPO in *; do
 		echo -e "\e[1;30m=== push: $REPO [hg] ===\e[0m"
 		echo -ne "\033]0;hg push $REPO \007"
 		cd $REPO
-		hg -q ci | prerror.sh Ошибка $REPO hg ci
-		hg -q push | prerror.sh Ошибка $REPO hg push
+		if [[ $(hg stat|grep -v '^\?') ]]; then
+			hg cdiff | less -R
+			hg ci
+		fi
+		hg push \
+			| grep -Pv '(pushing to |searching for changes|no changes found|adding changesets|adding manifests|adding file changes)' \
+			| prerror.sh $REPO hg push
 		cd ..
 	fi
 
