@@ -1,5 +1,8 @@
 #!/bin/bash
 
+LANG=en_US
+LANGUAGE=en_US
+
 pushd vendor/balancer > /dev/null
 
 for REPO in *; do
