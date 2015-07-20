@@ -1,5 +1,8 @@
 #!/bin/bash
 
+LANG=en_US
+LANGUAGE=en_US
+
 echo
 echo Check git and hg
 
@@ -12,8 +15,12 @@ for REPO in *; do
 		echo -e "\e[1;30m=== pull $REPO [hg]  ===\e[0m"
 		# echo -ne "\033]0;hg push $REPO \007"
 		cd $REPO
-		hg -q pull | prerror.sh Ошибка $REPO hg pull
-		hg -q up | prerror.sh Ошибка $REPO hg up
+		hg pull \
+			| grep -Pv '(pulling from|searching for changes|no changes found|adding changesets|adding manifests|adding file changes|to get a working copy)' \
+			| prerror.sh $REPO hg pull
+		hg up \
+			| grep -Pv '(0 files updated, 0 files merged, 0 files removed, 0 files unresolved)' \
+			| prerror.sh $REPO hg up
 		cd ..
 	fi
 	if [[ -e $REPO/.git/config ]]; then
