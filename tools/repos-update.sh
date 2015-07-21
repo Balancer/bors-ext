@@ -43,3 +43,14 @@ for REPO in *.git; do
 		cd ..
 	fi
 done
+
+echo
+echo Do hg-git
+for REPO in *; do
+	if [ -e hg-2-git/$REPO-github ]; then
+		cd $REPO
+		pwd
+		hg pull file://$PWD/hg-2-git/$REPO-github
+		hg up
+	fi
+done
