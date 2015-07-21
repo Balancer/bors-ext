@@ -1,7 +1,7 @@
 #!/bin/bash
 
-LANG=en_US
-LANGUAGE=en_US
+export LANG=en_US
+export LANGUAGE=en_US
 
 pushd vendor/balancer > /dev/null
 
