@@ -33,7 +33,7 @@ class blib_obscene
 		$text = preg_replace_callback("/\b(–±–ª)(—è[—Ç–¥])(—Å—Ç|—Å–∫)/ui", 'blib_obscene::stars', $text);
 
 //$text = preg_replace("/–º–∞–Ω–¥(–∞[^—Ä]|–∞[^—Ç]|–∏|–µ|—É|–æ–π|—ã)/u","–º***",$text);
-		$text = preg_replace_callback("/\b([–µe—ë])([–±][a–∞–∏—Éy—ëe–µ–ª–æ])/ui", 'blib_obscene::stars', $text);
+		$text = preg_replace_callback("/\b([–µe—ë–∏])([–±][a–∞–∏—Éy—ëe–µ–ª–æ])/ui", 'blib_obscene::stars', $text);
 		$text = preg_replace_callback("/(–æ–µ)(–±–µ)(–Ω—å)/ui", 'blib_obscene::stars', $text);
 		$text = preg_replace_callback("/(?<!(–ª|–Ω|—Ç|–¥|—á|—Ä|—â|–∏|–±|–≤))([–µe—ë])([–±][a–∞–∏—Éy])(—Ç—å|–ª|—Å—å|\b)/ui", 'blib_obscene::stars2', $text);
 		$text = preg_replace_callback("/(?<!(—Ä|–¥|–ª|–∑|–Ω|—Ç|—Å|—â))([–µe—ë])([–±][–ª])([—è—é–æ—É–µ])/ui", 'blib_obscene::stars2', $text);
@@ -41,7 +41,7 @@ class blib_obscene
 		$text = preg_replace_callback("/(?<!(–ª|–¥|—á|—à|—Ä))([–µe—ë])(–±–Ω)(—É)/ui", 'blib_obscene::stars2', $text);
 		$text = preg_replace_callback("/(–±–æ)([—ë–µ]–±)/ui", 'blib_obscene::stars', $text);
 		$text = preg_replace_callback("/\b(–ø—Ä–∏|–ø—Ä–æ|–∑–∞|—É|–ø–æ–¥|–ø–æ–¥—å|–ø–æ–¥—ä|–Ω–∞)([–µ—ëe])([–±])/ui", 'blib_obscene::stars', $text);
-		$text = preg_replace_callback("/(–≤—ã|–ø–µ—Ä–µ|—Ä–∞–∑—ä)([–µ—ëe])([–±])/ui", 'blib_obscene::stars', $text);
+		$text = preg_replace_callback("/(–≤—ã|–ø–µ—Ä–µ|—Ä–∞–∑—ä)([–µ—ëe–∏])([–±])/ui", 'blib_obscene::stars', $text);
 		$text = preg_replace_callback("/(–∑–ª–æ)([–µ—ëe][–±])(.+)/ui", 'blib_obscene::stars', $text);
 
 		$text = preg_replace_callback("/\b(–∑–∞)(–ª—É)(–ø[–∞-—è—ë]+)/ui", 'blib_obscene::stars', $text);
@@ -80,7 +80,7 @@ class blib_obscene
 		$obscene = array('»’¿ –œ»’¿ –œ»’…⁄Õ ‚ÏÒÙ¯ ¬Ã— ¬Ã—ƒ”‘◊œ ¬Ã—‘”‘◊œ ¬Ã—ƒÿ ¬Ã—ƒ’Œ');
 		$obscene[] = '≈¬¡‘ÿ ≈¬¡Ã ≈¬¡Œ’‘ÿ”— ≈¬’Œ ≈¬’‘ ≈¬‘…”ÿ ⁄¡≈¬¡Ã”— ⁄¡≈¬…”ÿ ≈¬Œ’Ã…”ÿ ≈¬Œ’ £¬Œ’ ⁄¡≈¬Ãœ';
 		$obscene[] = '≈¬… ◊Ÿ≈¬… £¬‘¡ ≈¬‘ –œƒÿ≈¬›…À –œ≈¬≈Œÿ ≈¬£€ÿ”— ƒœÃ¬œ≈¬œÕ ƒœÃ¬œ£¬ ƒœÃ¬œ£¬’ ≈¬Ã¿ ≈¬Ã≈  ◊Ÿ≈¬Ÿ◊¡Ã…”ÿ';
-		$obscene[] = '∆’¬Ã— –“œ≈¬ –“œ£¬ ≈¬Ã¡Œ “¡⁄ﬂ≈¬≈Œ…Ã¡';
+		$obscene[] = '∆’¬Ã— –“œ≈¬ –“œ£¬ ≈¬Ã¡Œ “¡⁄ﬂ≈¬≈Œ…Ã¡ ◊Ÿ…¬¡Ã …¬≈‘';
 		$obscene[] = '”–…⁄÷≈ŒŒŸ  –…⁄ƒ…‘ÿ ”–…⁄ƒ…‘ÿ –…⁄ƒ¡ –…ƒœ“ –…ƒ¡“';
 		$obscene[] = '⁄¡Ã’–¡ ˙¡Ï’œÍ ˙¡Ã’–≈';
 		$obscene[] = '»’  Œ¡»’  –œ»’  Ó≈Ë’≈◊Ÿ  –“…»’≈Ã… “…»’≈◊ »’Ã≈';
