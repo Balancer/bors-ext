@@ -33,7 +33,7 @@ class blib_obscene
 		$text = preg_replace_callback("/\b(–±–ª)(—è[—Ç–¥])(—Å—Ç|—Å–∫)/ui", 'blib_obscene::stars', $text);
 
 //$text = preg_replace("/–º–∞–Ω–¥(–∞[^—Ä]|–∞[^—Ç]|–∏|–µ|—É|–æ–π|—ã)/u","–º***",$text);
-		$text = preg_replace_callback("/\b([–µe—ë])([–±][a–∞–∏—Éy—ëe–µ–ª])/ui", 'blib_obscene::stars', $text);
+		$text = preg_replace_callback("/\b([–µe—ë])([–±][a–∞–∏—Éy—ëe–µ–ª–æ])/ui", 'blib_obscene::stars', $text);
 		$text = preg_replace_callback("/(–æ–µ)(–±–µ)(–Ω—å)/ui", 'blib_obscene::stars', $text);
 		$text = preg_replace_callback("/(?<!(–ª|–Ω|—Ç|–¥|—á|—Ä|—â|–∏|–±|–≤))([–µe—ë])([–±][a–∞–∏—Éy])(—Ç—å|–ª|—Å—å|\b)/ui", 'blib_obscene::stars2', $text);
 		$text = preg_replace_callback("/(?<!(—Ä|–¥|–ª|–∑|–Ω|—Ç|—Å|—â))([–µe—ë])([–±][–ª])([—è—é–æ—É–µ])/ui", 'blib_obscene::stars2', $text);
@@ -84,7 +84,7 @@ class blib_obscene
 		$obscene[] = '”–…⁄÷≈ŒŒŸ  –…⁄ƒ…‘ÿ ”–…⁄ƒ…‘ÿ –…⁄ƒ¡ –…ƒœ“ –…ƒ¡“';
 		$obscene[] = '⁄¡Ã’–¡ ˙¡Ï’œÍ ˙¡Ã’–≈';
 		$obscene[] = '»’  Œ¡»’  –œ»’  Ó≈Ë’≈◊Ÿ  –“…»’≈Ã… “…»’≈◊ »’Ã≈';
-		$obscene[] = '‰œ◊Ÿ£¬Ÿ◊¡Ã…”ÿ –≈“≈≈¬œ€…Ã… ⁄Ãœ≈¬’ﬁ¡—';
+		$obscene[] = '‰œ◊Ÿ£¬Ÿ◊¡Ã…”ÿ –≈“≈≈¬œ€…Ã… ⁄Ãœ≈¬’ﬁ¡— ⁄¡≈¬œ€…Ã… ≈¬œ€…‘ÿ';
 
 		foreach($obscene as $words)
 		{
