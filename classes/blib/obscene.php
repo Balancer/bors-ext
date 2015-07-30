@@ -20,6 +20,7 @@ class blib_obscene
 		$text = preg_replace_callback("/([xя┘])([yя┐][п╩][я▐п╦])(\b|[^пЁя┌п╟п╪])/ui", 'blib_obscene::stars', $text);
 		$text = preg_replace_callback("/([^я─pя┌][^п╟aп╦][xя┘])([yя┐])([п╧я▐п╣e]|п╣я▒)/ui", 'blib_obscene::stars', $text);
 		$text = preg_replace("/([^п═я─Ppп╒я┌T][^п░п╟Aaп≤п╦])([Xxп╔я┘])\.*[Yyпёя┐]\.*[п╧п≥я▐п╞п╣п∙eEe]\.*/u","\$1\$2***",$text);
+		$text = preg_replace_callback("/(п©я─п╦)([я┘][я┐][п╣])([п╟-я▐я▒])/ui", 'blib_obscene::stars', $text);
 
 		$text = preg_replace_callback("/([п÷п©])([п≤п╦][п≈п╥3])([п■п╢п╤])/ui", 'blib_obscene::stars', $text);
 		$text = preg_replace("/([п÷п©])\.*[п≤п╦]\.*[п≈п╥3]\.*[п■п╢]\.*/u","\$1***",$text);
@@ -80,7 +81,7 @@ class blib_obscene
 		$obscene[] = 'фубля проеб проёб';
 		$obscene[] = 'спизженный пиздить спиздить пизда пидор пидар';
 		$obscene[] = 'залупа ЗаЛуПоЙ Залупе';
-		$obscene[] = 'хуй нахуй похуй НеХуевый';
+		$obscene[] = 'хуй нахуй похуй НеХуевый прихуели Прихуев';
 		$obscene[] = 'Довыёбывались переебошили';
 
 		foreach($obscene as $words)
