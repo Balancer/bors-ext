@@ -4,6 +4,8 @@ class bors_objects_changelog extends bors_object_db
 {
 	function table_name() { return 'bors_changes_log'; }
 
+	function ignore_on_new_instance()  { return true; }
+
 	function table_fields()
 	{
 		return array(
