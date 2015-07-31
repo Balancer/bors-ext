@@ -33,24 +33,24 @@ class blib_obscene
 		$text = preg_replace_callback("/\b(бл)(я[тд])(ст|ск)/ui", 'blib_obscene::stars', $text);
 
 //$text = preg_replace("/манд(а[^р]|а[^т]|и|е|у|ой|ы)/u","м***",$text);
-		$text = preg_replace_callback("/\b([еeёи])([б][aаиуyёeело])/ui", 'blib_obscene::stars', $text);
-		$text = preg_replace_callback("/(ое)(бе)(нь)/ui", 'blib_obscene::stars', $text);
+		$text = preg_replace_callback("/\b([еeёи])([б][aаиуyёeело0o])\B/ui", 'blib_obscene::stars', $text);
+		$text = preg_replace_callback("/([оo0][еe])([б6][еe])(нь)/ui", 'blib_obscene::stars', $text);
 		$text = preg_replace_callback("/(?<!(л|н|т|д|ч|р|щ|и|б|в))([еeё])([б][aаиуy])(ть|л|сь|\b)/ui", 'blib_obscene::stars2', $text);
-		$text = preg_replace_callback("/(?<!(р|д|л|з|н|т|с|щ))([еeё])([б][л])([яюоуе])/ui", 'blib_obscene::stars2', $text);
-		$text = preg_replace_callback("/(?<!(р))([еeё])([б][Tт])(?!(ам|о.|у\b))/ui", 'blib_obscene::stars2', $text);
+		$text = preg_replace_callback("/(?<!(р|д|л|з|н|т|с|щ))([еeё])([б][л])([яюоo0уе])/ui", 'blib_obscene::stars2', $text);
+		$text = preg_replace_callback("/(?<!(р))([еeё])([б][Tт])(?!(ам|[оo0].|у\b))/ui", 'blib_obscene::stars2', $text);
 		$text = preg_replace_callback("/(?<!(л|д|ч|ш|р))([еeё])(бн)(у)/ui", 'blib_obscene::stars2', $text);
-		$text = preg_replace_callback("/(бо)([ёе]б)/ui", 'blib_obscene::stars', $text);
-		$text = preg_replace_callback("/\b(при|про|за|у|под|подь|подъ|на)([еёe])([б])/ui", 'blib_obscene::stars', $text);
+		$text = preg_replace_callback("/(б[оo0])([ёе]б)/ui", 'blib_obscene::stars', $text);
+		$text = preg_replace_callback("/\b(при|пр[оo0]|за|у|п[оo0]д|п[оo0]дь|п[оo0]дъ|на)([еёe])([б])/ui", 'blib_obscene::stars', $text);
 		$text = preg_replace_callback("/(вы|пере|разъ)([еёeи])([б])/ui", 'blib_obscene::stars', $text);
-		$text = preg_replace_callback("/(зло)([еёe][б])(.+)/ui", 'blib_obscene::stars', $text);
+		$text = preg_replace_callback("/(зл[оo0])([еёe][б])(.+)/ui", 'blib_obscene::stars', $text);
 
 		$text = preg_replace_callback("/\b(за)(лу)(п[а-яё]+)/ui", 'blib_obscene::stars', $text);
 
 		if($abusive)
 		{
-			$text = preg_replace_callback("/\b([г])([aаoо][BВв])([HНн])/ui", 'blib_obscene::stars',$text);
+			$text = preg_replace_callback("/\b([г])([aаoо0][BВв])([HНн])/ui", 'blib_obscene::stars',$text);
 //			$text = preg_replace("/([СсCc])[УуYy][КкKk]([аАaAиИеЕуУyY]|ой)/u","\$1**\$2",$text);
-			$text = preg_replace_callback("/(?<!(ки|ла))([п])(ид[ао])(р)(\b|[ауеы])/ui", 'blib_obscene::stars3',$text);
+			$text = preg_replace_callback("/(?<!(ки|ла))([п])(ид[аоo0])(р)(\b|[ауеы])/ui", 'blib_obscene::stars3',$text);
 			$text = preg_replace_callback("/(му)(да|ди)(к|ч|л)/ui", 'blib_obscene::stars', $text);
 			//$text = preg_replace("/жоп(а|и|е|у|ой)/u","ж**",$text);
 		}
@@ -71,7 +71,7 @@ class blib_obscene
 		$allowed[] = 'хребтом хребтами хребту сердцебиение досудебную колеблется беби мразеблоггерша';
 		$allowed[] = 'дирижабля дубля волшебную внеблоковый пищеблоку хребта ассеблеров';
 		$allowed[] = 'заштрихуйте Хулиан потребную Хулимсунт'; // Хулимсунт — посёлок такой.
-		$allowed[] = 'хулахуп';
+		$allowed[] = 'хулахуп ибо';
 
 		foreach($allowed as $s)
 			$test->assertEquals($s, self::mask($s, true));
