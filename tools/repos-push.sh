@@ -1,7 +1,7 @@
 #!/bin/bash
 
-export LANG=en_US
-export LANGUAGE=en_US
+LANG=en_US.utf8
+LANGUAGE=en_US.utf8
 
 echo
 echo Push repos
