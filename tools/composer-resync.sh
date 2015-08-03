@@ -30,8 +30,9 @@ for REPO in *; do
 		echo -e "\e[1;30m=== sync $REPO [git] ===\e[0m"
 		echo -ne "\033]0;git pull $REPO \007"
 		cd $REPO
-		git pull -q | prerror.sh Ошибка $REPO git pull
-		git commit -a -q
+		git pull -q \
+			| prerror.sh Ошибка $REPO git pull
+		git commit -a -q| grep -Pv 'On branch|Your branch is up-to-date with|nothing to commit|^$'
 		git push -q | prerror.sh Ошибка $REPO git push
 		cd ..
 	fi
