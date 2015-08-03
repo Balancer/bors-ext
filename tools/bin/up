@@ -4,7 +4,7 @@ git rev-parse --show-toplevel &>/dev/null
 
 if [ $? -eq 0 ]; then
 	git pull
-	git heads
+	git show-ref
 else
 	hg pull
 	hg up
