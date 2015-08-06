@@ -3,9 +3,10 @@
 LANG=en_US.utf8
 LANGUAGE=en_US.utf8
 
-pushd vendor/balancer > /dev/null
+for BASE in vendor/{aviaport,balancer,bors}; do
+  pushd  $BASE > /dev/null
 
-for REPO in *; do
+  for REPO in *; do
 
 	if [[ -e $REPO/.hg/hgrc ]]; then
 		echo -e "\e[1;30m=== sync $REPO [hg] ===\e[0m"
@@ -37,9 +38,11 @@ for REPO in *; do
 		cd ..
 	fi
 
-done
+  done
 
-popd > /dev/null
+  popd > /dev/null
+
+done
 
 composer update
 
