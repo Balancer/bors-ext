@@ -65,10 +65,22 @@ class bors_export_pdf extends bors_object
 				$body = " http://bors.balancer.ru/";
 		}
 
+		$footer = "";
+		if($footer_html = $this->get('footer_html'))
+		{
+			$footer_file = uniqid('/tmp/pdf-footer-').'.html';
+			$tmp_files[] = $footer_file;
+			file_put_contents($footer_file, $footer_html);
+			$footer = " --footer-html $footer_file";
+		}
+		elseif($footer_url = $this->get('footer_url'))
+				$footer = " --footer-html $footer_url";
+
+
 		$file = uniqid('/tmp/pdf-result-').'.pdf';
 		$tmp_files[] = $file;
 
-		$cmd = "$bin --encoding utf-8 $cover $header $body $file &> $log_put";
+		$cmd = "$bin --encoding utf-8 $cover $header $body $footer $file &> $log_put";
 		debug_hidden_log('00-pdf', $cmd);
 		system($cmd);
 
