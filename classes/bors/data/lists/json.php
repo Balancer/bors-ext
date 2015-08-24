@@ -75,10 +75,27 @@ class bors_data_lists_json extends bors_json
 			foreach($find->all() as $x)
 			{
 				$r2 = array();
+
 				foreach($tpl as $ret_f => $obj_f)
 				{
+					// Если в поле для вывода простое имя, то это имя возвращаемого значения.
 					if(preg_match('/^\w+$/', $obj_f))
 						$r2[$ret_f] = $x->get($obj_f);
+					// Если несколько имён, перечисленных через запятую, то возвращаем первое не пустое
+					elseif(preg_match('/^(\w+,)*\w+$/', $obj_f))
+					{
+						$coalesce_res = NULL;
+
+						foreach(explode(',', $obj_f) as $coalesce_f)
+							if(($coalesce_res = $x->get($coalesce_f)))
+								break;
+
+						if(!$coalesce_res)
+							$coalesce_res = 'NULL';
+
+						$r2[$ret_f] = $coalesce_res;
+					}
+					// Иначе рассматриваем строку с возвращаемым значением как шаблон, где %имя% заменяется на значение объекта.
 					else
 						$r2[$ret_f] = preg_replace_callback('/%(\w+)%/', function($m) use ($x) { return $x->get($m[1]); }, $obj_f);
 				}
